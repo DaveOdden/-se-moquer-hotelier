@@ -1,8 +1,10 @@
-# React + Vite
+# Se Moquer Hotelier
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mock hotel booking and guest management system built with the MERN stack. The idea is to continue implementing advanced concepts through out the tech stacks by building a custom content management system.
 
-Currently, two official plugins are available:
+## Tech Intention
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Package Manager - [Yarn](https://yarnpkg.com/)
+- Front End Build Tool - [Vite](https://vitejs.dev/)
+- Front End Framework - [React](https://react.dev/)
+- UI Kit - [Ant Design](https://ant.design/)
