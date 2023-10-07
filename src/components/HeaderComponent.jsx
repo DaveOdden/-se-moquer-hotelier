@@ -1,5 +1,5 @@
 import React from 'react';
-import ToolSelection from './ToolSelection'
+import FeatureNav from './FeatureNav'
 import { Row, Col } from 'antd';
 import { Divider, Typography, Button } from 'antd';
 import { ShopOutlined, PlusCircleOutlined } from '@ant-design/icons';
@@ -23,7 +23,7 @@ export default function HeaderComponent() {
         </Typography>
       </Col> 
       <Col span={18} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <ToolSelection />
+        <FeatureNav />
       </Col>
     </Row>
   );

@@ -20,7 +20,6 @@ const contentStyle = {
   backgroundColor: '#fff',
 };
 
-
 const dataSource = [
   {
     key: '1',

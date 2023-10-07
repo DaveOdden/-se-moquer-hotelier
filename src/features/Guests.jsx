@@ -20,7 +20,6 @@ const contentStyle = {
   backgroundColor: '#fff',
 };
 
-
 const dataSource = [
   {
     key: '1',
@@ -61,7 +60,7 @@ export default function Guests() {
         <SubHeaderComponent/>
       </Header>
       <Content style={contentStyle}>
-        <Table dataSource={dataSource} columns={columns} size="middle" />;
+        <Table dataSource={dataSource} columns={columns} size="middle" />
       </Content>
     </>
   )
