@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { MailOutlined, SettingOutlined, UserOutlined, ReadOutlined, PartitionOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, SettingOutlined, UserOutlined, ReadOutlined, PartitionOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const items = [
   {
@@ -24,11 +24,10 @@ const items = [
     icon: <UserOutlined />,
   },
   {
-    label: 'Email',
-    key: 'mail',
-    href: 'mail',
-    icon: <MailOutlined />,
-    disabled: true,
+    label: 'Rooms',
+    key: 'rooms',
+    href: 'rooms',
+    icon: <DatabaseOutlined />,
   },
   {
     label: 'Help',
@@ -69,14 +68,13 @@ const items = [
 ];
 
 
-export default function ToolSelection() {
+export default function FeatureNav() {
   const navigate = useNavigate();
-
-  const [current, setCurrent] = useState('bookings');
+  const location = useLocation();
+  const [current, setCurrent] = useState(location.pathname.slice(1,location.pathname.length));
   const onClick = (e) => {
-    console.log('click ', e);
-    navigate(`/${e.key}`);
     setCurrent(e.key);
+    navigate(`/${e.key}`);
   };
-  return <Menu style={{minWidth: '510px'}} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return <Menu style={{minWidth: '525px'}} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
 }

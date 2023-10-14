@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Layout, Space } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import SubHeaderComponent from '../components/SubHeaderComponent'
+import {roomData} from './roomData'
 
 const headerStyle = {
   textAlign: 'center',
@@ -20,56 +21,43 @@ const contentStyle = {
   backgroundColor: '#fff',
 };
 
-const dataSource = [
-  {
-    key: '1',
-    room: '505',
-    name: 'Mike',
-    age: 32,
-    address: '10 Downing Street',
-  },
-  {
-    key: '2',
-    room: '121',
-    name: 'John',
-    age: 42,
-    address: '10 Downing Street',
-  },
-];
-
 const columns = [
   {
     title: 'Room Num.',
     dataIndex: 'room',
     key: 'room',
+    type: 'regular'
   },
   {
-    title: 'Guest Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    type: 'regular'
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Guest',
+    dataIndex: 'guest',
+    key: 'guest',
+    type: 'regular'
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Availability',
+    dataIndex: 'availability',
+    key: 'availability',
+    type: 'regular'
   },
 ];
 
-export default function Bookings() {
+export default function Rooms() {
   return (
     <>
       <Header style={headerStyle}>
-        <SubHeaderComponent feature="bookings" recordCount={0}>
+        <SubHeaderComponent feature="rooms" recordCount={0}>
           <h1>Body</h1>
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
-        <Table dataSource={dataSource} columns={columns} size="middle" />;
+        <Table dataSource={roomData} columns={columns} size="middle" />
       </Content>
     </>
   )

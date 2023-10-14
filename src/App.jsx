@@ -5,6 +5,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import HeaderComponent from './components/HeaderComponent'
 import Bookings from './features/Bookings'
 import Guests from './features/Guests'
+import Rooms from './features/Rooms'
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 const headerStyle = {
@@ -42,6 +43,7 @@ const App = () => {
             <Route index element={<h1>Home</h1>} />
             <Route path="bookings" element={<Bookings />} />
             <Route path="guests" element={<Guests />} />
+            <Route path="rooms" element={<Rooms />} />
             <Route path="*" element={<h1>No</h1>} />
           </Route>
         </Routes>
