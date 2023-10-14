@@ -1,31 +1,69 @@
-import React from 'react';
-import { Row, Col } from 'antd';
-import { Input, Space, Typography, Button } from 'antd';
-import { ShopOutlined, PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Flex, Steps, Modal, Space, Typography, Button, Checkbox, Form, Input } from 'antd';
+import { PlusCircleOutlined, InfoCircleOutlined, SearchOutlined } from '@ant-design/icons';
 const { Title, Paragraph, Text, Link } = Typography;
+import { depluralize } from "../utils/helper"
 
 const headingStyle = {
   margin: 0,
   fontSize: '1.4rem',
 };
 
-export default function SubHeaderComponent() {
+export default function SubHeaderComponent(props) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  useEffect(() => {
+    if(props.formStatus === "completed") {
+      setIsModalOpen(false);
+    }
+  },[props.formStatus]);
+
   return (
-    <Row
-      align="stretch"
-      justify="start"
-      style={{maxWidth: 1440, margin: '0 auto'}}
-    >
-      <Col span={3} offset={18}>
-        <Space.Compact size="medium">
-          <Input addonBefore={<SearchOutlined />} placeholder="search" />
-        </Space.Compact>
-      </Col>
-      <Col span={3}>
-        <Button type="primary" shape="round" icon={<PlusCircleOutlined />} size="medium">
-          New Booking
-        </Button>
-      </Col> 
-    </Row>
+    <>
+      <Flex 
+        gap="middle" 
+        justify="space-between" 
+        align="center" 
+        style={{maxWidth:1440, margin: '0 auto'}}
+      >
+        <Title 
+          level={2} 
+          style={{textTransform: 'capitalize', margin: 0, fontSize: 20}}
+        >
+          <Space>
+            {props.feature}
+            {props.recordCount > 0 && <Text>({props.recordCount})</Text>}
+          </Space>
+        </Title>
+        <Space align="center">
+          <Input 
+            addonBefore={<SearchOutlined />} 
+            style={{verticalAlign: 'middle',marginTop: -2}} 
+            placeholder="search" 
+          />
+          <Button
+            type="primary"
+            shape="round"
+            icon={<PlusCircleOutlined />}
+            size="medium"
+            onClick={showModal}
+            style={{textTransform: 'capitalize'}}
+          >
+            New {depluralize(props.feature)}
+          </Button>
+        </Space>
+      </Flex>
+      <Modal 
+        title={`New ${depluralize(props.feature)}`} 
+        open={isModalOpen} 
+        footer={null}
+      >
+        {props.children}
+      </Modal>
+    </>
   );
 }

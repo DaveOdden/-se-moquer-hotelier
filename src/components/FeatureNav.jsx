@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MailOutlined, SettingOutlined, UserOutlined, ReadOutlined, PartitionOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, SettingOutlined, UserOutlined, ReadOutlined, PartitionOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -24,11 +24,10 @@ const items = [
     icon: <UserOutlined />,
   },
   {
-    label: 'Email',
-    key: 'mail',
-    href: 'mail',
-    icon: <MailOutlined />,
-    disabled: true,
+    label: 'Rooms',
+    key: 'rooms',
+    href: 'rooms',
+    icon: <DatabaseOutlined />,
   },
   {
     label: 'Help',
@@ -77,5 +76,5 @@ export default function FeatureNav() {
     setCurrent(e.key);
     navigate(`/${e.key}`);
   };
-  return <Menu style={{minWidth: '510px'}} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return <Menu style={{minWidth: '525px'}} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
 }
