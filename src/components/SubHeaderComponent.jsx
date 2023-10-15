@@ -28,7 +28,6 @@ export default function SubHeaderComponent(props) {
         gap="middle" 
         justify="space-between" 
         align="center" 
-        style={{maxWidth:1440, margin: '0 auto'}}
       >
         <Title 
           level={2} 

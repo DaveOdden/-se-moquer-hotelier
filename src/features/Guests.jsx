@@ -8,7 +8,7 @@ const headerStyle = {
   textAlign: 'center',
   color: '#333',
   height: 64,
-  paddingInline: 50,
+  paddingInline: 16,
   lineHeight: '64px',
   backgroundColor: '#fff',
   borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
@@ -16,7 +16,7 @@ const headerStyle = {
 
 const contentStyle = {
   textAlign: 'center',
-  height: 'calc(100vh - 128px)',
+  height: '80vh',
   color: '#333',
   backgroundColor: '#fff',
 };
@@ -27,6 +27,7 @@ const columns = [
     dataIndex: 'lastName',
     width: '200px',
     key: 'lastName',
+    paddingLeft: '50px'
   },
   {
     title: 'First Name',
@@ -177,6 +178,7 @@ export default function Guests() {
             size="middle" 
             rowKey={(record) => record._id}
             loading={contentIsLoading}
+            pagination="false"
           />
         }
       </Content>
