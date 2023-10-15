@@ -1,6 +1,6 @@
 import './App.css'
 import React from 'react';
-import { Table, Layout, Space } from 'antd';
+import { Table, Layout, Space, Row, Col } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import HeaderComponent from './components/HeaderComponent'
 import Bookings from './features/Bookings'
@@ -12,7 +12,7 @@ const headerStyle = {
   textAlign: 'center',
   color: '#333',
   height: 64,
-  paddingInline: 50,
+  paddingInline: 16,
   lineHeight: '64px',
   backgroundColor: '#fff',
   borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
@@ -27,28 +27,36 @@ const contentStyle = {
 
 const App = () => {
   return (
-    <Space
-      direction="vertical"
-      style={{
-        width: '100%',
-      }}
-      size={[0, 48]}
+    <Row
+      align="middle"
+      justify="center"
     >
-      <Layout>
-        <Header style={headerStyle}>
-          <HeaderComponent/>
-        </Header>
-        <Routes>
-          <Route path="/" element={<MockLayout />}>
-            <Route index element={<h1>Home</h1>} />
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="guests" element={<Guests />} />
-            <Route path="rooms" element={<Rooms />} />
-            <Route path="*" element={<h1>No</h1>} />
-          </Route>
-        </Routes>
-      </Layout>
-    </Space>
+      <Col 
+        span="24"
+        style={{
+          maxWidth: 1440,
+          borderRadius: 16,
+          overflow: 'hidden',
+          marginTop: 32,
+          border: '1px solid #111'
+        }}
+      >
+        <Layout>
+          <Header style={headerStyle}>
+            <HeaderComponent/>
+          </Header>
+          <Routes>
+            <Route path="/" element={<MockLayout />}>
+              <Route index element={<h1>Home</h1>} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="guests" element={<Guests />} />
+              <Route path="rooms" element={<Rooms />} />
+              <Route path="*" element={<h1>No</h1>} />
+            </Route>
+          </Routes>
+        </Layout>
+      </Col>
+    </Row>
   )
 }
 

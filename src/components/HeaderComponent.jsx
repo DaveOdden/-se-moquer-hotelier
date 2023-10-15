@@ -15,7 +15,6 @@ export default function HeaderComponent() {
     <Row
       align="stretch"
       justify="start"
-      style={{maxWidth: 1440, margin: '0 auto'}}
     >
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
         <Typography>
