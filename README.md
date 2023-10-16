@@ -1,4 +1,4 @@
-# Se Moquer Hotelier
+# Un Moquer Hotelier
 
 A mock hotel booking and guest management system built with the MERN stack. The idea is to continue implementing advanced concepts through out the tech stacks by building a custom content management system.
 
