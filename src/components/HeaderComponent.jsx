@@ -18,7 +18,7 @@ export default function HeaderComponent() {
     >
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
         <Typography>
-          <Title style={headingStyle}><ShopOutlined style={{paddingRight: '.7rem'}}/>Se Moquer Hotelier</Title>
+          <Title style={headingStyle}><ShopOutlined style={{paddingRight: '.7rem'}}/>Un Moquer Hotelier</Title>
         </Typography>
       </Col> 
       <Col span={18} style={{ display: 'flex', justifyContent: 'flex-end' }}>
