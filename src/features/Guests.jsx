@@ -93,7 +93,6 @@ export default function Guests() {
     GuestAPI.post(preppedFormData).then((res) => {
       console.log(res);
       if(res.success) {
-        //setGuests(res.message);
         setLoadingState(false);
         setFormStatus("completed")
         messageApi.success('Success. Guest Added');
