@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Layout, Space, Form, Input, Button, message } from 'antd';
+import React, { useState, useEffect, Suspense } from 'react';
+import { Table, Layout, message } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import { GuestAPI } from '../../api/GuestAPI'
 import { columnDefinitions } from './guestTableColumns';
-import { NewGuestForm } from './NewGuestForm';
+import NewGuestForm from './NewGuestForm';
 
 const headerStyle = {
   textAlign: 'center',
@@ -64,7 +64,7 @@ export default function Guests() {
     })
   }
 
-  function getGuestData() {
+  const getGuestData = () => {
     GuestAPI.get().then((res) => {
       setGuests(res.message);
       setLoadingState(false);
@@ -87,8 +87,7 @@ export default function Guests() {
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
-        { guests
-          && 
+        <Suspense>
           <Table 
             dataSource={guests} 
             columns={columnDefinitions} 
@@ -97,7 +96,7 @@ export default function Guests() {
             loading={contentIsLoading}
             pagination="false"
           />
-        }
+        </Suspense>
       </Content>
     </>
   )

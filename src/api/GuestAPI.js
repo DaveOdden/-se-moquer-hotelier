@@ -6,11 +6,10 @@ export const GuestAPI = {
     return jsonResponse;
   },
   post: async (data) => {
-    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guestss`, {
+    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests`, {
       method: "POST",
       body: JSON.stringify(data)
     });
-    console.log(response.status);
     if(response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;

@@ -4,7 +4,7 @@ import { Table, Layout, Space, Row, Col } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import HeaderComponent from './components/HeaderComponent'
 import Bookings from './features/Bookings'
-import Guests from './features/Guests'
+import Guests from './features/Guests/Guests'
 import Rooms from './features/Rooms'
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
