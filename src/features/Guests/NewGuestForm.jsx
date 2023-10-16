@@ -1,3 +1,5 @@
+import { Space, Form, Input, Button } from 'antd';
+
 export default function NewGuestForm(props) {
   return (
     <Form id="guestsForm" onFinish={props.submitFn}>
