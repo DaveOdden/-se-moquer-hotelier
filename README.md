@@ -8,3 +8,4 @@ A mock hotel booking and guest management system built with the MERN stack. The 
 - Front End Build Tool - [Vite](https://vitejs.dev/)
 - Front End Framework - [React](https://react.dev/)
 - UI Kit - [Ant Design](https://ant.design/)
+- Unit Testing - [Vitest](https://vitest.dev/)

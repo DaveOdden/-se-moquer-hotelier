@@ -35,7 +35,7 @@ export default function SubHeaderComponent(props) {
         >
           <Space>
             {props.feature}
-            {props.recordCount > 0 && <Text>({props.recordCount})</Text>}
+            {props.recordCount > 0 && <Text data-testid="record-count">({props.recordCount})</Text>}
           </Space>
         </Title>
         <Space align="center">
@@ -51,6 +51,7 @@ export default function SubHeaderComponent(props) {
             size="medium"
             onClick={showModal}
             style={{textTransform: 'capitalize'}}
+            data-testid="action-button"
           >
             New {depluralize(props.feature)}
           </Button>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Layout, Space, Form, Input, Button, message } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
-import SubHeaderComponent from '../components/SubHeaderComponent'
-import { GuestAPI } from '../api/GuestAPI'
+import SubHeaderComponent from '../../components/SubHeaderComponent'
+import { GuestAPI } from '../../api/GuestAPI'
+import { columnDefinitions } from './guestTableColumns';
+import { NewGuestForm } from './NewGuestForm';
 
 const headerStyle = {
   textAlign: 'center',
@@ -20,47 +22,6 @@ const contentStyle = {
   color: '#333',
   backgroundColor: '#fff',
 };
-
-const columns = [
-  {
-    title: 'Last Name',
-    dataIndex: 'lastName',
-    width: '200px',
-    key: 'lastName',
-    paddingLeft: '50px'
-  },
-  {
-    title: 'First Name',
-    dataIndex: 'firstName',
-    key: 'firstName',
-    width: '200px',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Street Name',
-    dataIndex: 'street',
-    key: 'street',
-  },
-  {
-    title: 'City',
-    dataIndex: 'city',
-    key: 'city',
-  },
-  {
-    title: 'State',
-    dataIndex: 'state',
-    key: 'state',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-  },
-];
 
 export default function Guests() {
   const [guests, setGuests] = useState([]);
@@ -93,7 +54,6 @@ export default function Guests() {
     GuestAPI.post(preppedFormData).then((res) => {
       console.log(res);
       if(res.success) {
-        //setGuests(res.message);
         setLoadingState(false);
         setFormStatus("completed")
         messageApi.success('Success. Guest Added');
@@ -123,50 +83,7 @@ export default function Guests() {
           recordCount={guests.length}
           formStatus={formStatus}
         >
-          <Form id="guestsForm" onFinish={submitUser}>
-            <Form.Item name="firstName" label="First Name">
-              <Input placeholder="e.g. John"/>
-            </Form.Item>
-            <Form.Item name="lastName" label="Last Name">
-              <Input placeholder="Last Name"/>
-            </Form.Item>
-            <Form.Item name="email" label="Email">
-              <Input placeholder="Email"/>
-            </Form.Item>
-            <Form.Item name="phone" label="Phone">
-              <Input placeholder="Phone"/>
-            </Form.Item>
-            <Form.Item name="age" label="Age">
-              <Input placeholder="Age"/>
-            </Form.Item>
-            <Form.Item label="Street Address">
-              <Input placeholder="Street Address"/>
-            </Form.Item>
-
-            <Space>
-              <Form.Item label="City">
-                <Input placeholder="City"/>
-              </Form.Item>
-              <Form.Item label="State">
-                <Input placeholder="State"/>
-              </Form.Item>
-              <Form.Item label="Zip Code">
-                <Input placeholder="Zip Code"/>
-              </Form.Item>
-            </Space>
-
-            <Form.Item name="licenseNumber">
-              <Input placeholder="License Number"/>
-            </Form.Item>
-            <Form.Item name="notes">
-              <Input.TextArea placeholder="Notes"/>
-            </Form.Item>
-            <Form.Item>
-              <Button  type="primary" key="submit" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-          </Form>
+          <NewGuestForm submitFn={submitUser} />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
@@ -174,7 +91,7 @@ export default function Guests() {
           && 
           <Table 
             dataSource={guests} 
-            columns={columns} 
+            columns={columnDefinitions} 
             size="middle" 
             rowKey={(record) => record._id}
             loading={contentIsLoading}
