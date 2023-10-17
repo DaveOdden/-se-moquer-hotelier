@@ -3,7 +3,7 @@ import { Space, Form, Input, Button } from 'antd';
 export default function NewGuestForm(props) {
   return (
     <Form id="guestsForm" onFinish={props.submitFn}>
-      <Form.Item name="firstName" label="First Name">
+      <Form.Item name="firstName" label="First Name" preserve={false}>
         <Input placeholder="e.g. John"/>
       </Form.Item>
       <Form.Item name="lastName" label="Last Name">
