@@ -16,6 +16,10 @@ export default function SubHeaderComponent(props) {
     setIsModalOpen(true);
   };
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     if(props.formStatus === "completed") {
       setIsModalOpen(false);
@@ -61,6 +65,8 @@ export default function SubHeaderComponent(props) {
         title={`New ${depluralize(props.feature)}`} 
         open={isModalOpen} 
         footer={null}
+        onCancel={handleCancel}
+        destroyOnClose={true}
       >
         {props.children}
       </Modal>

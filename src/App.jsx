@@ -30,15 +30,19 @@ const App = () => {
     <Row
       align="middle"
       justify="center"
+      style={{
+        padding: '32px 0'
+      }}
     >
       <Col 
         span="24"
         style={{
           maxWidth: 1440,
+          height: '100%',
+          maxHeight: 'calc(100vh - 64px)',
           borderRadius: 16,
           overflow: 'hidden',
-          marginTop: 32,
-          border: '1px solid #111'
+          border: '1px solid #111',
         }}
       >
         <Layout>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Layout, message } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import { GuestAPI } from '../../api/GuestAPI'
 import { columnDefinitions } from './guestTableColumns';
@@ -17,10 +17,10 @@ const headerStyle = {
 };
 
 const contentStyle = {
-  textAlign: 'center',
-  height: '80vh',
   color: '#333',
+  textAlign: 'center',
   backgroundColor: '#fff',
+  height: 'calc(100vh - 194px)'
 };
 
 export default function Guests() {
@@ -87,16 +87,17 @@ export default function Guests() {
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
-        <Suspense>
-          <Table 
-            dataSource={guests} 
-            columns={columnDefinitions} 
-            size="middle" 
-            rowKey={(record) => record._id}
-            loading={contentIsLoading}
-            pagination="false"
-          />
-        </Suspense>
+        <Table 
+          dataSource={guests} 
+          columns={columnDefinitions} 
+          size="middle" 
+          rowKey={(record) => record._id}
+          loading={contentIsLoading}
+          pagination={false}
+          scroll={{
+            y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
+          }}
+        />
       </Content>
     </>
   )
