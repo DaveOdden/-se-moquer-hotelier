@@ -5,6 +5,7 @@ import SubHeaderComponent from '../../components/SubHeaderComponent'
 import { GuestAPI } from '../../api/GuestAPI'
 import { columnDefinitions } from './guestTableColumns';
 import NewGuestForm from './NewGuestForm';
+import GuestDetail from './GuestDetail';
 
 const headerStyle = {
   textAlign: 'center',
@@ -27,6 +28,8 @@ export default function Guests() {
   const [guests, setGuests] = useState([]);
   const [contentIsLoading, setLoadingState] = useState(true);
   const [formStatus, setFormStatus] = useState("empty");
+  const [showGuestDetail, setShowGuestDetail] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
   const submitUser = (formData) => {
@@ -71,6 +74,16 @@ export default function Guests() {
     })
   }
 
+  const showDetail = (record, recordIndex) => {
+    setShowGuestDetail(true)
+    setSelectedRecord(record)
+  }
+
+  const hideDetail = (select) => {
+    setShowGuestDetail(false)
+    setSelectedRecord(null)
+  }
+
   useEffect(() => getGuestData, []);
   useEffect(() => getGuestData, [formStatus]);
 
@@ -94,10 +107,18 @@ export default function Guests() {
           rowKey={(record) => record._id}
           loading={contentIsLoading}
           pagination={false}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                showDetail(record, rowIndex)
+              }
+            };
+          }}
           scroll={{
             y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
           }}
         />
+        <GuestDetail show={showGuestDetail} data={selectedRecord} onClose={hideDetail} />
       </Content>
     </>
   )
