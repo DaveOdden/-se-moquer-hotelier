@@ -15,5 +15,26 @@ export const GuestAPI = {
       return jsonResponse;
     }
     return response
+  },
+  update: async (id) => {
+    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests?id=${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data)
+    });
+    if(response.status === 200) {
+      let jsonResponse = await response.json();
+      return jsonResponse;
+    }
+    return response
+  },
+  delete: async (id) => {
+    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests?id=${id}`, {
+      method: "DELETE",
+    });
+    if(response.status === 200) {
+      let jsonResponse = await response.json();
+      return jsonResponse;
+    }
+    return response
   }
 }
