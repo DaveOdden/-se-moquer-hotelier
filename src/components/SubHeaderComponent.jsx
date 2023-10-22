@@ -21,7 +21,7 @@ export default function SubHeaderComponent(props) {
   };
 
   useEffect(() => {
-    if(props.formStatus === "completed") {
+    if(props.formStatus.response) {
       setIsModalOpen(false);
     }
   },[props.formStatus]);

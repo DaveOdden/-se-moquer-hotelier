@@ -1,38 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Descriptions, Button, Space, Dropdown, message } from 'antd'
-import { MoreOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
+import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons';
+import EditGuestForm from "./EditGuestForm"
 
 export default function GuestDetail(props) {
-  const [actionIsProcessing, setActionProcessingState] = useState(false);
   const [isOpen, setOpenState] = useState(false);
+  const [isEditing, setEditState] = useState(false);
   const [descriptionContent, setDescriptionContent] = useState(null);
-  const [messageApi, contextHolder] = message.useMessage();
-
-  const editRecord = () => {
-    setActionProcessingState(true)
-    GuestAPI.update(data.props._id).then((res) => {
-      console.log(res);
-      if(res.success) {
-        setActionProcessingState(false);
-        messageApi.success('Success. Guest updated');
-      } else {
-        messageApi.error('Error. Something screwed up...');
-      }
-    })
-  }
-
-  const deleteRecord = () => {
-    setActionProcessingState(true)
-    GuestAPI.delete(data.props._id).then((res) => {
-      console.log(res);
-      if(res.success) {
-        setActionProcessingState(false);
-        messageApi.success('Success. Guest deleted');
-      } else {
-        messageApi.error('Error. Something screwed up...');
-      }
-    })
-  }
+  const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
 
   const actionItems = [
     {
@@ -45,7 +20,7 @@ export default function GuestDetail(props) {
       icon: (
         <EditOutlined />
       ),
-      onClick: editRecord
+      onClick: () => setEditState(true)
     },
     {
       key: 'delete',
@@ -58,7 +33,7 @@ export default function GuestDetail(props) {
         <DeleteOutlined />
       ),
       danger: true,
-      onClick: deleteRecord
+      onClick: () => props.deleteRecord(props.data._id)
     },
   ]
   
@@ -69,18 +44,23 @@ export default function GuestDetail(props) {
 
   const transformDataForDescription = () => {
     let descriptionContent = [];
-    if(props.data) {
+    function loopOverProperties(dataObj) {
       let index = 0;
-      for(const key in props.data) {
-        if(typeof props.data[key] != "object") {
+      for(const key in dataObj) {
+        if(typeof dataObj[key] != "object") {
           descriptionContent.push({
             key: index,
             label: key,
-            children: props.data[key]
+            children: dataObj[key]
           })
           index++
+        } else {
+          loopOverProperties(dataObj[key])
         }
       }
+    }
+    if(props.data) {
+      loopOverProperties(props.data)
       setDescriptionContent(descriptionContent);
     }
   }
@@ -93,9 +73,12 @@ export default function GuestDetail(props) {
     setOpenState(props.show)
   }, [props.show]);
 
+  useEffect(() => {
+    setEditGuestFormStatus(props.editGuestFormStatus)
+  }, [props.editGuestFormStatus]);
+
   return (
     <>
-      {contextHolder}
       <Drawer 
         title="Guest Information" 
         placement="right" 
@@ -104,18 +87,28 @@ export default function GuestDetail(props) {
         getContainer={false}
         extra={
           <Space>
-            <Dropdown menu={{ items: actionItems }} placement="bottomRight">
+            { !isEditing && <Dropdown menu={{ items: actionItems }} placement="bottomRight">
               <MoreOutlined />
-            </Dropdown>
+            </Dropdown> }
+            { isEditing && <Button type="text" onClick={() => setEditState(false)}><LineOutlined /></Button>}
           </Space>
         }
       >
-        <Descriptions 
-          items={descriptionContent} 
-          column={1} 
-          layout="small" 
-          contentStyle={{textAlign: 'left'}}
-        />
+        { !isEditing && 
+          <Descriptions 
+            items={descriptionContent} 
+            column={1} 
+            layout="small" 
+            contentStyle={{textAlign: 'left'}}
+          />
+        }
+        { isEditing && 
+          <EditGuestForm 
+            formData={props.data} 
+            submitFn={props.updateRecord} 
+            editGuestFormStatus={editGuestFormStatus}
+          /> 
+        }
       </Drawer>
     </>
   )

@@ -1,12 +1,14 @@
+const url = 'https://un-moquer-hotelier-api.vercel.app/api';
+const apiPath = "/guests"
 
 export const GuestAPI = {
   get: async () => {
-    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests`);
+    const response = await fetch(`${url}${apiPath}`);
     let jsonResponse = await response.json();
     return jsonResponse;
   },
   post: async (data) => {
-    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests`, {
+    const response = await fetch(`${url}${apiPath}`, {
       method: "POST",
       body: JSON.stringify(data)
     });
@@ -16,10 +18,10 @@ export const GuestAPI = {
     }
     return response
   },
-  update: async (id) => {
-    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests?id=${id}`, {
+  update: async (id, payload) => {
+    const response = await fetch(`${url}${apiPath}?id=${id}`, {
       method: "PUT",
-      body: JSON.stringify(data)
+      body: JSON.stringify(payload)
     });
     if(response.status === 200) {
       let jsonResponse = await response.json();
@@ -28,7 +30,7 @@ export const GuestAPI = {
     return response
   },
   delete: async (id) => {
-    const response = await fetch(`https://se-moquer-hotelier-api.vercel.app/api/guests?id=${id}`, {
+    const response = await fetch(`${url}${apiPath}?id=${id}`, {
       method: "DELETE",
     });
     if(response.status === 200) {

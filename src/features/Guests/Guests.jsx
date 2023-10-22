@@ -27,13 +27,13 @@ const contentStyle = {
 export default function Guests() {
   const [guests, setGuests] = useState([]);
   const [contentIsLoading, setLoadingState] = useState(true);
-  const [formStatus, setFormStatus] = useState("empty");
+  const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
+  const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [showGuestDetail, setShowGuestDetail] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
   const submitUser = (formData) => {
-    console.log(formData);
     setLoadingState(true);
     let preppedFormData = {
       ...formData,
@@ -54,15 +54,89 @@ export default function Guests() {
     delete preppedFormData.state
     delete preppedFormData.zip
 
+    setNewGuestFormStatus({
+      loading: true, 
+      response: null, 
+      error: null, 
+      pristine: false
+    })
+
     GuestAPI.post(preppedFormData).then((res) => {
-      console.log(res);
       if(res.success) {
         setLoadingState(false);
-        setFormStatus("completed")
+        setNewGuestFormStatus({
+          loading: false, 
+          response: true, 
+          error: null, 
+          pristine: false
+        })
         messageApi.success('Success. Guest Added');
       } else {
-        setFormStatus("error")
+        setNewGuestFormStatus({
+          loading: false, 
+          response: null, 
+          error: true, 
+          pristine: false
+        })
         messageApi.error('Error. Something screwed up...');
+      }
+    })
+  }
+
+  const updateRecord = (id, formData) => {
+    let preppedFormData = {
+      ...formData,
+      lastUpdated: new Date(),
+    };
+
+    setEditGuestFormStatus({
+      loading: true, 
+      response: null, 
+      error: null, 
+      pristine: false
+    })
+
+    GuestAPI.update(id, preppedFormData).then((res) => {
+      if(res.success) {
+        messageApi.success('Success. Guest updated');
+        setEditGuestFormStatus({
+          loading: false, 
+          response: true, 
+          error: null, 
+          pristine: false
+        })
+        setTimeout( hideDetail, 800)
+      } else {
+        messageApi.error('Error. Something screwed up...');
+        setEditGuestFormStatus({
+          loading: false, 
+          response: null, 
+          error: true, 
+          pristine: false
+        })
+      }
+    })
+  }
+
+  const deleteRecord = (id) => {
+    GuestAPI.delete(id).then((res) => {
+      if(res.success) {
+        messageApi.success('Success. Guest deleted');
+        setEditGuestFormStatus({
+          loading: null, 
+          response: true, 
+          error: null, 
+          pristine: false
+        })
+        setTimeout( hideDetail, 800)
+      } else {
+        messageApi.error('Error. Something screwed up...');
+        setEditGuestFormStatus({
+          loading: null, 
+          response: null, 
+          error: true, 
+          pristine: false
+        })
       }
     })
   }
@@ -79,13 +153,13 @@ export default function Guests() {
     setSelectedRecord(record)
   }
 
-  const hideDetail = (select) => {
+  const hideDetail = () => {
     setShowGuestDetail(false)
     setSelectedRecord(null)
   }
 
   useEffect(() => getGuestData, []);
-  useEffect(() => getGuestData, [formStatus]);
+  useEffect(() => getGuestData, [newGuestFormStatus, editGuestFormStatus]);
 
   return (
     <>
@@ -94,7 +168,7 @@ export default function Guests() {
         <SubHeaderComponent 
           feature="guests" 
           recordCount={guests.length}
-          formStatus={formStatus}
+          formStatus={newGuestFormStatus}
         >
           <NewGuestForm submitFn={submitUser} />
         </SubHeaderComponent>
@@ -118,7 +192,14 @@ export default function Guests() {
             y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
           }}
         />
-        <GuestDetail show={showGuestDetail} data={selectedRecord} onClose={hideDetail} />
+        <GuestDetail 
+          show={showGuestDetail} 
+          data={selectedRecord} 
+          onClose={hideDetail}
+          updateRecord={updateRecord} 
+          deleteRecord={deleteRecord} 
+          editGuestFormStatus={editGuestFormStatus}
+        />
       </Content>
     </>
   )
