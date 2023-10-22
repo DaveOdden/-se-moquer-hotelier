@@ -11,7 +11,6 @@ export default function EditGuestForm(props) {
 
   useEffect(() => {
     props.formData ? setFormData(props.formData) : null
-    console.log(props.formData);
   }, [props.formData]);
 
   useEffect(() => {

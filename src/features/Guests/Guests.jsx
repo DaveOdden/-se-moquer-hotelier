@@ -33,7 +33,7 @@ export default function Guests() {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const submitUser = (formData) => {
+  const createGuest = (formData) => {
     setLoadingState(true);
     let preppedFormData = {
       ...formData,
@@ -83,7 +83,7 @@ export default function Guests() {
     })
   }
 
-  const updateRecord = (id, formData) => {
+  const updateGuest = (id, formData) => {
     let preppedFormData = {
       ...formData,
       lastUpdated: new Date(),
@@ -99,12 +99,14 @@ export default function Guests() {
     GuestAPI.update(id, preppedFormData).then((res) => {
       if(res.success) {
         messageApi.success('Success. Guest updated');
-        setEditGuestFormStatus({
-          loading: false, 
-          response: true, 
-          error: null, 
-          pristine: false
-        })
+        setTimeout( () => {
+          setEditGuestFormStatus({
+            loading: false, 
+            response: true, 
+            error: null, 
+            pristine: false
+          })
+        }, 1200)
         setTimeout( hideDetail, 800)
       } else {
         messageApi.error('Error. Something screwed up...');
@@ -118,16 +120,18 @@ export default function Guests() {
     })
   }
 
-  const deleteRecord = (id) => {
+  const deleteGuest = (id) => {
     GuestAPI.delete(id).then((res) => {
       if(res.success) {
         messageApi.success('Success. Guest deleted');
-        setEditGuestFormStatus({
-          loading: null, 
-          response: true, 
-          error: null, 
-          pristine: false
-        })
+        setTimeout( () => {
+          setEditGuestFormStatus({
+            loading: false, 
+            response: true, 
+            error: null, 
+            pristine: false
+          })
+        }, 1200)
         setTimeout( hideDetail, 800)
       } else {
         messageApi.error('Error. Something screwed up...');
@@ -170,7 +174,7 @@ export default function Guests() {
           recordCount={guests.length}
           formStatus={newGuestFormStatus}
         >
-          <NewGuestForm submitFn={submitUser} />
+          <NewGuestForm submitFn={createGuest} />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
@@ -196,8 +200,8 @@ export default function Guests() {
           show={showGuestDetail} 
           data={selectedRecord} 
           onClose={hideDetail}
-          updateRecord={updateRecord} 
-          deleteRecord={deleteRecord} 
+          updateGuest={updateGuest} 
+          deleteGuest={deleteGuest} 
           editGuestFormStatus={editGuestFormStatus}
         />
       </Content>

@@ -33,12 +33,13 @@ export default function GuestDetail(props) {
         <DeleteOutlined />
       ),
       danger: true,
-      onClick: () => props.deleteRecord(props.data._id)
+      onClick: () => props.deleteGuest(props.data._id)
     },
   ]
   
   const onClose = () => {
     setOpenState(false);
+    setEditState(false);
     props.onClose();
   };
 
@@ -75,6 +76,9 @@ export default function GuestDetail(props) {
 
   useEffect(() => {
     setEditGuestFormStatus(props.editGuestFormStatus)
+    if(props.editGuestFormStatus.response == true ){
+      setEditState(false)
+    }
   }, [props.editGuestFormStatus]);
 
   return (
@@ -105,7 +109,7 @@ export default function GuestDetail(props) {
         { isEditing && 
           <EditGuestForm 
             formData={props.data} 
-            submitFn={props.updateRecord} 
+            submitFn={props.updateGuest} 
             editGuestFormStatus={editGuestFormStatus}
           /> 
         }
