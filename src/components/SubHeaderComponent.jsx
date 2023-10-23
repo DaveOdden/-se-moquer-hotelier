@@ -21,7 +21,7 @@ export default function SubHeaderComponent(props) {
   };
 
   useEffect(() => {
-    if(props.formStatus.response) {
+    if(props.formStatus && props.formStatus.response) {
       setIsModalOpen(false);
     }
   },[props.formStatus]);
@@ -48,17 +48,19 @@ export default function SubHeaderComponent(props) {
             style={{verticalAlign: 'middle',marginTop: -2}} 
             placeholder="search" 
           />
-          <Button
-            type="primary"
-            shape="round"
-            icon={<PlusCircleOutlined />}
-            size="medium"
-            onClick={showModal}
-            style={{textTransform: 'capitalize'}}
-            data-testid="action-button"
-          >
-            New {depluralize(props.feature)}
-          </Button>
+          { props.newRecordBtn ? (
+            <Button
+              type="primary"
+              shape="round"
+              icon={<PlusCircleOutlined />}
+              size="medium"
+              onClick={showModal}
+              style={{textTransform: 'capitalize'}}
+              data-testid="action-button"
+            >
+              New {depluralize(props.feature)}
+            </Button>
+          ) : null }
         </Space>
       </Flex>
       <Modal 

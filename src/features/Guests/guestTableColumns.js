@@ -16,21 +16,29 @@ export const columnDefinitions = [
     title: 'Age',
     dataIndex: 'age',
     key: 'age',
+    width: '70px'
   },
   {
     title: 'Street Name',
-    dataIndex: 'street',
+    dataIndex: ['address', 'street'],
     key: 'street',
+    width: '200px',
   },
   {
     title: 'City',
-    dataIndex: 'city',
+    dataIndex: ['address', 'city'],
     key: 'city',
   },
   {
     title: 'State',
-    dataIndex: 'state',
+    dataIndex: ['address', 'state'],
     key: 'state',
+    width: '70px'
+  },
+  {
+    title: 'ZipCode',
+    dataIndex: ['address', 'zip'],
+    key: 'zip',
   },
   {
     title: 'Status',

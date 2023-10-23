@@ -1,7 +1,8 @@
-import React from 'react';
-import { Table, Layout, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Layout, message } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import SubHeaderComponent from '../components/SubHeaderComponent'
+import { BookingsAPI } from '../api/BookingsAPI'
 
 const headerStyle = {
   textAlign: 'center',
@@ -20,47 +21,41 @@ const contentStyle = {
   backgroundColor: '#fff',
 };
 
-const dataSource = [
-  {
-    key: '1',
-    room: '505',
-    name: 'Mike',
-    age: 32,
-    address: '10 Downing Street',
-  },
-  {
-    key: '2',
-    room: '121',
-    name: 'John',
-    age: 42,
-    address: '10 Downing Street',
-  },
-];
-
 const columns = [
   {
-    title: 'Room Num.',
-    dataIndex: 'room',
+    title: 'Room id.',
+    dataIndex: ['room', '_id'],
     key: 'room',
   },
   {
     title: 'Guest Name',
-    dataIndex: 'name',
+    dataIndex: ['guest', '_id'],
     key: 'name',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Checkin',
+    dataIndex: 'checkinDate',
+    key: 'checkin',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Checkout',
+    dataIndex: 'checkoutDate',
+    key: 'checkout',
   },
 ];
 
 export default function Bookings() {
+  const [bookings, setBookings] = useState([]);
+
+  const guestBookingData = () => {
+    BookingsAPI.get().then((res) => {
+      setBookings(res.message);
+      setLoadingState(false);
+    })
+  }
+
+  useEffect(() => guestBookingData, []);
+
   return (
     <>
       <Header style={headerStyle}>
@@ -69,7 +64,7 @@ export default function Bookings() {
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
-        <Table dataSource={dataSource} columns={columns} size="middle" />;
+        <Table dataSource={bookings} columns={columns} size="middle" />;
       </Content>
     </>
   )
