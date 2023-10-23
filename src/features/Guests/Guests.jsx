@@ -152,7 +152,7 @@ export default function Guests() {
     })
   }
 
-  const showDetail = (record, recordIndex) => {
+  const showDetail = (record) => {
     setShowGuestDetail(true)
     setSelectedRecord(record)
   }
