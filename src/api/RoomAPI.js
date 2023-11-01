@@ -2,8 +2,9 @@ const url = 'https://un-moquer-hotelier-api.vercel.app/api';
 const apiPath = "/rooms"
 
 export const RoomsAPI = {
-  get: async () => {
-    const response = await fetch(`${url}${apiPath}`);
+  get: async (feature) => {
+    let queryString = feature ? `?for=${feature}` : '';
+    const response = await fetch(`${url}${apiPath}${queryString}`);
     let jsonResponse = await response.json();
     return jsonResponse;
   },

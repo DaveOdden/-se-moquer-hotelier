@@ -1,9 +1,11 @@
 const url = 'https://un-moquer-hotelier-api.vercel.app/api';
 const apiPath = "/bookings"
+const roomPath = "/bookingsByRoom"
 
 export const BookingsAPI = {
-  get: async () => {
-    const response = await fetch(`${url}${apiPath}`);
+  get: async (key, val) => {
+    let queryString = key ? `?${key}=${val}` : '';
+    const response = await fetch(`${url}${apiPath}${queryString}`);
     let jsonResponse = await response.json();
     return jsonResponse;
   },
@@ -39,4 +41,13 @@ export const BookingsAPI = {
     }
     return response
   }
+}
+
+export const BookingsByRoomAPI = {
+  get: async (key, val) => {
+    let queryString = val ? `?${key}=${val}` : '';
+    const response = await fetch(`${url}${roomPath}${queryString}`);
+    let jsonResponse = await response.json();
+    return jsonResponse;
+  },
 }

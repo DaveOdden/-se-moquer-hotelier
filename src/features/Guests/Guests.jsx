@@ -173,6 +173,7 @@ export default function Guests() {
           feature="guests" 
           recordCount={guests.length}
           formStatus={newGuestFormStatus}
+          newRecordBtn={true}
         >
           <NewGuestForm submitFn={createGuest} />
         </SubHeaderComponent>

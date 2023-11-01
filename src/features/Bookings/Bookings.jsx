@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Layout, message } from 'antd';
+import { Table, Layout, Space, Form, Input, Button, message } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
-import SubHeaderComponent from '../components/SubHeaderComponent'
-import { BookingsAPI } from '../api/BookingsAPI'
+import SubHeaderComponent from '../../components/SubHeaderComponent'
+import NewBookingForm from './NewBookingForm'
+import { BookingsAPI } from '../../api/BookingsAPI'
 
 const headerStyle = {
   textAlign: 'center',
   color: '#333',
   height: 64,
-  paddingInline: 50,
+  paddingInline: 16,
   lineHeight: '64px',
   backgroundColor: '#fff',
   borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
@@ -46,6 +47,7 @@ const columns = [
 
 export default function Bookings() {
   const [bookings, setBookings] = useState([]);
+  const [isLoading, setLoadingState] = useState(true);
 
   const guestBookingData = () => {
     BookingsAPI.get().then((res) => {
@@ -59,12 +61,17 @@ export default function Bookings() {
   return (
     <>
       <Header style={headerStyle}>
-        <SubHeaderComponent feature="bookings" recordCount={0}>
-          <h1>Body</h1>
+        <SubHeaderComponent feature="bookings" recordCount={0} newRecordBtn={true}>
+          <NewBookingForm />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
-        <Table dataSource={bookings} columns={columns} size="middle" />;
+        <Table 
+          dataSource={bookings} 
+          columns={columns} 
+          size="middle"
+          rowKey={(record) => record._id}
+        />
       </Content>
     </>
   )
