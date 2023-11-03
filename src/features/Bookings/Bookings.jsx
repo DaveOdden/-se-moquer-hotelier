@@ -61,7 +61,7 @@ export default function Bookings() {
   return (
     <>
       <Header style={headerStyle}>
-        <SubHeaderComponent feature="bookings" recordCount={0} newRecordBtn={true}>
+        <SubHeaderComponent feature="Bookings" recordCount={0} newRecordBtn={true}>
           <NewBookingForm />
         </SubHeaderComponent>
       </Header>
