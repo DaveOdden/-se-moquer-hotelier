@@ -11,6 +11,7 @@ export default function NewBookingForm(props) {
   const [guestsKeyValueSet, setGuestsForAutoComplete] = useState([]);
   const [guestSearchHasNoMatch, setGuestSearchHasNoMatch] = useState(false);
   const [rooms, setRooms] = useState([]);
+  const [guestSelected, setGuestSelected] = useState(false);
   const [arrayOfDatesRoomIsBooked, setArrayOfDatesRoomIsBooked] = useState([]);
   const [bookingsForSelectedRoom, setBookingsForSelectedRoom] = useState([]);
   const [roomsKeyValueSet, setRoomsForAutoComplete] = useState([]);
@@ -53,23 +54,6 @@ export default function NewBookingForm(props) {
 
   useEffect(() => init, [])
 
-  // const handleGuestSearch = (one, two, three) => {
-  //   console.log(one);
-  //   console.log(two);
-  //   console.log(three);
-  //   console.log(guestsKeyValueSet);
-  // }
-
-  // const filterOption = (inputValue, option) => {
-  //   //console.log(inputValue, option);
-  //   let valueIsPresentInOptions = option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
-  //   console.log('valueIsPresentInOptions: ' + valueIsPresentInOptions)
-  //   console.log(option)
-  //   console.log('')
-  //   setFilteredGuests(option)
-  //   return valueIsPresentInOptions
-  // }
-
   const findDatesToDisable = (current) => {
     let index = arrayOfDatesRoomIsBooked.findIndex(date => date === dayjs(current).format('YYYY-MM-DD'))
     return index > -1 && true
@@ -92,7 +76,16 @@ export default function NewBookingForm(props) {
     } else if(hasMatch && guestSearchHasNoMatch) {
       setGuestSearchHasNoMatch(false)
     }
-  };
+  }
+
+  const onDropdownSelect = () => {
+    setGuestSelected(true)
+  }
+
+  const onCheckoutDateSelection = (val) => {
+    if( val )
+    console.log('onCheckoutDateSelection')
+  }
 
   return (
 
@@ -102,8 +95,11 @@ export default function NewBookingForm(props) {
           options={guestsKeyValueSet}
           filterOption={true}
           onSearch={handleSearch}
-          placeholder="Search Guests"
-        />
+          onSelect={onDropdownSelect}
+          placeholder="Search By Name"
+        >
+          <Input.Search />
+        </AutoComplete>
       </Form.Item>
       { guestSearchHasNoMatch && 
         <Flex align="center" justify="space-between">
@@ -114,6 +110,40 @@ export default function NewBookingForm(props) {
             Create New Guest
           </Button>
         </Flex>
+      }
+      { guestSelected && 
+        <>
+          <Space>
+            <Form.Item name="checkinDate" label="CheckIn Date">
+              <DatePicker 
+                disabledDate={findDatesToDisable}
+              />
+            </Form.Item>
+            <Form.Item name="checkinTime" label="Checkin Time">
+              <TimePicker 
+                use12Hours 
+                minuteStep={15} 
+                defaultValue={dayjs('12:00', 'HH:mm')} 
+                format="h:mm a"
+              />
+            </Form.Item>
+          </Space>
+          <Space>
+            <Form.Item name="checkoutDate" label="Checkout Date">
+              <DatePicker 
+                onChange={onCheckoutDateSelection}
+              />
+            </Form.Item>
+            <Form.Item name="checkoutTime" label="Checkout Time">
+              <TimePicker 
+                use12Hours 
+                minuteStep={15} 
+                defaultValue={dayjs('10:30', 'HH:mm')} 
+                format="h:mm a" 
+              />
+            </Form.Item>
+          </Space>
+        </>
       }
       {/* <Form.Item name="room" label="Room">
         <AutoComplete
