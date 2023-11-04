@@ -40,7 +40,13 @@ export const BookingsAPI = {
       return jsonResponse;
     }
     return response
-  }
+  },
+  getRoomsByAvailability: async (checkinDate, checkoutDate) => {
+    let queryString = checkinDate && checkoutDate ? `?checkin=${checkinDate}&checkout=${checkoutDate}` : '';
+    const response = await fetch(`${url}/getRoomsByAvailability${queryString}`);
+    let jsonResponse = await response.json();
+    return jsonResponse;
+  },
 }
 
 export const BookingsByRoomAPI = {
