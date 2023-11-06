@@ -45,9 +45,35 @@ const columns = [
   },
 ];
 
-export default function Bookings() {
+export default function Bookings(props) {
+  const [messageApi, contextHolder] = message.useMessage();
   const [bookings, setBookings] = useState([]);
   const [isLoading, setLoadingState] = useState(true);
+  const [newBookingFormStatus, setNewBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
+
+  async function createBooking(data) {
+    setNewBookingFormStatus({
+      loading: true, 
+      response: null, 
+      error: null, 
+      pristine: false
+    })
+    console.log(data);
+    BookingsAPI.post(data).then((res) => {
+      console.log(res);
+      setTimeout(() => {
+        message.success("Booking Completed!")
+      },1200)
+      setTimeout(() => {
+        setNewBookingFormStatus({
+          loading: false, 
+          response: true, 
+          error: null, 
+          pristine: false
+        })
+      },1500)
+    })
+  }
 
   const guestBookingData = () => {
     BookingsAPI.get().then((res) => {
@@ -58,11 +84,29 @@ export default function Bookings() {
 
   useEffect(() => guestBookingData, []);
 
+  /*
+
+  setNewGuestFormStatus({
+          loading: false, 
+          response: true, 
+          error: null, 
+          pristine: false
+        })
+
+
+        */
+
   return (
     <>
+      {contextHolder}
       <Header style={headerStyle}>
-        <SubHeaderComponent feature="Bookings" recordCount={0} newRecordBtn={true}>
-          <NewBookingForm />
+        <SubHeaderComponent 
+          feature="Bookings" 
+          recordCount={0} 
+          newRecordBtn={true}
+          formStatus={newBookingFormStatus}
+        >
+          <NewBookingForm submitFn={createBooking} />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
