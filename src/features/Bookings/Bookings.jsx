@@ -69,6 +69,7 @@ export default function Bookings() {
         <Table 
           dataSource={bookings} 
           columns={columns} 
+          loading={isLoading}
           size="middle"
           rowKey={(record) => record._id}
         />
