@@ -2,9 +2,19 @@ const url = 'https://un-moquer-hotelier-api.vercel.app/api';
 const apiPath = "/guests"
 
 export const GuestAPI = {
-  get: async (feature) => {
-    let queryString = feature ? `?for=${feature}` : '';
-    const response = await fetch(`${url}${apiPath}${queryString}`);
+  get: async () => {
+    const response = await fetch(`${url}${apiPath}`);
+    let jsonResponse = await response.json();
+    return jsonResponse;
+  },
+  getOne: async (id) => {
+    let queryString = id ? `?id=${id}` : '';
+    const response = await fetch(`${url}/getOneGuest${queryString}`);
+    let jsonResponse = await response.json();
+    return jsonResponse;
+  },
+  getGuestsForAutocomplete: async () => {
+    const response = await fetch(`${url}/getGuestsForAutocomplete`);
     let jsonResponse = await response.json();
     return jsonResponse;
   },

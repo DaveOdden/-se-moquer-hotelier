@@ -13,11 +13,11 @@ export default function NewBookingForm(props) {
   const carouselRef = useRef()
 
   /* Guest States */
-  const [guests, setGuests] = useState([]); // unused (general store)
+  const [guests, setGuests] = useState([]);
   const [guestsKeyValueSet, setGuestsForAutoComplete] = useState([]);
   const [guestIsLoading, setGuestLoadingState] = useState(true);
   const [guestSearchHasNoMatch, setGuestSearchHasNoMatch] = useState(false);
-  const [guestSelected, setGuestSelected] = useState(false);
+  const [selectedGuest, setSelectedGuest] = useState(false);
   const [showNewGuestForm, toggleNewGuestForm] = useState(false);
 
   /* Date / Time States */
@@ -33,10 +33,12 @@ export default function NewBookingForm(props) {
   const [showRoomSelection, setShowRoomSelection] = useState(false)
   const [selectedRoom, setSelectedRoom] = useState(-1)
 
+  const [confirmationIsLoading, setConfirmationLoading] = useState(false)
+  const [bookingIsSuccess, setBookingIsSuccess] = useState(false)
+
   const getGuestData = () => {
-    GuestAPI.get('keyvaluepair').then((res) => {
-      setGuests(res.message)
-      setGuestsForAutoComplete(res.keyvalpair)
+    GuestAPI.getGuestsForAutocomplete().then((res) => {
+      setGuestsForAutoComplete(res.message)
       setGuestLoadingState(false)
     })
   }
@@ -54,15 +56,18 @@ export default function NewBookingForm(props) {
     }
     if(!hasMatch) {
       setGuestSearchHasNoMatch(true)
-      setGuestSelected(false)
+      setSelectedGuest({})
       setShowRoomSelection(false)
     } else if(hasMatch && guestSearchHasNoMatch) {
       setGuestSearchHasNoMatch(false)
     }
   }
 
-  const onGuestSelection = () => {
-    setGuestSelected(true)
+  const onGuestSelection = (value, data) => {
+    GuestAPI.getOne(data.id).then((res) => {
+      console.log(res.message);
+      setSelectedGuest(res.message)
+    })
   }
 
   const calculateDuration = (checkinDate, checkoutDate) => {
@@ -106,6 +111,30 @@ export default function NewBookingForm(props) {
     setSelectedRoom(val)
   }
 
+  const submitBooking = () => {
+    let data = {
+      guest:selectedGuest._id,
+      room: selectedRoom,
+      checkinDate: checkinDate,
+      checkoutDate: checkoutDate,
+      paid: true,
+      billing: {
+        rate: roomRate,
+        days: durationOfStay,
+        additional: 0,
+      }
+    }
+
+    setConfirmationLoading(true)
+    props.submitFn(data).then(() => {
+      console.log('done')
+      setTimeout(() => {
+        setConfirmationLoading(false)
+        setBookingIsSuccess(true)
+      },1200)
+    })
+  }
+
   useEffect(() => getGuestData, [])
 
   return (
@@ -124,7 +153,7 @@ export default function NewBookingForm(props) {
               </AutoComplete>
             </Form.Item>
             { guestSearchHasNoMatch && <NewGuestPrompt toggleNewGuestForm={toggleNewGuestForm} /> }
-            { guestSelected && 
+            { selectedGuest && 
               <>
                 <Space>
                   <Form.Item name="checkinDate" label="CheckIn Date">
@@ -171,8 +200,6 @@ export default function NewBookingForm(props) {
                     <Form.Item style={{textAlign: 'right', marginBottom: '0'}}>
                       <Button 
                         type="primary" 
-                        key="submit" 
-                        htmlType="submit" 
                         disabled={selectedRoom === -1}
                         onClick={()=>carouselRef.current.goTo(1)}
                       >
@@ -192,7 +219,7 @@ export default function NewBookingForm(props) {
               style={{marginTop: '16px', display: 'flex', justifyContent: 'flex-end'}} 
               column={1}
             >
-              <Descriptions.Item label="Guest Name">{guestSelected.firstName}</Descriptions.Item>
+              <Descriptions.Item label="Guest Name">{selectedGuest.firstName}</Descriptions.Item>
               <Descriptions.Item label="License #">70001011</Descriptions.Item>
               <Descriptions.Item label="Check In">{dayjs(checkinDate).format('dddd - MMMM DD, YYYY')}</Descriptions.Item>
               <Descriptions.Item label="Check Out">{dayjs(checkoutDate).format('dddd - MMMM DD, YYYY')}</Descriptions.Item>
@@ -207,7 +234,7 @@ export default function NewBookingForm(props) {
           </Space>
           <Flex justify="space-between">
             <Button onClick={() => carouselRef.current.goTo(0)}>Back</Button>
-            <Button type="primary">Confirm Booking</Button>
+            <Button type="primary" onClick={submitBooking}>Confirm Booking</Button>
           </Flex>
         </div>
       </Carousel>
