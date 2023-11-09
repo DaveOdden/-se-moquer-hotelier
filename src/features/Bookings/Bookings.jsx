@@ -83,18 +83,7 @@ export default function Bookings(props) {
   }
 
   useEffect(() => guestBookingData, []);
-
-  /*
-
-  setNewGuestFormStatus({
-          loading: false, 
-          response: true, 
-          error: null, 
-          pristine: false
-        })
-
-
-        */
+  useEffect(() => guestBookingData, [newBookingFormStatus]);
 
   return (
     <>
