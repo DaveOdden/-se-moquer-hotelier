@@ -100,7 +100,7 @@ export default function Rooms() {
               <Space.Compact direction="vertical" style={{width: 'calc(100%/26)', marginTop: '1.5rem'}} key={room._id}>
                 <Button 
                   onClick={() => showModal(room)} 
-                  style={{height: '4.5rem', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? 'red' : 'white')}} 
+                  style={{height: '4.5rem', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')}} 
                   block
                 >
                   <Text>{room.roomNum}</Text>
