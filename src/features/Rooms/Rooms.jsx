@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Flex, Typography, Modal, Space, Button, message } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 const { Text } = Typography;
-import SubHeaderComponent from '../components/SubHeaderComponent'
-import { RoomsAPI } from '../api/RoomAPI'
-import { BookingsAPI } from '../api/BookingsAPI'
+import SubHeaderComponent from '../../components/SubHeaderComponent'
+import RoomDetail from './RoomDetail'
+import { RoomsAPI } from '../../api/RoomAPI'
+import { BookingsAPI } from '../../api/BookingsAPI'
 import { MoneyCollectOutlined } from '@ant-design/icons';
 
 const headerStyle = {
@@ -53,18 +54,21 @@ const columns = [
 
 export default function Rooms() {
   const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState({});
   const [bookings, setRoomBookings] = useState([]);
   const [contentIsLoading, setLoadingState] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const roomsPerFloor = 26;
 
-  const showModal = () => {
+  const showModal = (selectedRoom) => {
     setIsModalOpen(true);
+    setSelectedRoom(selectedRoom);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setSelectedRoom({});
   };
 
   const getBookedRooms = () => {
@@ -87,9 +91,7 @@ export default function Rooms() {
     <>
       {contextHolder}
       <Header style={headerStyle}>
-        <SubHeaderComponent feature="rooms" recordCount={0} newRecordBtn={false}>
-          <h1>Body</h1>
-        </SubHeaderComponent>
+        <SubHeaderComponent feature="rooms" recordCount={0} newRecordBtn={false} />
       </Header>
       <Content style={contentStyle}>
         <Flex wrap="wrap">
@@ -97,9 +99,8 @@ export default function Rooms() {
             return (
               <Space.Compact direction="vertical" style={{width: 'calc(100%/26)', marginTop: '1.5rem'}} key={room._id}>
                 <Button 
-                  onClick={showModal} 
-                  style={{height: '4.5rem', borderRadius: 0}} 
-                  disabled={bookings && bookings.includes(room._id)} 
+                  onClick={() => showModal(room)} 
+                  style={{height: '4.5rem', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')}} 
                   block
                 >
                   <Text>{room.roomNum}</Text>
@@ -116,7 +117,7 @@ export default function Rooms() {
         onCancel={handleCancel}
         destroyOnClose={true}
       >
-        <h1>Modal Content</h1>
+        <RoomDetail room={selectedRoom} />
       </Modal>
     </>
   )
