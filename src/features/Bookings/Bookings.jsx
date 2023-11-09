@@ -4,6 +4,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import NewBookingForm from './NewBookingForm'
 import { BookingsAPI } from '../../api/BookingsAPI'
+import BookingDetail from './BookingDetail';
 
 const headerStyle = {
   textAlign: 'center',
@@ -50,6 +51,8 @@ export default function Bookings(props) {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setLoadingState] = useState(true);
   const [newBookingFormStatus, setNewBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
+  const [showBookingDetail, setShowBookingDetail] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
 
   async function createBooking(data) {
     setNewBookingFormStatus({
@@ -58,7 +61,6 @@ export default function Bookings(props) {
       error: null, 
       pristine: false
     })
-    console.log(data);
     BookingsAPI.post(data).then((res) => {
       console.log(res);
       setTimeout(() => {
@@ -80,6 +82,16 @@ export default function Bookings(props) {
       setBookings(res.message);
       setLoadingState(false);
     })
+  }
+
+  const showDetail = (record) => {
+    setShowBookingDetail(true)
+    setSelectedRecord(record)
+  }
+
+  const hideDetail = () => {
+    setShowBookingDetail(false)
+    setSelectedRecord(null)
   }
 
   useEffect(() => guestBookingData, []);
@@ -104,7 +116,23 @@ export default function Bookings(props) {
           columns={columns} 
           loading={isLoading}
           size="middle"
+          pagination={false}
           rowKey={(record) => record._id}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                showDetail(record, rowIndex)
+              }
+            };
+          }}
+          scroll={{
+            y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
+          }}
+        />
+        <BookingDetail 
+          show={showBookingDetail} 
+          data={selectedRecord} 
+          onClose={hideDetail}
         />
       </Content>
     </>
