@@ -23,12 +23,15 @@ This repo is the front-end layer only.
 ## Techniques
 
 - Conditional Rendering
-- `<ErrorBoundary />` to prevent intrusive errors
-- `<Suspense />` to await data
 - isLoading toggle before/after API calls
 - Disabling form fields and buttons during API calls
 - Destructuring
 - React Query
+- Custom Hooks
+- Higher Order Components (HOC)
+- Render Props
+- `<ErrorBoundary />` to prevent intrusive errors
+- `<Suspense />` to await data
 
 ## Component Hierarchy
 

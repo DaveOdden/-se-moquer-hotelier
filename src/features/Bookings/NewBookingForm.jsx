@@ -8,6 +8,11 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 const { Text, Title } = Typography;
 import dayjs from 'dayjs';
 
+const carouselHeightInactive = {
+  height: 0,
+  overflow: 'hidden'
+}
+
 export default function NewBookingForm(props) {
   const roomRate = 140;
   const carouselRef = useRef()
@@ -32,6 +37,8 @@ export default function NewBookingForm(props) {
   const [roomIsLoading, setRoomLoadingState] = useState(true);
   const [showRoomSelection, setShowRoomSelection] = useState(false)
   const [selectedRoom, setSelectedRoom] = useState(-1)
+  
+  const [carouselIndex, setCarouselIndex] = useState(0)
 
   const [confirmationIsLoading, setConfirmationLoading] = useState(false)
   const [bookingIsSuccess, setBookingIsSuccess] = useState(false)
@@ -56,10 +63,11 @@ export default function NewBookingForm(props) {
     }
     if(!hasMatch) {
       setGuestSearchHasNoMatch(true)
-      setSelectedGuest({})
+      setSelectedGuest(false)
       setShowRoomSelection(false)
     } else if(hasMatch && guestSearchHasNoMatch) {
       setGuestSearchHasNoMatch(false)
+      setShowRoomSelection(checkinTime && checkoutTime)
     }
   }
 
@@ -135,107 +143,123 @@ export default function NewBookingForm(props) {
     })
   }
 
+  const onBeforeChangeCarousel = (current, next) => {
+    console.log('onBeforeChangeCarousel');
+    console.log(next);
+    setCarouselIndex(next);
+  }
+
+  const setCarouselSlideHeight = (slideIndex) => {
+    return carouselIndex !== slideIndex ? carouselHeightInactive : {}
+  }
+
   useEffect(() => getGuestData, [])
 
   return (
     <>
-      <Carousel ref={carouselRef}>
+      <Carousel 
+        ref={carouselRef}
+        beforeChange={onBeforeChangeCarousel}>
         <div>
-          <Form id="bookingForm" onFinish={props.submitFn}>
-            <Form.Item name="name" label="Guest" style={{marginTop: '32px'}}>
-              <AutoComplete
-                options={guestsKeyValueSet}
-                filterOption={true}
-                onSearch={onGuestSearch}
-                onSelect={onGuestSelection}
-              >
-                <Input.Search placeholder="Search By Name" />
-              </AutoComplete>
-            </Form.Item>
-            { guestSearchHasNoMatch && <NewGuestPrompt toggleNewGuestForm={toggleNewGuestForm} /> }
-            { selectedGuest && 
-              <>
-                <Space>
-                  <Form.Item name="checkinDate" label="CheckIn Date">
-                    <DatePicker
-                      onChange={onCheckinDateSelection}
-                    />
-                  </Form.Item>
-                  <Form.Item name="checkinTime" label="Checkin Time">
-                    <TimePicker 
-                      use12Hours 
-                      minuteStep={15} 
-                      defaultValue={dayjs('12:00', 'HH:mm')} 
-                      format="h:mm a"
-                      onSelect={(val) => setCheckinTime(val)}
-                    />
-                  </Form.Item>
-                </Space>
-                <Space>
-                  <Form.Item name="checkoutDate" label="Checkout Date">
-                    <DatePicker 
-                      onChange={onCheckoutDateSelection}
-                    />
-                  </Form.Item>
-                  <Form.Item name="checkoutTime" label="Checkout Time">
-                    <TimePicker 
-                      use12Hours 
-                      minuteStep={15} 
-                      defaultValue={dayjs('10:30', 'HH:mm')} 
-                      format="h:mm a"
-                      onSelect={(val) => setCheckoutTime(val)}
-                    />
-                  </Form.Item>
-                </Space> 
-                { showRoomSelection && !roomIsLoading &&
-                  <>
-                    <Form.Item name="rooms" label={`Rooms ${rooms.length ? `(${rooms.length})` : ''}`}>
-                      <AutoComplete
-                        options={rooms}
-                        filterOption={true}
-                        onSelect={onRoomSelection}
-                        onChange={onRoomSelectionChange}
+          <div style={setCarouselSlideHeight(0)}>
+            <Form id="bookingForm" onFinish={props.submitFn}>
+              <Form.Item name="name" label="Guest" style={{marginTop: '32px'}}>
+                <AutoComplete
+                  options={guestsKeyValueSet}
+                  filterOption={true}
+                  onSearch={onGuestSearch}
+                  onSelect={onGuestSelection}
+                >
+                  <Input.Search placeholder="Search By Name" />
+                </AutoComplete>
+              </Form.Item>
+              { guestSearchHasNoMatch && <NewGuestPrompt toggleNewGuestForm={toggleNewGuestForm} /> }
+              { selectedGuest && 
+                <>
+                  <Space>
+                    <Form.Item name="checkinDate" label="CheckIn Date">
+                      <DatePicker
+                        onChange={onCheckinDateSelection}
                       />
                     </Form.Item>
-                    <Form.Item style={{textAlign: 'right', marginBottom: '0'}}>
-                      <Button 
-                        type="primary" 
-                        disabled={selectedRoom === -1}
-                        onClick={()=>carouselRef.current.goTo(1)}
-                      >
-                        Next
-                      </Button>
+                    <Form.Item name="checkinTime" label="Checkin Time">
+                      <TimePicker 
+                        use12Hours 
+                        minuteStep={15} 
+                        defaultValue={dayjs('12:00', 'HH:mm')} 
+                        format="h:mm a"
+                        onSelect={(val) => setCheckinTime(val)}
+                      />
                     </Form.Item>
-                  </>
-                }
-              </>
-            }
-          </Form>
+                  </Space>
+                  <Space>
+                    <Form.Item name="checkoutDate" label="Checkout Date">
+                      <DatePicker 
+                        onChange={onCheckoutDateSelection}
+                      />
+                    </Form.Item>
+                    <Form.Item name="checkoutTime" label="Checkout Time">
+                      <TimePicker 
+                        use12Hours 
+                        minuteStep={15} 
+                        defaultValue={dayjs('10:30', 'HH:mm')} 
+                        format="h:mm a"
+                        onSelect={(val) => setCheckoutTime(val)}
+                      />
+                    </Form.Item>
+                  </Space> 
+                  { showRoomSelection && !roomIsLoading &&
+                    <>
+                      <Form.Item name="rooms" label={`Rooms ${rooms.length ? `(${rooms.length})` : ''}`}>
+                        <AutoComplete
+                          options={rooms}
+                          filterOption={true}
+                          onSelect={onRoomSelection}
+                          onChange={onRoomSelectionChange}
+                        />
+                      </Form.Item>
+                      <Form.Item style={{textAlign: 'right', marginBottom: '0'}}>
+                        <Button 
+                          type="primary" 
+                          disabled={selectedRoom === -1}
+                          onClick={()=>carouselRef.current.goTo(1)}
+                        >
+                          Next
+                        </Button>
+                      </Form.Item>
+                    </>
+                  }
+                </>
+              }
+            </Form>
+          </div>
         </div>
         <div>
-          <Space direction="vertical">
-            <Descriptions 
-              size="small"
-              style={{marginTop: '16px', display: 'flex', justifyContent: 'flex-end'}} 
-              column={1}
-            >
-              <Descriptions.Item label="Guest Name">{selectedGuest.firstName}</Descriptions.Item>
-              <Descriptions.Item label="License #">70001011</Descriptions.Item>
-              <Descriptions.Item label="Check In">{dayjs(checkinDate).format('dddd - MMMM DD, YYYY')}</Descriptions.Item>
-              <Descriptions.Item label="Check Out">{dayjs(checkoutDate).format('dddd - MMMM DD, YYYY')}</Descriptions.Item>
-              <Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
-            </Descriptions>
-            <Divider style={{margin: 0}}/>
+          <div style={setCarouselSlideHeight(1)}>
+            <Space direction="vertical">
+              <Descriptions 
+                size="small"
+                style={{marginTop: '16px', display: 'flex', justifyContent: 'flex-end'}} 
+                column={1}
+              >
+                <Descriptions.Item label="Guest Name">{selectedGuest.firstName}</Descriptions.Item>
+                <Descriptions.Item label="License #">70001011</Descriptions.Item>
+                <Descriptions.Item label="Check In">{dayjs(checkinDate).format('dddd - MMMM DD, YYYY')}</Descriptions.Item>
+                <Descriptions.Item label="Check Out">{dayjs(checkoutDate).format('dddd - MMMM DD, YYYY')}</Descriptions.Item>
+                <Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
+              </Descriptions>
+              <Divider style={{margin: 0}}/>
+              <Flex justify="space-between">
+              <Descriptions column={1}>
+                <Descriptions.Item label="Rate">${roomRate} x {durationOfStay}</Descriptions.Item></Descriptions>
+                <Statistic title="Total" style={{textAlign: 'right', marginBottom: '32px'}} value={`$${roomRate*durationOfStay}`} />
+              </Flex>
+            </Space>
             <Flex justify="space-between">
-            <Descriptions column={1}>
-              <Descriptions.Item label="Rate">${roomRate} x {durationOfStay}</Descriptions.Item></Descriptions>
-              <Statistic title="Total" style={{textAlign: 'right', marginBottom: '32px'}} value={`$${roomRate*durationOfStay}`} />
+              <Button onClick={() => carouselRef.current.goTo(0)}>Back</Button>
+              <Button type="primary" onClick={submitBooking}>Confirm Booking</Button>
             </Flex>
-          </Space>
-          <Flex justify="space-between">
-            <Button onClick={() => carouselRef.current.goTo(0)}>Back</Button>
-            <Button type="primary" onClick={submitBooking}>Confirm Booking</Button>
-          </Flex>
+          </div>
         </div>
       </Carousel>
       { showNewGuestForm && 
