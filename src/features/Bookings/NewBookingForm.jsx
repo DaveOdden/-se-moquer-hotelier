@@ -16,6 +16,7 @@ const carouselHeightInactive = {
 export default function NewBookingForm(props) {
   const roomRate = 140;
   const carouselRef = useRef()
+  const [bookingForm] = Form.useForm();
 
   /* Guest States */
   const [guests, setGuests] = useState([]);
@@ -73,7 +74,6 @@ export default function NewBookingForm(props) {
 
   const onGuestSelection = (value, data) => {
     GuestAPI.getOne(data.id).then((res) => {
-      console.log(res.message);
       setSelectedGuest(res.message)
     })
   }
@@ -135,7 +135,6 @@ export default function NewBookingForm(props) {
 
     setConfirmationLoading(true)
     props.submitFn(data).then(() => {
-      console.log('done')
       setTimeout(() => {
         setConfirmationLoading(false)
         setBookingIsSuccess(true)
@@ -144,8 +143,6 @@ export default function NewBookingForm(props) {
   }
 
   const onBeforeChangeCarousel = (current, next) => {
-    console.log('onBeforeChangeCarousel');
-    console.log(next);
     setCarouselIndex(next);
   }
 
@@ -153,17 +150,53 @@ export default function NewBookingForm(props) {
     return carouselIndex !== slideIndex ? carouselHeightInactive : {}
   }
 
+  const allFieldsComplete = () => {
+    return bookingForm.guest !== '' && 
+           bookingForm.checkinDate && 
+           bookingForm.checkoutDate && 
+           bookingForm.checkinTime && 
+           bookingForm.checkoutTime && 
+           bookingForm.room
+  }
+
+  const nextButtonIsDisabled = () => {
+    if(!allFieldsComplete() || bookingForm.getFieldsError().filter(({ errors }) => errors.length).length > 0) {
+      return false
+    }
+    return true
+  }
+
   useEffect(() => getGuestData, [])
 
   return (
     <>
       <Carousel 
+        dots={false}
         ref={carouselRef}
         beforeChange={onBeforeChangeCarousel}>
         <div>
           <div style={setCarouselSlideHeight(0)}>
-            <Form id="bookingForm" onFinish={props.submitFn}>
-              <Form.Item name="name" label="Guest" style={{marginTop: '32px'}}>
+            <Form 
+              id="bookingForm" 
+              onFinish={props.submitFn}
+              initialValues={{
+                checkinTime: dayjs('12:00', 'HH:mm'),
+                checkoutTime: dayjs('10:30', 'HH:mm'),
+              }}
+              form={bookingForm}
+              validateTrigger="onChange"
+            >
+              <Form.Item 
+                name="guest" 
+                label="Guest" 
+                style={{marginTop: '32px'}}
+                rules={[
+                  {
+                    required: true,
+                    message: 'Select a guest',
+                  },
+                ]}
+              >
                 <AutoComplete
                   options={guestsKeyValueSet}
                   filterOption={true}
@@ -177,32 +210,66 @@ export default function NewBookingForm(props) {
               { selectedGuest && 
                 <>
                   <Space>
-                    <Form.Item name="checkinDate" label="CheckIn Date">
+                    <Form.Item
+                      name="checkinDate"
+                      label="CheckIn Date"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Check-in date is required',
+                        },
+                      ]}
+                    >
                       <DatePicker
                         onChange={onCheckinDateSelection}
                       />
                     </Form.Item>
-                    <Form.Item name="checkinTime" label="Checkin Time">
+                    <Form.Item 
+                      name="checkinTime" 
+                      label="Checkin Time"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Check-in time is required',
+                        },
+                      ]}
+                    >
                       <TimePicker 
                         use12Hours 
                         minuteStep={15} 
-                        defaultValue={dayjs('12:00', 'HH:mm')} 
                         format="h:mm a"
                         onSelect={(val) => setCheckinTime(val)}
                       />
                     </Form.Item>
                   </Space>
                   <Space>
-                    <Form.Item name="checkoutDate" label="Checkout Date">
+                    <Form.Item 
+                      name="checkoutDate" 
+                      label="Checkout Date"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Check-out date is required',
+                        },
+                      ]}
+                    >
                       <DatePicker 
                         onChange={onCheckoutDateSelection}
                       />
                     </Form.Item>
-                    <Form.Item name="checkoutTime" label="Checkout Time">
+                    <Form.Item 
+                      name="checkoutTime" 
+                      label="Checkout Time"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Check-out time is required',
+                        },
+                      ]}
+                    >
                       <TimePicker 
                         use12Hours 
                         minuteStep={15} 
-                        defaultValue={dayjs('10:30', 'HH:mm')} 
                         format="h:mm a"
                         onSelect={(val) => setCheckoutTime(val)}
                       />
@@ -210,7 +277,16 @@ export default function NewBookingForm(props) {
                   </Space> 
                   { showRoomSelection && !roomIsLoading &&
                     <>
-                      <Form.Item name="rooms" label={`Rooms ${rooms.length ? `(${rooms.length})` : ''}`}>
+                      <Form.Item 
+                        name="room" 
+                        label={`Rooms ${rooms.length ? `(${rooms.length})` : ''}`}
+                        rules={[
+                        {
+                          required: true,
+                          message: 'a room is required',
+                        },
+                      ]}
+                      >
                         <AutoComplete
                           options={rooms}
                           filterOption={true}
@@ -218,14 +294,20 @@ export default function NewBookingForm(props) {
                           onChange={onRoomSelectionChange}
                         />
                       </Form.Item>
-                      <Form.Item style={{textAlign: 'right', marginBottom: '0'}}>
-                        <Button 
-                          type="primary" 
-                          disabled={selectedRoom === -1}
-                          onClick={()=>carouselRef.current.goTo(1)}
-                        >
-                          Next
-                        </Button>
+                      <Form.Item shouldUpdate style={{textAlign: 'right', marginBottom: '0'}}>
+                        {(bookingForm) => {
+                          const { guest, checkinDate, checkinTime, checkoutDate, checkoutTime, room } = bookingForm.getFieldsValue();
+                          const formIsComplete = !!guest && !!checkinDate && !!checkinTime && !!checkoutDate && !!checkoutTime && !!room;
+                          return (
+                            <Button 
+                              type="primary" 
+                              disabled={!formIsComplete}
+                              onClick={()=>carouselRef.current.goTo(1)}
+                            >
+                              Next
+                            </Button>
+                          );
+                        }}
                       </Form.Item>
                     </>
                   }

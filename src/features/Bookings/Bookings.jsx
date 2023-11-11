@@ -62,10 +62,9 @@ export default function Bookings(props) {
       pristine: false
     })
     BookingsAPI.post(data).then((res) => {
-      console.log(res);
       setTimeout(() => {
         message.success("Booking Completed!")
-      },1200)
+      },1000)
       setTimeout(() => {
         setNewBookingFormStatus({
           loading: false, 
@@ -73,7 +72,7 @@ export default function Bookings(props) {
           error: null, 
           pristine: false
         })
-      },1500)
+      },1200)
     })
   }
 
