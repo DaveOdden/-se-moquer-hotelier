@@ -7,6 +7,7 @@ import { AutoComplete, Space, Flex, Form, Input, Button, DatePicker, TimePicker,
 import { ArrowLeftOutlined } from '@ant-design/icons';
 const { Text, Title } = Typography;
 import dayjs from 'dayjs';
+import { useGuestAutoCompleteData } from '../../hooks/useGuestAutoCompleteData.js';
 
 const carouselHeightInactive = {
   height: 0,
@@ -16,11 +17,10 @@ const carouselHeightInactive = {
 export default function NewBookingForm(props) {
   const roomRate = 140;
   const carouselRef = useRef()
+  const guestsKeyValueSet = useGuestAutoCompleteData()
   const [bookingForm] = Form.useForm();
 
   /* Guest States */
-  const [guests, setGuests] = useState([]);
-  const [guestsKeyValueSet, setGuestsForAutoComplete] = useState([]);
   const [guestIsLoading, setGuestLoadingState] = useState(true);
   const [guestSearchHasNoMatch, setGuestSearchHasNoMatch] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState(false);
@@ -43,13 +43,6 @@ export default function NewBookingForm(props) {
 
   const [confirmationIsLoading, setConfirmationLoading] = useState(false)
   const [bookingIsSuccess, setBookingIsSuccess] = useState(false)
-
-  const getGuestData = () => {
-    GuestAPI.getGuestsForAutocomplete().then((res) => {
-      setGuestsForAutoComplete(res.message)
-      setGuestLoadingState(false)
-    })
-  }
 
   const onGuestSearch = (query) => {
     let hasMatch = false;
@@ -166,7 +159,6 @@ export default function NewBookingForm(props) {
     return true
   }
 
-  useEffect(() => getGuestData, [])
 
   return (
     <>
