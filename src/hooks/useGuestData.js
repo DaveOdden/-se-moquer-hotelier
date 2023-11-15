@@ -15,3 +15,18 @@ export const useGuestAutoCompleteData = () => {
   return guestsKeyValueSet
 
 }
+
+export const useGuestData = () => {
+  const [guestsKeyValueSet, setGuestsForAutoComplete] = useState([]);
+
+  const getGuestData = () => {
+    GuestAPI.getGuestsForAutocomplete().then((res) => {
+      setGuestsForAutoComplete(res.message)
+    })
+  }
+
+  useEffect(() => getGuestData, [])
+
+  return guestsKeyValueSet
+
+}
