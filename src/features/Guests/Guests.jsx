@@ -3,7 +3,6 @@ import { Table, Layout, message } from 'antd';
 const { Header, Content } = Layout;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import { GuestAPI } from '../../api/GuestAPI'
-import { columnDefinitions } from './guestTableColumns';
 import NewGuestForm from './NewGuestForm';
 import GuestDetail from './GuestDetail';
 
