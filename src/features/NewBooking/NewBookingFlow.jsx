@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { BookingsAPI } from '../../api/BookingsAPI'
 import NewGuestPrompt from './NewGuestPrompt'
 import { NewBookingGuestSelection } from './NewBookingGuestSelection'
 import { NewBookingDateSelection } from './NewBookingDateSelection'
 import { NewBookingRoomSelection } from './NewBookingRoomSelection'
 import BookingConfirmation from './NewBookingConfirmation'
-import { AutoComplete, Space, Flex, Form, Input, Button, DatePicker, TimePicker, Typography, Carousel, Descriptions, Divider, Statistic } from 'antd';
+import { Form, Carousel } from 'antd';
 import dayjs from 'dayjs';
 
 const carouselHeightInactive = {
@@ -18,6 +18,9 @@ export default function NewBookingFlow(props) {
   const roomRate = 140;
   const carouselRef = useRef()
   const [bookingForm] = Form.useForm();
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [confirmationIsLoading, setConfirmationLoading] = useState(false)
+  const [bookingIsSuccess, setBookingIsSuccess] = useState(false)
 
   /* Guest States */
   const [guestIsLoading, setGuestLoadingState] = useState(true);
@@ -36,11 +39,6 @@ export default function NewBookingFlow(props) {
   const [roomIsLoading, setRoomLoadingState] = useState(true);
   const [showRoomSelection, setShowRoomSelection] = useState(false)
   const [selectedRoom, setSelectedRoom] = useState(-1)
-  
-  const [carouselIndex, setCarouselIndex] = useState(0)
-
-  const [confirmationIsLoading, setConfirmationLoading] = useState(false)
-  const [bookingIsSuccess, setBookingIsSuccess] = useState(false)
 
   const calculateDuration = (checkinDate, checkoutDate) => {
     setDurationOfStay(checkoutDate.diff(checkinDate, "days"))
