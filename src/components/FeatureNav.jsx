@@ -5,11 +5,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const items = [
   {
-    label: 'Timeline',
-    key: 'timeline',
-    href: 'timeline',
+    label: 'Overview',
+    key: 'overview',
+    href: 'overview',
     icon: <PartitionOutlined />,
-    disabled: true,
   },
   {
     label: 'Bookings',

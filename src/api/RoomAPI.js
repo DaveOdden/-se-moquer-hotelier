@@ -13,6 +13,11 @@ export const RoomsAPI = {
     let jsonResponse = await response.json();
     return jsonResponse;
   },
+  getCurrentlyOccupiedRooms: async (id) => {
+    const response = await fetch(`${url}/getCurrentlyOccupiedRooms`);
+    let jsonResponse = await response.json();
+    return jsonResponse;
+  },
   post: async (data) => {
     const response = await fetch(`${url}${apiPath}`, {
       method: "POST",

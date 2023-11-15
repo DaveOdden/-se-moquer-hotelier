@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Layout, Space, Form, Input, Button, message } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+import { Table, Layout, message } from 'antd';
+const { Header, Content } = Layout;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import NewBookingContainer from '../NewBooking/Index'
 import { BookingsAPI } from '../../api/BookingsAPI'
@@ -75,8 +75,8 @@ export default function Bookings(props) {
     })
     BookingsAPI.post(data).then((res) => {
       setTimeout(() => {
-        message.success("Booking Confirmed")
-      },1000)
+        message.success("Booking Successful")
+      },700)
       setTimeout(() => {
         setNewBookingFormStatus({
           loading: false, 
@@ -84,7 +84,7 @@ export default function Bookings(props) {
           error: null, 
           pristine: false
         })
-      },1200)
+      },900)
     })
   }
 
@@ -123,8 +123,7 @@ export default function Bookings(props) {
           recordCount={0} 
           newRecordBtn={true}
           formStatus={newBookingFormStatus}
-          search={searchTable}
-        >
+          search={searchTable}>
           <NewBookingContainer submitFn={createBooking} />
         </SubHeaderComponent>
       </Header>
@@ -145,13 +144,11 @@ export default function Bookings(props) {
           }}
           scroll={{
             y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
-          }}
-        />
+          }} />
         <BookingDetail 
           show={showBookingDetail} 
           data={selectedRecord} 
-          onClose={hideDetail}
-        />
+          onClose={hideDetail} />
       </Content>
     </>
   )
