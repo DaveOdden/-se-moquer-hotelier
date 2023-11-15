@@ -1,11 +1,11 @@
 import React, { useState, createContext } from 'react';
-import NewBookingNewGuest from './NewBookingNewGuest'
-import NewBookingCarousel from './NewBookingCarousel'
+import NewGuest from './NewGuestWrapper'
+import NewBookingFlow from './NewBookingFlow'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 
 export const CurrentModalState = createContext(null);
 
-export default function NewBookingForm(props) {
+export default function NewBookingContainer(props) {
   const [currentView, setCurrentView] = useState(null);
   const { submitFn } = props;
 
@@ -15,9 +15,9 @@ export default function NewBookingForm(props) {
         { (() => { 
           switch(currentView) {
             case 'newGuestForm': 
-              return <NewBookingNewGuest />
+              return <NewGuest />
             default:
-              return <NewBookingCarousel submitFn={submitFn} />
+              return <NewBookingFlow submitFn={submitFn} />
           }
         })() }
       </CurrentModalState.Provider>

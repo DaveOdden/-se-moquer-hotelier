@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Layout, Space, Form, Input, Button, message } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
-import NewBookingForm from './NewBookingForm'
+import NewBookingContainer from '../NewBooking/Index'
 import { BookingsAPI } from '../../api/BookingsAPI'
 import BookingDetail from './BookingDetail';
 
@@ -106,7 +106,7 @@ export default function Bookings(props) {
           newRecordBtn={true}
           formStatus={newBookingFormStatus}
         >
-          <NewBookingForm submitFn={createBooking} />
+          <NewBookingContainer submitFn={createBooking} />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
