@@ -10,6 +10,7 @@ const headingStyle = {
 };
 
 export default function SubHeaderComponent(props) {
+  const { feature, recordCount, formStatus, search } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -21,10 +22,10 @@ export default function SubHeaderComponent(props) {
   };
 
   useEffect(() => {
-    if(props.formStatus && props.formStatus.response) {
+    if(formStatus && formStatus.response) {
       setIsModalOpen(false);
     }
-  },[props.formStatus]);
+  },[formStatus]);
 
   return (
     <>
@@ -38,15 +39,16 @@ export default function SubHeaderComponent(props) {
           style={{textTransform: 'capitalize', margin: 0, fontSize: 20}}
         >
           <Space>
-            {props.feature}
-            {props.recordCount > 0 && <Text data-testid="record-count">({props.recordCount})</Text>}
+            {feature}
+            {recordCount > 0 && <Text data-testid="record-count">({recordCount})</Text>}
           </Space>
         </Title>
         <Space align="center">
           <Input 
             addonBefore={<SearchOutlined />} 
             style={{verticalAlign: 'middle',marginTop: -2}} 
-            placeholder="search" 
+            placeholder="search"
+            onChange={(e) => search(e)}
           />
           { props.newRecordBtn ? (
             <Button

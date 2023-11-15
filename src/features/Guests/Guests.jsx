@@ -26,12 +26,78 @@ const contentStyle = {
 
 export default function Guests() {
   const [guests, setGuests] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [contentIsLoading, setLoadingState] = useState(true);
   const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [showGuestDetail, setShowGuestDetail] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [messageApi, contextHolder] = message.useMessage();
+  const [searchValue, setSearchValue] = useState('');
+
+  const columnDefinitions = [
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      width: '200px',
+      key: 'lastName',
+      paddingLeft: '50px',
+      filteredValue: [searchValue],
+      onFilter: (value, record) => {
+        return (
+          String(record.firstName).toLowerCase().includes(value.toLowerCase()) || 
+          String(record.lastName).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.email).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.address.street).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.address.city).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.address.state).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.address.zip).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.licenseNum).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.status).toLowerCase().includes(value.toLowerCase())
+        )
+      }
+    },
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+      key: 'firstName',
+      width: '200px',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+      width: '70px'
+    },
+    {
+      title: 'Street Name',
+      dataIndex: ['address', 'street'],
+      key: 'street',
+      width: '200px',
+    },
+    {
+      title: 'City',
+      dataIndex: ['address', 'city'],
+      key: 'city',
+    },
+    {
+      title: 'State',
+      dataIndex: ['address', 'state'],
+      key: 'state',
+      width: '70px'
+    },
+    {
+      title: 'ZipCode',
+      dataIndex: ['address', 'zip'],
+      key: 'zip',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+  ];
 
   const createGuest = (formData) => {
     setLoadingState(true);
@@ -148,6 +214,7 @@ export default function Guests() {
   const getGuestData = () => {
     GuestAPI.get().then((res) => {
       setGuests(res.message);
+      setTableData(res.message);
       setLoadingState(false);
     })
   }
@@ -162,6 +229,11 @@ export default function Guests() {
     setSelectedRecord(null)
   }
 
+  const searchTable = (e) => {
+    const currentSearch = e.target.value;
+    setSearchValue(currentSearch);
+  }
+
   useEffect(() => getGuestData, []);
   useEffect(() => getGuestData, [newGuestFormStatus, editGuestFormStatus]);
 
@@ -174,13 +246,14 @@ export default function Guests() {
           recordCount={guests.length}
           formStatus={newGuestFormStatus}
           newRecordBtn={true}
+          search={searchTable}
         >
           <NewGuestForm submitFn={createGuest} />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
         <Table 
-          dataSource={guests} 
+          dataSource={tableData} 
           columns={columnDefinitions} 
           size="middle" 
           rowKey={(record) => record._id}

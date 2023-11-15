@@ -23,36 +23,48 @@ const contentStyle = {
   backgroundColor: '#fff',
 };
 
-const columns = [
-  {
-    title: 'Room id.',
-    dataIndex: ['room', '_id'],
-    key: 'room',
-  },
-  {
-    title: 'Guest Name',
-    dataIndex: ['guest', '_id'],
-    key: 'name',
-  },
-  {
-    title: 'Checkin',
-    dataIndex: 'checkinDate',
-    key: 'checkin',
-  },
-  {
-    title: 'Checkout',
-    dataIndex: 'checkoutDate',
-    key: 'checkout',
-  },
-];
-
 export default function Bookings(props) {
   const [messageApi, contextHolder] = message.useMessage();
   const [bookings, setBookings] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [isLoading, setLoadingState] = useState(true);
   const [newBookingFormStatus, setNewBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [showBookingDetail, setShowBookingDetail] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
+
+  const columns = [
+    {
+      title: 'Room id.',
+      dataIndex: ['room', '_id'],
+      key: 'room',
+      filteredValue: [searchValue],
+      onFilter: (value, record) => {
+        return (
+          String(record.room._id).toLowerCase().includes(value.toLowerCase()) || 
+          String(record.guest._id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.checkinDate).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.checkoutDate).toLowerCase().includes(value.toLowerCase())
+        )
+      }
+    },
+    {
+      title: 'Guest Name',
+      dataIndex: ['guest', '_id'],
+      key: 'name',
+    },
+    {
+      title: 'Checkin',
+      dataIndex: 'checkinDate',
+      key: 'checkin',
+    },
+    {
+      title: 'Checkout',
+      dataIndex: 'checkoutDate',
+      key: 'checkout',
+    },
+  ];
+
 
   async function createBooking(data) {
     setNewBookingFormStatus({
@@ -63,7 +75,7 @@ export default function Bookings(props) {
     })
     BookingsAPI.post(data).then((res) => {
       setTimeout(() => {
-        message.success("Booking Completed!")
+        message.success("Booking Confirmed")
       },1000)
       setTimeout(() => {
         setNewBookingFormStatus({
@@ -79,6 +91,7 @@ export default function Bookings(props) {
   const guestBookingData = () => {
     BookingsAPI.get().then((res) => {
       setBookings(res.message);
+      setTableData(res.message);
       setLoadingState(false);
     })
   }
@@ -93,6 +106,11 @@ export default function Bookings(props) {
     setSelectedRecord(null)
   }
 
+  const searchTable = (e) => {
+    const currentSearch = e.target.value;
+    setSearchValue(currentSearch);
+  }
+
   useEffect(() => guestBookingData, []);
   useEffect(() => guestBookingData, [newBookingFormStatus]);
 
@@ -105,13 +123,14 @@ export default function Bookings(props) {
           recordCount={0} 
           newRecordBtn={true}
           formStatus={newBookingFormStatus}
+          search={searchTable}
         >
           <NewBookingContainer submitFn={createBooking} />
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>
         <Table 
-          dataSource={bookings} 
+          dataSource={tableData} 
           columns={columns} 
           loading={isLoading}
           size="middle"
