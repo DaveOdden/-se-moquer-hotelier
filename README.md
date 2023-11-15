@@ -23,8 +23,12 @@ This repo is the front-end layer only.
 ## Techniques
 
 - Conditional Rendering
+- ContextAPI
+  - Used to avoid ugly prop drilling with New Booking modal states
 - isLoading toggle before/after API calls
+  - Indicates to user a process is ocurring and avoids duplicate calls.
 - Disabling form fields and buttons during API calls
+    - Indicates to user a process is ocurring and avoids duplicate calls.
 - Destructuring
 - React Query
 - Custom Hooks

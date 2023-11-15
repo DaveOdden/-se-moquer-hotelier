@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Flex, Button, Typography } from 'antd';
 const { Text } = Typography;
-import { CurrentModalState } from './NewBookingForm';
+import { CurrentModalState } from './Index';
 
 export default function NewGuestPrompt() {
   const { setCurrentView } = useContext(CurrentModalState);
