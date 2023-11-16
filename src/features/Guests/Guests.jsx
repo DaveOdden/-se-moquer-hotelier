@@ -111,7 +111,7 @@ export default function Guests() {
       currentlyAssignedRoom: "",
       status: "good",
       storedCreditCard: {},
-      history: {},
+      history: [],
       signUpDate: new Date(),
     };
     delete preppedFormData.street

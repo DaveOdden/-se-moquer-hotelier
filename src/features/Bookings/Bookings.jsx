@@ -65,7 +65,6 @@ export default function Bookings(props) {
     },
   ];
 
-
   async function createBooking(data) {
     setNewBookingFormStatus({
       loading: true, 
@@ -74,6 +73,7 @@ export default function Bookings(props) {
       pristine: false
     })
     BookingsAPI.post(data).then((res) => {
+      console.log(res);
       setTimeout(() => {
         message.success("Booking Successful")
       },700)
@@ -104,6 +104,32 @@ export default function Bookings(props) {
   const hideDetail = () => {
     setShowBookingDetail(false)
     setSelectedRecord(null)
+  }
+
+  const deleteBooking = (id) => {
+    BookingsAPI.delete(id).then((res) => {
+      console.log(res);
+      if(res.success) {
+        messageApi.success('Success. Booking deleted');
+        setTimeout( () => {
+          setNewBookingFormStatus({
+            loading: false, 
+            response: true, 
+            error: null, 
+            pristine: false
+          })
+        }, 1200)
+        setTimeout( hideDetail, 800)
+      } else {
+        messageApi.error('Error. Something screwed up...');
+        setNewBookingFormStatus({
+          loading: null, 
+          response: null, 
+          error: true, 
+          pristine: false
+        })
+      }
+    })
   }
 
   const searchTable = (e) => {
@@ -147,7 +173,8 @@ export default function Bookings(props) {
           }} />
         <BookingDetail 
           show={showBookingDetail} 
-          data={selectedRecord} 
+          data={selectedRecord}
+          deleteBooking={deleteBooking} 
           onClose={hideDetail} />
       </Content>
     </>

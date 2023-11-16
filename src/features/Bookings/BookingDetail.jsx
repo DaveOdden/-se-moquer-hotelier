@@ -32,7 +32,7 @@ export default function BookingDetail(props) {
         <DeleteOutlined />
       ),
       danger: true,
-      onClick: () => props.deleteGuest(props.data._id)
+      onClick: () => props.deleteBooking(props.data._id)
     },
   ]
   
@@ -72,13 +72,6 @@ export default function BookingDetail(props) {
   useEffect(() => {
     setOpenState(props.show)
   }, [props.show]);
-
-  // useEffect(() => {
-  //   setEditGuestFormStatus(props.editGuestFormStatus)
-  //   if(props.editGuestFormStatus.response == true ){
-  //     setEditState(false)
-  //   }
-  // }, [props.editGuestFormStatus]);
 
   return (
     <>
