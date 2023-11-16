@@ -64,16 +64,16 @@ export default function Guests() {
       width: '200px',
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      width: '70px'
+      title: 'Date of Birth',
+      dataIndex: 'dob',
+      key: 'dob',
+      width: '170px'
     },
     {
       title: 'Street Name',
       dataIndex: ['address', 'street'],
       key: 'street',
-      width: '200px',
+      width: '230px',
     },
     {
       title: 'City',
@@ -100,6 +100,7 @@ export default function Guests() {
 
   const createGuest = (formData) => {
     setLoadingState(true);
+    console.log(formData);
     let preppedFormData = {
       ...formData,
       address: {
@@ -118,6 +119,7 @@ export default function Guests() {
     delete preppedFormData.city
     delete preppedFormData.state
     delete preppedFormData.zip
+    console.log(preppedFormData);
 
     setNewGuestFormStatus({
       loading: true, 

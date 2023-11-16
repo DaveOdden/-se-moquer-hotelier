@@ -15,21 +15,21 @@ export default function NewGuestForm(props) {
       <Form.Item name="phone" label="Phone">
         <Input placeholder="Phone"/>
       </Form.Item>
-      <Form.Item name="age" label="Age">
-        <Input placeholder="Age"/>
+      <Form.Item name="dob" label="Date of Birth">
+        <Input placeholder="YYYY-MM-DD"/>
       </Form.Item>
-      <Form.Item label="Street Address">
+      <Form.Item name="street" label="Street Address">
         <Input placeholder="Street Address"/>
       </Form.Item>
 
       <Space>
-        <Form.Item label="City">
+        <Form.Item name="city" label="City">
           <Input placeholder="City"/>
         </Form.Item>
-        <Form.Item label="State">
+        <Form.Item name="state" label="State">
           <Input placeholder="State"/>
         </Form.Item>
-        <Form.Item label="Zip Code">
+        <Form.Item name="zip" label="Zip Code">
           <Input placeholder="Zip Code"/>
         </Form.Item>
       </Space>
