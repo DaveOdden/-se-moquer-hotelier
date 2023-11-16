@@ -1,6 +1,6 @@
 import { Space, Form, Input, Button } from 'antd';
 
-export default function NewGuestForm(props) {
+export const NewGuestForm = (props) => {
   return (
     <Form id="guestsForm" onFinish={props.submitFn}>
       <Form.Item name="firstName" label="First Name" preserve={false}>

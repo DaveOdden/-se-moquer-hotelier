@@ -1,11 +1,11 @@
 import React, { useState, createContext } from 'react';
-import NewGuest from './NewGuestWrapper'
-import NewBookingFlow from './NewBookingFlow'
+import { NewGuest } from './NewGuestWrapper'
+import { NewBookingFlow } from './NewBookingFlow'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 
 export const CurrentModalState = createContext(null);
 
-export default function NewBookingContainer(props) {
+export const NewBookingContainer = (props) => {
   const [currentView, setCurrentView] = useState(null);
   const { submitFn } = props;
 

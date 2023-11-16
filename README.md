@@ -22,6 +22,8 @@ This repo is the front-end layer only.
 
 ## Techniques
 
+- All function-based components (no class based)
+  - Functional components have a simpler syntax, no lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
 - Conditional Rendering
 - ContextAPI
   - Used to avoid ugly prop drilling with New Booking modal states
@@ -29,13 +31,12 @@ This repo is the front-end layer only.
   - Indicates to user a process is occurring and avoids duplicate calls.
 - Disabling form fields and buttons during API calls
     - Indicates to user a process is occurring and avoids duplicate calls.
+- Spread Syntax
 - Destructuring
-- React Query
+- Smart parent / dumb children pattern
 - Custom Hooks
-- Higher Order Components (HOC)
-- Render Props
+  - Only use Higher Order Components (HOC) or Render Props when absolutely necessary.
 - `<ErrorBoundary />` to prevent intrusive errors
-- `<Suspense />` to await data
 
 ## Component Hierarchy
 

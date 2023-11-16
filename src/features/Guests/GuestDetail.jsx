@@ -3,7 +3,7 @@ import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
 import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons';
 import EditGuestForm from "./EditGuestForm"
 
-export default function GuestDetail(props) {
+export const GuestDetail = (props) => {
   const [isOpen, setOpenState] = useState(false);
   const [isEditing, setEditState] = useState(false);
   const [descriptionContent, setDescriptionContent] = useState(null);

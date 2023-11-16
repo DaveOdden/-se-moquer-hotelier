@@ -14,7 +14,7 @@ const carouselHeightInactive = {
   overflow: 'hidden'
 }
 
-export default function NewBookingFlow(props) {
+export const NewBookingFlow = (props) => {
   const roomRate = 140;
   const carouselRef = useRef()
   const [bookingForm] = Form.useForm();

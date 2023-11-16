@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
 import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons';
 
-export default function BookingDetail(props) {
+export const BookingDetail = (props) => {
   const [isOpen, setOpenState] = useState(false);
   const [isEditing, setEditState] = useState(false);
   const [descriptionContent, setDescriptionContent] = useState(null);
