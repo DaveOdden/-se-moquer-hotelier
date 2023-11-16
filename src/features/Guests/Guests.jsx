@@ -245,8 +245,7 @@ export default function Guests() {
           recordCount={guests.length}
           formStatus={newGuestFormStatus}
           newRecordBtn={true}
-          search={searchTable}
-        >
+          search={searchTable} >
           <NewGuestForm submitFn={createGuest} />
         </SubHeaderComponent>
       </Header>
@@ -267,16 +266,14 @@ export default function Guests() {
           }}
           scroll={{
             y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
-          }}
-        />
+          }} />
         <GuestDetail 
           show={showGuestDetail} 
           data={selectedRecord} 
           onClose={hideDetail}
           updateGuest={updateGuest} 
           deleteGuest={deleteGuest} 
-          editGuestFormStatus={editGuestFormStatus}
-        />
+          editGuestFormStatus={editGuestFormStatus} />
       </Content>
     </>
   )

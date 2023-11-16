@@ -73,18 +73,27 @@ export default function Bookings(props) {
       pristine: false
     })
     BookingsAPI.post(data).then((res) => {
-      console.log(res);
-      setTimeout(() => {
-        message.success("Booking Successful")
-      },700)
-      setTimeout(() => {
+      if(res.success) {
+        setTimeout(() => {
+          message.success("Booking Successful")
+        },700)
+        setTimeout(() => {
+          setNewBookingFormStatus({
+            loading: false, 
+            response: true, 
+            error: null, 
+            pristine: false
+          })
+        },900)
+      } else {
+        messageApi.error('Error. Something screwed up...');
         setNewBookingFormStatus({
-          loading: false, 
-          response: true, 
-          error: null, 
+          loading: null, 
+          response: null, 
+          error: true, 
           pristine: false
         })
-      },900)
+      }
     })
   }
 
@@ -108,7 +117,6 @@ export default function Bookings(props) {
 
   const deleteBooking = (id) => {
     BookingsAPI.delete(id).then((res) => {
-      console.log(res);
       if(res.success) {
         messageApi.success('Success. Booking deleted');
         setTimeout( () => {
