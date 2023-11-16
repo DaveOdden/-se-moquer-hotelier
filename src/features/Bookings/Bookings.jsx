@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Table } from 'antd'
-import { BookingsAPI } from '../../api/BookingsAPI'
+import { BookingsAPI } from 'src/api/BookingsAPI'
+import { useGuestData } from 'src/hooks/useGuests'
+import { useBookings } from 'src/hooks/useBookings'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import BookingDetail from './BookingDetail'
-import { useGuestData } from '../../hooks/useGuests'
-import { useBookings } from '../../hooks/useBookings'
+import { BookingsTable } from './BookingsTable'
 import NewBookingContainer from '../NewBooking/Index'
 
 export default function Bookings(props) {
@@ -16,38 +16,6 @@ export default function Bookings(props) {
   const [searchValue, setSearchValue] = useState('');
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
-  const columns = [
-    {
-      title: 'Room id.',
-      dataIndex: ['room', '_id'],
-      key: 'room',
-      filteredValue: [searchValue],
-      onFilter: (value, record) => {
-        return (
-          String(record.room._id).toLowerCase().includes(value.toLowerCase()) || 
-          String(record.guest._id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.checkinDate).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.checkoutDate).toLowerCase().includes(value.toLowerCase())
-        )
-      }
-    },
-    {
-      title: 'Guest Name',
-      dataIndex: ['guest', '_id'],
-      key: 'name',
-    },
-    {
-      title: 'Checkin',
-      dataIndex: 'checkinDate',
-      key: 'checkin',
-    },
-    {
-      title: 'Checkout',
-      dataIndex: 'checkoutDate',
-      key: 'checkout',
-    },
-  ];
-
   async function createBooking(data) {
     setNewBookingFormStatus({
       loading: true, 
@@ -58,7 +26,6 @@ export default function Bookings(props) {
     BookingsAPI.post(data).then((res) => {
       if(res.success) {
         setTimeout(() => {
-          //message.success("Booking Successful")
           setToastNotification({
             message: "Booking Successful",
             type: 'success'
@@ -73,7 +40,6 @@ export default function Bookings(props) {
           })
         },900)
       } else {
-        //messageApi.error('Error. Something screwed up...');
         setToastNotification({
           message: "Error. Something screwed up...",
           type: 'error'
@@ -141,23 +107,11 @@ export default function Bookings(props) {
       }}
       newRecordComponent={<NewBookingContainer submitFn={createBooking} />}
       toastNotification={toastNotification}>
-      <Table 
-        dataSource={bookings.records} 
-        columns={columns} 
-        loading={bookings.isLoading}
-        size="middle"
-        pagination={false}
-        rowKey={(record) => record._id}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              showDetail(record, rowIndex)
-            }
-          };
-        }}
-        scroll={{
-          y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
-        }} />
+      <BookingsTable 
+        isLoading={bookings.isLoading}
+        tableData={bookings.records}
+        onRowClick={showDetail} 
+        searchTerms={searchValue} />
       <BookingDetail 
         show={showBookingDetail} 
         data={selectedRecord}
