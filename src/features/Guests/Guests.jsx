@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { GuestAPI } from 'src/api/GuestAPI'
 import { useGuestData } from 'src/hooks/useGuests'
-import NewGuestForm from './NewGuestForm'
+import { NewGuestForm } from './NewGuestForm'
 import { GuestTable } from './GuestTable'
-import GuestDetail from './GuestDetail'
+import { GuestDetail } from './GuestDetail'
 
 export default function Guests() {
   const guests = useGuestData();
-
   const [contentIsLoading, setLoadingState] = useState(true);
   const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});

@@ -3,9 +3,9 @@ import { BookingsAPI } from 'src/api/BookingsAPI'
 import { useGuestData } from 'src/hooks/useGuests'
 import { useBookings } from 'src/hooks/useBookings'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
-import BookingDetail from './BookingDetail'
+import { BookingDetail } from './BookingDetail'
 import { BookingsTable } from './BookingsTable'
-import NewBookingContainer from '../NewBooking/Index'
+import { NewBookingContainer } from '../NewBooking/Index'
 
 export default function Bookings(props) {
   const guests = useGuestData();

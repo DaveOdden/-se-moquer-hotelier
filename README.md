@@ -31,6 +31,7 @@ This repo is the front-end layer only.
   - Indicates to user a process is occurring and avoids duplicate calls.
 - Disabling form fields and buttons during API calls
     - Indicates to user a process is occurring and avoids duplicate calls.
+- Spread Syntax
 - Destructuring
 - Smart parent / dumb children pattern
 - Custom Hooks
