@@ -3,7 +3,7 @@ import { Table } from 'antd'
 import { BookingsAPI } from '../../api/BookingsAPI'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import BookingDetail from './BookingDetail'
-import { useGuestData } from '../../hooks/useGuestData'
+import { useGuestData } from '../../hooks/useGuests'
 import { useBookings } from '../../hooks/useBookings'
 import NewBookingContainer from '../NewBooking/Index'
 
@@ -139,7 +139,7 @@ export default function Bookings(props) {
         formStatus: newBookingFormStatus,
         search: searchTable
       }}
-      modalComponent={<NewBookingContainer submitFn={createBooking} />}
+      newRecordComponent={<NewBookingContainer submitFn={createBooking} />}
       toastNotification={toastNotification}>
       <Table 
         dataSource={bookings.records} 

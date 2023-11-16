@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Layout, message } from 'antd'
 const { Header, Content } = Layout
 import SubHeaderComponent from 'src/components/SubHeaderComponent'
@@ -21,7 +21,7 @@ const contentStyle = {
 };
 
 export const FeatureWrapper = (props) => {
-  const { subHeaderProps, modalComponent, toastNotification } = props
+  const { subHeaderProps, newRecordComponent, toastNotification } = props
   const [messageApi, contextHolder] = message.useMessage();
 
   const showMessage = () => {
@@ -35,7 +35,7 @@ export const FeatureWrapper = (props) => {
       {contextHolder}
       <Header style={headerStyle}>
         <SubHeaderComponent {...subHeaderProps}>
-          {modalComponent}
+          {newRecordComponent}
         </SubHeaderComponent>
       </Header>
       <Content style={contentStyle}>

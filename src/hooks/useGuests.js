@@ -17,16 +17,20 @@ export const useGuestAutoCompleteData = () => {
 }
 
 export const useGuestData = () => {
-  const [guests, setGuests] = useState([]);
+  const [records, setRecords] = useState([]);
+  const [isLoading, toggleLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const getGuestData = () => {
+  const getGuests = () => {
+    toggleLoading(true)
     GuestAPI.get().then((res) => {
-      setGuests(res.message)
+      setRecords(res.message)
+      toggleLoading(false)
     })
   }
 
-  useEffect(() => getGuestData, [])
+  useEffect(() => getGuests, [])
 
-  return guests
+  return { records, isLoading, error, getGuests }
 
 }

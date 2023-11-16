@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import React, { useState, useEffect } from 'react'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { GuestAPI } from 'src/api/GuestAPI'
-import NewGuestForm from './NewGuestForm';
-import GuestDetail from './GuestDetail';
+import { useGuestData } from 'src/hooks/useGuests'
+import NewGuestForm from './NewGuestForm'
+import { GuestTable } from './GuestTable'
+import GuestDetail from './GuestDetail'
 
 export default function Guests() {
-  const [guests, setGuests] = useState([]);
-  const [tableData, setTableData] = useState([]);
+  const guests = useGuestData();
+
   const [contentIsLoading, setLoadingState] = useState(true);
   const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
@@ -15,70 +16,6 @@ export default function Guests() {
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
-
-  const columnDefinitions = [
-    {
-      title: 'Last Name',
-      dataIndex: 'lastName',
-      width: '200px',
-      key: 'lastName',
-      paddingLeft: '50px',
-      filteredValue: [searchValue],
-      onFilter: (value, record) => {
-        return (
-          String(record.firstName).toLowerCase().includes(value.toLowerCase()) || 
-          String(record.lastName).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.email).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.address.street).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.address.city).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.address.state).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.address.zip).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.licenseNum).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.status).toLowerCase().includes(value.toLowerCase())
-        )
-      }
-    },
-    {
-      title: 'First Name',
-      dataIndex: 'firstName',
-      key: 'firstName',
-      width: '200px',
-    },
-    {
-      title: 'Date of Birth',
-      dataIndex: 'dob',
-      key: 'dob',
-      width: '170px'
-    },
-    {
-      title: 'Street Name',
-      dataIndex: ['address', 'street'],
-      key: 'street',
-      width: '230px',
-    },
-    {
-      title: 'City',
-      dataIndex: ['address', 'city'],
-      key: 'city',
-    },
-    {
-      title: 'State',
-      dataIndex: ['address', 'state'],
-      key: 'state',
-      width: '70px'
-    },
-    {
-      title: 'ZipCode',
-      dataIndex: ['address', 'zip'],
-      key: 'zip',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-    },
-  ];
 
   const createGuest = (formData) => {
     setLoadingState(true);
@@ -204,14 +141,6 @@ export default function Guests() {
     })
   }
 
-  const getGuestData = () => {
-    GuestAPI.get().then((res) => {
-      setGuests(res.message);
-      setTableData(res.message);
-      setLoadingState(false);
-    })
-  }
-
   const showDetail = (record) => {
     setShowGuestDetail(true)
     setSelectedRecord(record)
@@ -227,8 +156,7 @@ export default function Guests() {
     setSearchValue(currentSearch);
   }
 
-  useEffect(() => getGuestData, []);
-  useEffect(() => getGuestData, [newGuestFormStatus, editGuestFormStatus]);
+  useEffect(() => guests.getGuests(), [newGuestFormStatus, editGuestFormStatus]);
 
   return (
     <FeatureWrapper
@@ -239,32 +167,20 @@ export default function Guests() {
         formStatus: newGuestFormStatus,
         search: searchTable
       }}
-      modalComponent={<NewGuestForm submitFn={createGuest} />}
+      newRecordComponent={<NewGuestForm submitFn={createGuest} />}
       toastNotification={toastNotification}>
-        <Table 
-          dataSource={tableData} 
-          columns={columnDefinitions} 
-          size="middle" 
-          rowKey={(record) => record._id}
-          loading={contentIsLoading}
-          pagination={false}
-          onRow={(record, rowIndex) => {
-            return {
-              onClick: (event) => {
-                showDetail(record, rowIndex)
-              }
-            };
-          }}
-          scroll={{
-            y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
-          }} />
-        <GuestDetail 
-          show={showGuestDetail} 
-          data={selectedRecord} 
-          onClose={hideDetail}
-          updateGuest={updateGuest} 
-          deleteGuest={deleteGuest} 
-          editGuestFormStatus={editGuestFormStatus} />
+      <GuestTable 
+        isLoading={guests.isLoading}
+        tableData={guests.records}
+        onRowClick={showDetail} 
+        searchTerms={searchValue} />
+      <GuestDetail 
+        show={showGuestDetail} 
+        data={selectedRecord} 
+        onClose={hideDetail}
+        updateGuest={updateGuest} 
+        deleteGuest={deleteGuest} 
+        editGuestFormStatus={editGuestFormStatus} />
     </FeatureWrapper>
   )
 }
