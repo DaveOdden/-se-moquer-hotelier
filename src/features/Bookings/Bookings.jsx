@@ -1,37 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Layout, message } from 'antd';
-const { Header, Content } = Layout;
-import SubHeaderComponent from '../../components/SubHeaderComponent'
-import NewBookingContainer from '../NewBooking/Index'
+import React, { useState, useEffect } from 'react'
+import { Table } from 'antd'
 import { BookingsAPI } from '../../api/BookingsAPI'
-import BookingDetail from './BookingDetail';
-
-const headerStyle = {
-  textAlign: 'center',
-  color: '#333',
-  height: 64,
-  paddingInline: 16,
-  lineHeight: '64px',
-  backgroundColor: '#fff',
-  borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
-};
-
-const contentStyle = {
-  textAlign: 'center',
-  height: 'calc(100vh - 128px)',
-  color: '#333',
-  backgroundColor: '#fff',
-};
+import { FeatureWrapper } from 'src/components/FeatureWrapper'
+import BookingDetail from './BookingDetail'
+import { useGuestData } from '../../hooks/useGuestData'
+import { useBookings } from '../../hooks/useBookings'
+import NewBookingContainer from '../NewBooking/Index'
 
 export default function Bookings(props) {
-  const [messageApi, contextHolder] = message.useMessage();
-  const [bookings, setBookings] = useState([]);
-  const [tableData, setTableData] = useState([]);
-  const [isLoading, setLoadingState] = useState(true);
+  const guests = useGuestData();
+  const bookings = useBookings();
   const [newBookingFormStatus, setNewBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [showBookingDetail, setShowBookingDetail] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [searchValue, setSearchValue] = useState('');
+  const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
   const columns = [
     {
@@ -75,7 +58,11 @@ export default function Bookings(props) {
     BookingsAPI.post(data).then((res) => {
       if(res.success) {
         setTimeout(() => {
-          message.success("Booking Successful")
+          //message.success("Booking Successful")
+          setToastNotification({
+            message: "Booking Successful",
+            type: 'success'
+          })
         },700)
         setTimeout(() => {
           setNewBookingFormStatus({
@@ -86,7 +73,11 @@ export default function Bookings(props) {
           })
         },900)
       } else {
-        messageApi.error('Error. Something screwed up...');
+        //messageApi.error('Error. Something screwed up...');
+        setToastNotification({
+          message: "Error. Something screwed up...",
+          type: 'error'
+        })
         setNewBookingFormStatus({
           loading: null, 
           response: null, 
@@ -94,14 +85,6 @@ export default function Bookings(props) {
           pristine: false
         })
       }
-    })
-  }
-
-  const guestBookingData = () => {
-    BookingsAPI.get().then((res) => {
-      setBookings(res.message);
-      setTableData(res.message);
-      setLoadingState(false);
     })
   }
 
@@ -145,46 +128,41 @@ export default function Bookings(props) {
     setSearchValue(currentSearch);
   }
 
-  useEffect(() => guestBookingData, []);
-  useEffect(() => guestBookingData, [newBookingFormStatus]);
+  useEffect(() => bookings.getBookings(), [newBookingFormStatus]);
 
   return (
-    <>
-      {contextHolder}
-      <Header style={headerStyle}>
-        <SubHeaderComponent 
-          feature="Bookings" 
-          recordCount={0} 
-          newRecordBtn={true}
-          formStatus={newBookingFormStatus}
-          search={searchTable}>
-          <NewBookingContainer submitFn={createBooking} />
-        </SubHeaderComponent>
-      </Header>
-      <Content style={contentStyle}>
-        <Table 
-          dataSource={tableData} 
-          columns={columns} 
-          loading={isLoading}
-          size="middle"
-          pagination={false}
-          rowKey={(record) => record._id}
-          onRow={(record, rowIndex) => {
-            return {
-              onClick: (event) => {
-                showDetail(record, rowIndex)
-              }
-            };
-          }}
-          scroll={{
-            y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
-          }} />
-        <BookingDetail 
-          show={showBookingDetail} 
-          data={selectedRecord}
-          deleteBooking={deleteBooking} 
-          onClose={hideDetail} />
-      </Content>
-    </>
+    <FeatureWrapper
+      subHeaderProps={{
+        feature: "Bookings", 
+        recordCount: 0,
+        newRecordBtn: true,
+        formStatus: newBookingFormStatus,
+        search: searchTable
+      }}
+      modalComponent={<NewBookingContainer submitFn={createBooking} />}
+      toastNotification={toastNotification}>
+      <Table 
+        dataSource={bookings.records} 
+        columns={columns} 
+        loading={bookings.isLoading}
+        size="middle"
+        pagination={false}
+        rowKey={(record) => record._id}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              showDetail(record, rowIndex)
+            }
+          };
+        }}
+        scroll={{
+          y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
+        }} />
+      <BookingDetail 
+        show={showBookingDetail} 
+        data={selectedRecord}
+        deleteBooking={deleteBooking} 
+        onClose={hideDetail} />
+    </FeatureWrapper>
   )
 }

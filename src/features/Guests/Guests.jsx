@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Layout, message } from 'antd';
-const { Header, Content } = Layout;
-import SubHeaderComponent from '../../components/SubHeaderComponent'
-import { GuestAPI } from '../../api/GuestAPI'
+import { Table } from 'antd';
+import { FeatureWrapper } from 'src/components/FeatureWrapper'
+import { GuestAPI } from 'src/api/GuestAPI'
 import NewGuestForm from './NewGuestForm';
 import GuestDetail from './GuestDetail';
-
-const headerStyle = {
-  textAlign: 'center',
-  color: '#333',
-  height: 64,
-  paddingInline: 16,
-  lineHeight: '64px',
-  backgroundColor: '#fff',
-  borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
-};
-
-const contentStyle = {
-  color: '#333',
-  textAlign: 'center',
-  backgroundColor: '#fff',
-  height: 'calc(100vh - 194px)'
-};
 
 export default function Guests() {
   const [guests, setGuests] = useState([]);
@@ -31,8 +13,8 @@ export default function Guests() {
   const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [showGuestDetail, setShowGuestDetail] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const [messageApi, contextHolder] = message.useMessage();
   const [searchValue, setSearchValue] = useState('');
+  const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
   const columnDefinitions = [
     {
@@ -100,7 +82,6 @@ export default function Guests() {
 
   const createGuest = (formData) => {
     setLoadingState(true);
-    console.log(formData);
     let preppedFormData = {
       ...formData,
       address: {
@@ -119,7 +100,6 @@ export default function Guests() {
     delete preppedFormData.city
     delete preppedFormData.state
     delete preppedFormData.zip
-    console.log(preppedFormData);
 
     setNewGuestFormStatus({
       loading: true, 
@@ -137,7 +117,10 @@ export default function Guests() {
           error: null, 
           pristine: false
         })
-        messageApi.success('Success. Guest Added');
+        setToastNotification({
+          message: 'Success. Guest Added',
+          type: 'success'
+        })
       } else {
         setNewGuestFormStatus({
           loading: false, 
@@ -145,7 +128,10 @@ export default function Guests() {
           error: true, 
           pristine: false
         })
-        messageApi.error('Error. Something screwed up...');
+        setToastNotification({
+          message: 'Error. Something screwed up...',
+          type: 'error'
+        })
       }
     })
   }
@@ -165,7 +151,10 @@ export default function Guests() {
 
     GuestAPI.update(id, preppedFormData).then((res) => {
       if(res.success) {
-        messageApi.success('Success. Guest updated');
+        setToastNotification({
+          message: 'Success. Guest updated',
+          type: 'success'
+        })
         setTimeout( () => {
           setEditGuestFormStatus({
             loading: false, 
@@ -176,7 +165,10 @@ export default function Guests() {
         }, 1200)
         setTimeout( hideDetail, 800)
       } else {
-        messageApi.error('Error. Something screwed up...');
+        setToastNotification({
+          message: 'Error. Something screwed up...',
+          type: 'error'
+        })
         setEditGuestFormStatus({
           loading: false, 
           response: null, 
@@ -239,19 +231,16 @@ export default function Guests() {
   useEffect(() => getGuestData, [newGuestFormStatus, editGuestFormStatus]);
 
   return (
-    <>
-      <Header style={headerStyle}>
-        {contextHolder}
-        <SubHeaderComponent 
-          feature="guests" 
-          recordCount={guests.length}
-          formStatus={newGuestFormStatus}
-          newRecordBtn={true}
-          search={searchTable} >
-          <NewGuestForm submitFn={createGuest} />
-        </SubHeaderComponent>
-      </Header>
-      <Content style={contentStyle}>
+    <FeatureWrapper
+      subHeaderProps={{
+        feature: "Guests", 
+        recordCount: guests.length,
+        newRecordBtn: true,
+        formStatus: newGuestFormStatus,
+        search: searchTable
+      }}
+      modalComponent={<NewGuestForm submitFn={createGuest} />}
+      toastNotification={toastNotification}>
         <Table 
           dataSource={tableData} 
           columns={columnDefinitions} 
@@ -276,7 +265,6 @@ export default function Guests() {
           updateGuest={updateGuest} 
           deleteGuest={deleteGuest} 
           editGuestFormStatus={editGuestFormStatus} />
-      </Content>
-    </>
+    </FeatureWrapper>
   )
 }

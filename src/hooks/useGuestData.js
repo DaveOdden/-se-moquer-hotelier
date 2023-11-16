@@ -17,16 +17,16 @@ export const useGuestAutoCompleteData = () => {
 }
 
 export const useGuestData = () => {
-  const [guestsKeyValueSet, setGuestsForAutoComplete] = useState([]);
+  const [guests, setGuests] = useState([]);
 
   const getGuestData = () => {
-    GuestAPI.getGuestsForAutocomplete().then((res) => {
-      setGuestsForAutoComplete(res.message)
+    GuestAPI.get().then((res) => {
+      setGuests(res.message)
     })
   }
 
   useEffect(() => getGuestData, [])
 
-  return guestsKeyValueSet
+  return guests
 
 }
