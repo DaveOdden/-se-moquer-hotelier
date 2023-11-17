@@ -29,18 +29,20 @@ This repo is the front-end layer only.
 - All function-based components (no class based)
   - Functional components have a simpler syntax, no lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
 - Conditional Rendering
+  - e.g. (`{ dataIsAvailable && <ComponentToShow /> }`)
 - ContextAPI
   - Used to avoid ugly prop drilling with New Booking modal states
-- isLoading toggle before/after API calls
-  - Indicates to user a process is occurring and avoids duplicate calls.
-- Disabling form fields and buttons during API calls
-    - Indicates to user a process is occurring and avoids duplicate calls.
+- Loading State Pattern
+  - Toggle `isLoading` state variables during processes.
+  - Disable form fields and buttons during API calls to avoid duplicate calls.
+- Absolute Dependency Paths
 - Spread Syntax
 - Destructuring
-- Smart parent / dumb children pattern
+- Smart parent / Dumb Children Pattern
 - Custom Hooks
   - Only use Higher Order Components (HOC) or Render Props when absolutely necessary.
-- `<ErrorBoundary />` to prevent intrusive errors
+- `<ErrorBoundary />`
+  - Prevent intrusive errors from affecting entire app.
 
 ## Component Diagrams
 
