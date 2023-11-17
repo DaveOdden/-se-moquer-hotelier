@@ -5,8 +5,7 @@ A mock hotel booking and guest management system built with the MERN stack. The 
 This repo is the front-end layer only.
 
 ![bookings](./docs/ui/Bookings.png)
-<a id="screenshots">See More UI Screenshots</a>
-
+<a id="#screenshots">See More UI Screenshots</a>
 
 
 ## Tooling List
@@ -54,7 +53,7 @@ This repo is the front-end layer only.
 
 TBD
 
-## Screenshots
+## UI Screenshots
 
 ### Guest Table
 ![guests](./docs/ui/Guests.png)
