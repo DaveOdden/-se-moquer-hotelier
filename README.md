@@ -38,6 +38,13 @@ This repo is the front-end layer only.
   - Only use Higher Order Components (HOC) or Render Props when absolutely necessary.
 - `<ErrorBoundary />` to prevent intrusive errors
 
+## Component Diagrams
+
+### New Booking Form
+
+![new booking form diagram](./docs/UnMoquerHotelier-NewBooking.png)
+
+
 ## Component Hierarchy
 
 TBD
