@@ -9,8 +9,3 @@ export const writtenOutDate = (date) => {
 export const writtenOutDateTime = (date) => {
   return dayjs(date).format('dddd - MMMM DD, YYYY H:M A')
 }
-
-export const getRoomRecordByBooking = () => {
-  let room
-  return room
-}

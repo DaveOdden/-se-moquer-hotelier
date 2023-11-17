@@ -16,10 +16,8 @@ export const useAggregatedBookings = () => {
 
   const findRoomData = (_rooms, roomId) => {
     let selectedRecord = []
-    console.log(_rooms);
     if(_rooms.hasOwnProperty('records')) {
       for(let x = 0; x < _rooms.records.length; x++) {
-        console.log(roomId, _rooms.records[x])
         if(roomId === _rooms.records[x]._id) {
           selectedRecord = _rooms.records[x]
           break
@@ -54,7 +52,6 @@ export const useAggregatedBookings = () => {
       bookings.records[z].checkinDateReadable = writtenOutDateTime( bookings.records[z].checkinDate )
       bookings.records[z].checkoutDateReadable = writtenOutDateTime( bookings.records[z].checkoutDate )
     }
-    console.log(bookings.records)
     return bookings.records
   }
 

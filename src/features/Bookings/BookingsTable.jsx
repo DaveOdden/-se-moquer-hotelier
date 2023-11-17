@@ -5,7 +5,7 @@ export const BookingsTable = (props) => {
 
   const columns = [
     {
-      title: 'Room id.',
+      title: 'Room Num',
       dataIndex: ['room', 'roomNum'],
       key: 'room',
       filteredValue: [searchTerms],
@@ -13,11 +13,16 @@ export const BookingsTable = (props) => {
         return (
           String(record.room._id).toLowerCase().includes(value.toLowerCase()) || 
           String(record.guest._id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.guest.fullName).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.guest.licenseNum).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.guest.dob).toLowerCase().includes(value.toLowerCase()) ||
           String(record.checkinDate).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.checkoutDate).toLowerCase().includes(value.toLowerCase())
+          String(record.checkoutDate).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.checkinDateReadable).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.checkoutDateReadable).toLowerCase().includes(value.toLowerCase())
         )
       },
-      width: '100px'
+      width: '120px'
     },
     {
       title: 'Guest Name',
@@ -26,7 +31,7 @@ export const BookingsTable = (props) => {
     },
     {
       title: 'Checkin',
-      dataIndex: 'checkoutDateReadable',
+      dataIndex: 'checkinDateReadable',
       key: 'checkin',
     },
     {
