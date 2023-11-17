@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Flex, Typography, Modal, Space, Button, message } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 const { Text } = Typography;
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import RoomDetail from './RoomDetail'
 import { RoomsAPI } from '../../api/RoomAPI'
 import { BookingsAPI } from '../../api/BookingsAPI'
-import { MoneyCollectOutlined } from '@ant-design/icons';
 
 const headerStyle = {
   textAlign: 'center',
@@ -115,8 +114,7 @@ export default function Rooms() {
         open={isModalOpen} 
         footer={null}
         onCancel={handleCancel}
-        destroyOnClose={true}
-      >
+        destroyOnClose={true}>
         <RoomDetail room={selectedRoom} />
       </Modal>
     </>

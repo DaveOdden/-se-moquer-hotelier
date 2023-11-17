@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Table } from 'antd'
 
 export const BookingsTable = (props) => {
   const { tableData, isLoading, onRowClick, searchTerms } = props;
