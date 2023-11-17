@@ -6,7 +6,7 @@ export const BookingsTable = (props) => {
   const columns = [
     {
       title: 'Room id.',
-      dataIndex: ['room', '_id'],
+      dataIndex: ['room', 'roomNum'],
       key: 'room',
       filteredValue: [searchTerms],
       onFilter: (value, record) => {
@@ -16,21 +16,22 @@ export const BookingsTable = (props) => {
           String(record.checkinDate).toLowerCase().includes(value.toLowerCase()) ||
           String(record.checkoutDate).toLowerCase().includes(value.toLowerCase())
         )
-      }
+      },
+      width: '100px'
     },
     {
       title: 'Guest Name',
-      dataIndex: ['guest', '_id'],
+      dataIndex: ['guest', 'fullName'],
       key: 'name',
     },
     {
       title: 'Checkin',
-      dataIndex: 'checkinDate',
+      dataIndex: 'checkoutDateReadable',
       key: 'checkin',
     },
     {
       title: 'Checkout',
-      dataIndex: 'checkoutDate',
+      dataIndex: 'checkoutDateReadable',
       key: 'checkout',
     },
   ];

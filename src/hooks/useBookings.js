@@ -4,17 +4,17 @@ import { BookingsAPI } from 'src/api/BookingsAPI';
 export const useBookings = () => {
   const [records, setRecords] = useState([]);
   const [isLoading, toggleLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
 
   const getBookings = () => {
-    toggleLoading(true)
     BookingsAPI.get().then((res) => {
       setRecords(res.message)
-      toggleLoading(false)
+      setDataLoaded(true)
     })
   }
 
   useEffect(() => getBookings, [])
 
-  return { records, isLoading, error, getBookings }
+  return { records, isLoading, dataLoaded, error, getBookings }
 }
