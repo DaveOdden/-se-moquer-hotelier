@@ -3,7 +3,7 @@ import { Flex, Button, Typography } from 'antd';
 const { Text } = Typography;
 import { CurrentModalState } from './Index';
 
-export default function NewGuestPrompt() {
+export const NewGuestPrompt = () => {
   const { setCurrentView } = useContext(CurrentModalState);
 
   return (

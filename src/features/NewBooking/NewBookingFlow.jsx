@@ -1,13 +1,13 @@
 
 import React, { useState, useRef } from 'react';
-import { BookingsAPI } from '../../api/BookingsAPI'
-import NewGuestPrompt from './NewGuestPrompt'
+import { Form, Carousel } from 'antd';
+import dayjs from 'dayjs';
+import { BookingsAPI } from 'src/api/BookingsAPI'
+import { NewGuestPrompt } from './NewGuestPrompt'
 import { NewBookingGuestSelection } from './NewBookingGuestSelection'
 import { NewBookingDateSelection } from './NewBookingDateSelection'
 import { NewBookingRoomSelection } from './NewBookingRoomSelection'
-import BookingConfirmation from './NewBookingConfirmation'
-import { Form, Carousel } from 'antd';
-import dayjs from 'dayjs';
+import { BookingConfirmation } from './NewBookingConfirmation'
 
 const carouselHeightInactive = {
   height: 0,
@@ -111,13 +111,16 @@ export const NewBookingFlow = (props) => {
   const setCarouselSlideHeight = (slideIndex) => {
     return carouselIndex !== slideIndex ? carouselHeightInactive : {}
   }
+
+  const goToCarouselIndex = (index) => {
+    carouselRef.current.goTo(index)
+  }
   
   return (
     <Carousel 
       dots={false}
       ref={carouselRef}
-      beforeChange={onBeforeChangeCarousel}
-    >
+      beforeChange={onBeforeChangeCarousel}>
       <div>
         <div style={setCarouselSlideHeight(0)}>
           <Form 
@@ -128,13 +131,11 @@ export const NewBookingFlow = (props) => {
               checkoutTime: dayjs('10:30', 'HH:mm'),
             }}
             form={bookingForm}
-            validateTrigger="onChange"
-          >
+            validateTrigger="onChange">
             <NewBookingGuestSelection 
               setGuestSearchHasNoMatch={setGuestSearchHasNoMatch}
               setSelectedGuest={setSelectedGuest}
-              setShowRoomSelection={setShowRoomSelection}
-            />
+              setShowRoomSelection={setShowRoomSelection} />
             { guestSearchHasNoMatch && (
               <NewGuestPrompt /> 
             ) }
@@ -143,8 +144,7 @@ export const NewBookingFlow = (props) => {
                 onCheckinDateSelection={onCheckinDateSelection}
                 onCheckoutDateSelection={onCheckoutDateSelection}
                 setCheckinTime={setCheckinTime}
-                setCheckoutTime={setCheckoutTime}
-              /> 
+                setCheckoutTime={setCheckoutTime} /> 
             ) }
             { selectedGuest && showRoomSelection && !roomIsLoading && (
               <NewBookingRoomSelection
@@ -152,8 +152,7 @@ export const NewBookingFlow = (props) => {
                 bookingForm={bookingForm}
                 onRoomSelection={onRoomSelection}
                 onRoomSelectionChange={onRoomSelectionChange}
-                carouselRef={carouselRef}
-              /> 
+                carouselRef={carouselRef} /> 
             ) }
           </Form>
         </div>
@@ -164,11 +163,10 @@ export const NewBookingFlow = (props) => {
             selectedGuest={selectedGuest}
             checkinDate={checkinDate}
             checkoutDate={checkoutDate}
-            carouselRef={carouselRef}
+            goToCarouselIndex={goToCarouselIndex}
             submitBooking={submitBooking}
             durationOfStay={durationOfStay}
-            roomRate={roomRate}
-          />
+            roomRate={roomRate} />
         </div>
       </div>
     </Carousel>
