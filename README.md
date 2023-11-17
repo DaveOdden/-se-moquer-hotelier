@@ -4,6 +4,11 @@ A mock hotel booking and guest management system built with the MERN stack. The 
 
 This repo is the front-end layer only.
 
+![bookings](./docs/ui/Bookings.png)
+<a name="screenshots">See More UI Screenshots</a>
+
+
+
 ## Tooling List
 
 - Package Manager - [Yarn](https://yarnpkg.com/)
@@ -48,3 +53,5 @@ This repo is the front-end layer only.
 ## Component Hierarchy
 
 TBD
+
+## Screenshots [link](#screenshots)
