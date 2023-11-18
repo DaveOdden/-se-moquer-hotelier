@@ -6,15 +6,24 @@ export const useBookings = () => {
   const [isLoading, toggleLoading] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
-
+  const refetchRecords = () => getBookings()
   const getBookings = () => {
-    BookingsAPI.get().then((res) => {
-      setRecords(res.message)
-      setDataLoaded(true)
-    })
+    try {
+      toggleLoading(true)
+      setDataLoaded(false)
+      BookingsAPI.get().then((res) => {
+        setRecords(res.message)
+        setDataLoaded(true)
+      })
+    }
+    catch(err){
+      setError(err)
+    }finally{
+      toggleLoading(false)
+    }
   }
 
   useEffect(() => getBookings, [])
 
-  return { records, isLoading, dataLoaded, error, getBookings }
+  return { records, isLoading, dataLoaded, error, refetchRecords }
 }

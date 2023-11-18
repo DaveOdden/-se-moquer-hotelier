@@ -1,15 +1,15 @@
 import React from 'react';
 import { AutoComplete, Form, Input } from 'antd';
-import { GuestAPI } from '../../api/GuestAPI'
-import { useGuestAutoCompleteData } from '../../hooks/useGuests.js';
+import { GuestAPI } from '../../../api/GuestAPI.js'
+import { useGuestAutoCompleteData } from '../../../hooks/useGuests.js';
 
 export const NewBookingGuestSelection = (props) => {
-  const guestsKeyValueSet = useGuestAutoCompleteData()
-  const { setGuestSearchHasNoMatch, setSelectedGuest, setShowRoomSelection } = props;
+  const guest = useGuestAutoCompleteData()
+  const { setSelectedGuest } = props;
 
   const onGuestSearch = (query) => {
     let hasMatch = false;
-    for (const el of guestsKeyValueSet) {
+    for (const el of guest.guestsKeyValueSet) {
       let hasValueMatch, hasLabelMatch = false;
       hasLabelMatch = el.label.indexOf(query) !== -1 ? true : false
       hasValueMatch = el.value.indexOf(query) !== -1 ? true : false
@@ -19,12 +19,7 @@ export const NewBookingGuestSelection = (props) => {
       }
     }
     if(!hasMatch) {
-      setGuestSearchHasNoMatch(true)
-      setSelectedGuest(false)
-      setShowRoomSelection(false)
-    } else if(hasMatch && guestSearchHasNoMatch) {
-      setGuestSearchHasNoMatch(false)
-      setShowRoomSelection(checkinTime && checkoutTime)
+      setSelectedGuest(null)
     }
   }
 
@@ -39,20 +34,18 @@ export const NewBookingGuestSelection = (props) => {
       name="guest" 
       label="Guest" 
       style={{marginTop: '32px'}}
-      rules={[
-        {
-          required: true,
-          message: 'Select a guest',
-        },
-      ]}
-    >
+      rules={[{
+        required: true,
+        message: 'Select a guest',
+      }]}>
       <AutoComplete
-        options={guestsKeyValueSet}
+        options={guest.guestsKeyValueSet}
         filterOption={true}
         onSearch={onGuestSearch}
-        onSelect={onGuestSelection}
-      >
-        <Input.Search placeholder="Search By Name" />
+        onSelect={onGuestSelection}>
+        <Input.Search
+          placeholder={guest.isLoading ? 'Loading...' : 'Search by Name'} 
+          disabled={guest.isLoading} />
       </AutoComplete>
     </Form.Item>
   )
