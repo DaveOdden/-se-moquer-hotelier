@@ -21,7 +21,7 @@ export const GuestTable = (props) => {
           String(record.address.city).toLowerCase().includes(value.toLowerCase()) ||
           String(record.address.state).toLowerCase().includes(value.toLowerCase()) ||
           String(record.address.zip).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.licenseNum).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.licenseNumber).toLowerCase().includes(value.toLowerCase()) ||
           String(record.status).toLowerCase().includes(value.toLowerCase())
         )
       }

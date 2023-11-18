@@ -118,7 +118,10 @@ export default function Guests() {
   const deleteGuest = (id) => {
     GuestAPI.delete(id).then((res) => {
       if(res.success) {
-        messageApi.success('Success. Guest deleted');
+        setToastNotification({
+          message: 'Success. Guest deleted',
+          type: 'success'
+        })
         setTimeout( () => {
           setEditGuestFormStatus({
             loading: false, 
@@ -129,7 +132,10 @@ export default function Guests() {
         }, 1200)
         setTimeout( hideDetail, 800)
       } else {
-        messageApi.error('Error. Something screwed up...');
+        setToastNotification({
+          message: 'Error. Something screwed up...',
+          type: 'error'
+        })
         setEditGuestFormStatus({
           loading: null, 
           response: null, 

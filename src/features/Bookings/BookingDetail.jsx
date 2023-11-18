@@ -83,20 +83,28 @@ export const BookingDetail = (props) => {
         getContainer={false}
         extra={
           <Space>
-            { !isEditing && <Dropdown menu={{ items: actionItems }} placement="bottomRight">
-              <MoreOutlined />
-            </Dropdown> }
-            { isEditing && <Button type="text" onClick={() => setEditState(false)}><LineOutlined /></Button>}
+            { !isEditing && (
+              <Dropdown 
+                menu={{ items: actionItems }} 
+                placement="bottomRight">
+                <MoreOutlined />
+              </Dropdown> 
+            ) }
+            { isEditing && (
+              <Button 
+                type="text" 
+                onClick={() => setEditState(false)}>
+                <LineOutlined />
+              </Button>
+            ) }
           </Space>
-        }
-      >
+        }>
         { !isEditing && 
           <Descriptions 
             items={descriptionContent} 
             column={1} 
             layout="small" 
-            contentStyle={{textAlign: 'left'}}
-          />
+            contentStyle={{textAlign: 'left'}} />
         }
       </Drawer>
     </>
