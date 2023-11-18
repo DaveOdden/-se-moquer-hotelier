@@ -1,9 +1,15 @@
-import dayjs from 'dayjs'
+import React, { useEffect } from 'react';
 import { Space, Flex, Button, Descriptions, Divider, Statistic } from 'antd'
 import { writtenOutDate } from 'src/utils/dataTransformation'
 
 export const BookingConfirmation = (props) => {
-  const { selectedGuest, checkinDate, checkoutDate, durationOfStay, submitBooking, roomRate, goToCarouselIndex } = props;
+  const roomRate = 140
+  const { 
+    formData,
+    guestDetails, 
+    submitBooking, 
+    backButtonAction 
+  } = props
 
   return (
     <>
@@ -16,16 +22,16 @@ export const BookingConfirmation = (props) => {
             justifyContent: 'flex-end'
           }} 
           column={1}>
-          <Descriptions.Item label="Guest Name">{selectedGuest.firstName}</Descriptions.Item>
-          <Descriptions.Item label="License #">70001011</Descriptions.Item>
-          <Descriptions.Item label="Check In">{writtenOutDate(checkinDate)}</Descriptions.Item>
-          <Descriptions.Item label="Check Out">{writtenOutDate(checkoutDate)}</Descriptions.Item>
+          <Descriptions.Item label="Guest Name">{guestDetails?.firstName} {guestDetails?.lastName}</Descriptions.Item>
+          <Descriptions.Item label="License #">{guestDetails?.licenseNum}</Descriptions.Item>
+          <Descriptions.Item label="Check In">{writtenOutDate(formData?.checkinDate)}</Descriptions.Item>
+          <Descriptions.Item label="Check Out">{writtenOutDate(formData?.checkoutDate)}</Descriptions.Item>
           <Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
         </Descriptions>
         <Divider style={{ margin: 0 }}/>
         <Flex justify="space-between">
           <Descriptions column={1}>
-            <Descriptions.Item label="Rate">${roomRate} x {durationOfStay}</Descriptions.Item>
+            <Descriptions.Item label="Rate">${roomRate} x {formData?.billing?.days}</Descriptions.Item>
           </Descriptions>
           <Statistic 
             title="Total" 
@@ -33,11 +39,11 @@ export const BookingConfirmation = (props) => {
               textAlign: 'right', 
               marginBottom: '32px'
             }} 
-            value={`$${roomRate*durationOfStay}`} />
+            value={`$${roomRate*formData?.billing?.days}`} />
         </Flex>
       </Space>
       <Flex justify="space-between">
-        <Button onClick={() => goToCarouselIndex(0)}>Back</Button>
+        <Button onClick={backButtonAction}>Back</Button>
         <Button type="primary" onClick={() => submitBooking()}>Confirm Booking</Button>
       </Flex>
     </>

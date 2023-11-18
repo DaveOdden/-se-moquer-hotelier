@@ -3,16 +3,28 @@ import { GuestAPI } from '../api/GuestAPI';
 
 export const useGuestAutoCompleteData = () => {
   const [guestsKeyValueSet, setGuestsForAutoComplete] = useState([]);
+  const [isLoading, toggleLoading] = useState(false);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
   const getGuestData = () => {
-    GuestAPI.getGuestsForAutocomplete().then((res) => {
-      setGuestsForAutoComplete(res.message)
-    })
+    try {
+      toggleLoading(true)
+      GuestAPI.getGuestsForAutocomplete().then((res) => {
+        setGuestsForAutoComplete(res.message)
+        setDataLoaded(true)
+      })
+    }
+    catch(err) {
+      setError(err)
+    } finally {
+      toggleLoading(false)
+    }
   }
 
   useEffect(() => getGuestData, [])
 
-  return guestsKeyValueSet
+  return { guestsKeyValueSet, isLoading, dataLoaded, error }
 
 }
 
@@ -23,10 +35,18 @@ export const useGuestData = () => {
   const [error, setError] = useState(null);
 
   const getGuests = () => {
-    GuestAPI.get().then((res) => {
-      setRecords(res.message)
-      setDataLoaded(true)
-    })
+    try {
+      toggleLoading(true)
+      GuestAPI.get().then((res) => {
+        setRecords(res.message)
+        setDataLoaded(true)
+      })
+    }
+    catch(err) {
+      setError(err)
+    } finally {
+      toggleLoading(false)
+    }
   }
 
   useEffect(() => getGuests, [])

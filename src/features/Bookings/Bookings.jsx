@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BookingsAPI } from 'src/api/BookingsAPI'
 import { useAggregatedBookings } from 'src/hooks/useAggregatedBookings'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
@@ -14,14 +14,14 @@ export default function Bookings(props) {
   const [searchValue, setSearchValue] = useState('');
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
-  async function createBooking(data) {
+  async function createBooking(formData) {
     setNewBookingFormStatus({
       loading: true, 
       response: null, 
       error: null, 
       pristine: false
     })
-    BookingsAPI.post(data).then((res) => {
+    BookingsAPI.post(formData).then((res) => {
       if(res.success) {
         setTimeout(() => {
           setToastNotification({
@@ -52,20 +52,13 @@ export default function Bookings(props) {
     })
   }
 
-  const showDetail = (record) => {
-    setShowBookingDetail(true)
-    setSelectedRecord(record)
-  }
-
-  const hideDetail = () => {
-    setShowBookingDetail(false)
-    setSelectedRecord(null)
-  }
-
   const deleteBooking = (id) => {
     BookingsAPI.delete(id).then((res) => {
       if(res.success) {
-        messageApi.success('Success. Booking deleted');
+        setToastNotification({
+          message: "Booking Deleted",
+          type: 'success'
+        })    
         setTimeout( () => {
           setNewBookingFormStatus({
             loading: false, 
@@ -76,7 +69,10 @@ export default function Bookings(props) {
         }, 1200)
         setTimeout( hideDetail, 800)
       } else {
-        messageApi.error('Error. Something screwed up...');
+        setToastNotification({
+          message: "Error. Something screwed up...",
+          type: 'error'
+        })
         setNewBookingFormStatus({
           loading: null, 
           response: null, 
@@ -87,12 +83,27 @@ export default function Bookings(props) {
     })
   }
 
+  const showDetail = (record) => {
+    setShowBookingDetail(true)
+    setSelectedRecord(record)
+  }
+
+  const hideDetail = () => {
+    setShowBookingDetail(false)
+    setSelectedRecord(null)
+  }
+
   const searchTable = (e) => {
     const currentSearch = e.target.value;
     setSearchValue(currentSearch);
   }
 
-  //useEffect(() => bookings.getBookings(), [newBookingFormStatus]);
+  const refetchAggregatedData = () => {
+    if(newBookingFormStatus.response)
+      bookings.refetchBookings()
+  }
+
+  useEffect(() => refetchAggregatedData(), [newBookingFormStatus]);
 
   return (
     <FeatureWrapper
