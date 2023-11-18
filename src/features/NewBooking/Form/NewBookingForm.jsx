@@ -27,6 +27,9 @@ export const NewBookingForm = (props) => {
   const [roomIsLoading, setRoomLoadingState] = useState(true);
   const [selectedRoom, setSelectedRoom] = useState(-1)
 
+  let showDateSelection = selectedGuest
+  let showRoomSelection = selectedGuest && checkinDate && checkoutDate && checkinTime && checkoutTime
+
   const populateRoomDropdown = () => {
     if(checkoutDate && checkinDate) {
       setRoomLoadingState(true)
@@ -67,14 +70,6 @@ export const NewBookingForm = (props) => {
     returnFormData(data)
   }
 
-  const showDateSelection = () => {
-    return selectedGuest
-  }
-
-  const showRoomSelection = () => {
-    return selectedGuest && checkinDate && checkoutDate && checkinTime && checkoutTime
-  }
-
   useEffect(() => populateRoomDropdown(), [checkinDate, checkoutDate])
 
   return (
@@ -88,14 +83,14 @@ export const NewBookingForm = (props) => {
       validateTrigger="onChange">
       <NewBookingGuestSelection setSelectedGuest={setSelectedGuest} />
       { selectedGuest === null && <NewGuestPrompt /> }
-      { showDateSelection() && (
+      { showDateSelection && (
         <NewBookingDateSelection
           onCheckinDateSelection={setCheckinDate}
           onCheckoutDateSelection={setCheckoutDate}
           setCheckinTime={setCheckinTime}
           setCheckoutTime={setCheckoutTime} /> 
       ) }
-      { showRoomSelection() && (
+      { showRoomSelection && (
         <>
           <NewBookingRoomSelection
             rooms={rooms}

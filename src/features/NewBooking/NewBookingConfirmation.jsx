@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Space, Flex, Button, Descriptions, Divider, Statistic } from 'antd'
 import { writtenOutDate } from 'src/utils/dataTransformation'
 
@@ -10,6 +10,12 @@ export const BookingConfirmation = (props) => {
     submitBooking, 
     backButtonAction 
   } = props
+  const [isLoading, setLoading] = useState(false)
+
+  const kickOffFormSubmission = () => {
+    setLoading(true)
+    submitBooking()
+  }
 
   return (
     <>
@@ -23,7 +29,7 @@ export const BookingConfirmation = (props) => {
           }} 
           column={1}>
           <Descriptions.Item label="Guest Name">{guestDetails?.firstName} {guestDetails?.lastName}</Descriptions.Item>
-          <Descriptions.Item label="License #">{guestDetails?.licenseNum}</Descriptions.Item>
+          <Descriptions.Item label="License #">{guestDetails?.licenseNumber}</Descriptions.Item>
           <Descriptions.Item label="Check In">{writtenOutDate(formData?.checkinDate)}</Descriptions.Item>
           <Descriptions.Item label="Check Out">{writtenOutDate(formData?.checkoutDate)}</Descriptions.Item>
           <Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
@@ -44,7 +50,12 @@ export const BookingConfirmation = (props) => {
       </Space>
       <Flex justify="space-between">
         <Button onClick={backButtonAction}>Back</Button>
-        <Button type="primary" onClick={() => submitBooking()}>Confirm Booking</Button>
+        <Button 
+          type="primary" 
+          onClick={kickOffFormSubmission} 
+          loading={isLoading}>
+            Confirm Booking
+        </Button>
       </Flex>
     </>
   )

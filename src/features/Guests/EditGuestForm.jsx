@@ -31,8 +31,8 @@ export default function EditGuestForm(props) {
       <Form.Item name="phone" label="Phone" disabled={editGuestFormStatus.loading}>
         <Input placeholder="Phone" disabled={editGuestFormStatus.loading} />
       </Form.Item>
-      <Form.Item name="age" label="Age" disabled={editGuestFormStatus.loading}>
-        <Input placeholder="Age" disabled={editGuestFormStatus.loading} />
+      <Form.Item name="dob" label="Date of Birth" disabled={editGuestFormStatus.loading}>
+        <Input placeholder="Date of Birth" disabled={editGuestFormStatus.loading} />
       </Form.Item>
       <Form.Item name={['address', 'street']} label="Street Address" disabled={editGuestFormStatus.loading}>
         <Input placeholder="Street Address" value={formData.address.street} disabled={editGuestFormStatus.loading}/>
@@ -50,7 +50,7 @@ export default function EditGuestForm(props) {
         </Form.Item>
       </Space>
 
-      <Form.Item name="licenseNum" disabled={editGuestFormStatus.loading}>
+      <Form.Item name="licenseNumber" disabled={editGuestFormStatus.loading}>
         <Input placeholder="License Number" disabled={editGuestFormStatus.loading}/>
       </Form.Item>
       <Form.Item name="notes" disabled={editGuestFormStatus.loading}>
