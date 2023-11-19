@@ -68,8 +68,6 @@ export const NewBookingForm = (props) => {
       guestDetails: {...selectedGuest},
     }
 
-    console.log(data);
-
     returnFormData(data)
   }
 
