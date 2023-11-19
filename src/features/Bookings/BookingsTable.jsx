@@ -39,6 +39,11 @@ export const BookingsTable = (props) => {
       dataIndex: 'checkoutDateReadable',
       key: 'checkout',
     },
+    {
+      title: 'Confirmation #',
+      dataIndex: '_id',
+      key: 'checkout',
+    },
   ];
 
   return (

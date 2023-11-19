@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Space, Flex, Button, Descriptions, Divider, Statistic } from 'antd'
-import { writtenOutDate } from 'src/utils/dataTransformation'
+import { writtenOutDateTime } from 'src/utils/dataTransformation'
 
 export const BookingConfirmation = (props) => {
   const roomRate = 140
@@ -30,8 +30,8 @@ export const BookingConfirmation = (props) => {
           column={1}>
           <Descriptions.Item label="Guest Name">{guestDetails?.firstName} {guestDetails?.lastName}</Descriptions.Item>
           <Descriptions.Item label="License #">{guestDetails?.licenseNumber}</Descriptions.Item>
-          <Descriptions.Item label="Check In">{writtenOutDate(formData?.checkinDate)}</Descriptions.Item>
-          <Descriptions.Item label="Check Out">{writtenOutDate(formData?.checkoutDate)}</Descriptions.Item>
+          <Descriptions.Item label="Check In">{writtenOutDateTime(formData?.checkinDate)}</Descriptions.Item>
+          <Descriptions.Item label="Check Out">{writtenOutDateTime(formData?.checkoutDate)}</Descriptions.Item>
           <Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
         </Descriptions>
         <Divider style={{ margin: 0 }}/>

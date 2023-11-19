@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Calendar } from 'antd'
-import { getArrayOfDatesBooked, findDatesToDisable } from 'src/utils/dateHelpers'
+import { getArrayOfDatesBooked } from 'src/utils/dateHelpers'
 
 export const BookedCalendar = (props) => {
   const { data } = props
@@ -11,10 +11,6 @@ export const BookedCalendar = (props) => {
       let bookedDates = getArrayOfDatesBooked(data.checkinDate, data.checkoutDate)
       setDatesBooked(bookedDates)
     }
-  }
-
-  const disableCalendarDates = (current) => {
-    return findDatesToDisable(datesBooked, current)
   }
 
   const otherBookedDates = []; // Replace with room's booked dates

@@ -13,12 +13,10 @@ export const NewBookingRoomSelection = (props) => {
       <Form.Item 
         name="room" 
         label={`Rooms ${rooms.length ? `(${rooms.length})` : ''}`}
-        rules={[
-        {
+        rules={[{
           required: true,
           message: 'a room is required',
-        },
-      ]}>
+        }]}>
         <AutoComplete
           options={rooms}
           filterOption={true}

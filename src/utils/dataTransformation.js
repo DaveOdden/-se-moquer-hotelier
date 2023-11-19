@@ -5,5 +5,5 @@ export const writtenOutDate = (date) => {
 }
 
 export const writtenOutDateTime = (date) => {
-  return dayjs(date).format('dddd - MMMM DD, YYYY H:M A')
+  return dayjs(date).format('ddd, MMM D, YYYY h:mm A')
 }
