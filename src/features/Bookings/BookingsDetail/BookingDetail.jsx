@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Drawer, Descriptions, Button, Space, Dropdown, Divider, Calendar } from 'antd'
+import { Drawer, Button, Space, Dropdown } from 'antd'
 import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons'
 import { BookingDetailContent } from 'src/features/Bookings/BookingsDetail/BookingDetailContent'
 
