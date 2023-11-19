@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Flex, Typography, Modal, Space, Button, message } from 'antd';
-const { Header, Content } = Layout;
-const { Text } = Typography;
+import React, { useState, useEffect } from 'react'
+import { Layout, Flex, Typography, Modal, Space, Button, message } from 'antd'
+const { Header, Content } = Layout
+const { Text } = Typography
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import RoomDetail from './RoomDetail'
 import { RoomsAPI } from '../../api/RoomAPI'
@@ -96,12 +96,17 @@ export default function Rooms() {
         <Flex wrap="wrap">
           {!contentIsLoading && rooms.map((room) => {
             return (
-              <Space.Compact direction="vertical" style={{width: 'calc(100%/26)', marginTop: '1.5rem'}} key={room._id}>
+              <Space.Compact 
+                direction="vertical" 
+                style={{
+                  width: 'calc(100%/26)', 
+                  marginTop: '1.5rem'
+                }} 
+                key={room._id}>
                 <Button 
                   onClick={() => showModal(room)} 
                   style={{height: '4.5rem', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')}} 
-                  block
-                >
+                  block>
                   <Text>{room.roomNum}</Text>
                 </Button>
               </Space.Compact>

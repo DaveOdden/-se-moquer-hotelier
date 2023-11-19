@@ -7,6 +7,7 @@ import {Overview} from './features/Overview/Index'
 import Bookings from './features/Bookings/Bookings'
 import Guests from './features/Guests/Guests'
 import Rooms from './features/Rooms/Rooms'
+import { Settings } from './features/Settings/Settings'
 import { Routes, Route, Outlet } from "react-router-dom";
 
 const headerStyle = {
@@ -48,6 +49,7 @@ const App = () => {
               <Route path="bookings" element={<Bookings />} />
               <Route path="guests" element={<Guests />} />
               <Route path="rooms" element={<Rooms />} />
+              <Route path="settings" element={<Settings />} />
               <Route path="*" element={<h1>No</h1>} />
             </Route>
           </Routes>
