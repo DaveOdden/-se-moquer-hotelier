@@ -14,10 +14,9 @@ const headerStyle = {
 };
 
 const contentStyle = {
-  textAlign: 'center',
-  height: 'calc(100vh - 128px)',
   color: '#333',
   backgroundColor: '#fff',
+  height: 'calc(100vh - 128px)',
 };
 
 export const FeatureWrapper = (props) => {
