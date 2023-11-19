@@ -5,7 +5,7 @@ const { Content } = Layout
 
 const contentStyle = {
   textAlign: 'center',
-  height: 'calc(100vh - 128px)',
+  height: 'calc(100vh - 241px)',
   color: '#333',
   backgroundColor: '#fff',
 };

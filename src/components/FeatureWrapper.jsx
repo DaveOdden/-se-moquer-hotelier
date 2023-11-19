@@ -16,7 +16,7 @@ const headerStyle = {
 const contentStyle = {
   color: '#333',
   backgroundColor: '#fff',
-  height: 'calc(100vh - 128px)',
+  height: 'calc(100vh - 241px)',
 };
 
 export const FeatureWrapper = (props) => {

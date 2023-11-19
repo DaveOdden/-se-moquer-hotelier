@@ -19,7 +19,7 @@ const headerStyle = {
 
 const contentStyle = {
   textAlign: 'center',
-  height: 'calc(100vh - 128px)',
+  height: 'calc(100vh - 241px)',
   color: '#333',
   backgroundColor: '#fff',
 };
@@ -93,19 +93,21 @@ export default function Rooms() {
         <SubHeaderComponent feature="rooms" recordCount={0} newRecordBtn={false} />
       </Header>
       <Content style={contentStyle}>
-        <Flex wrap="wrap">
+        <Flex wrap="wrap" justify="flex-start" style={{ background: '#f5f5f5', height: '100%', padding: '8px 0' }}>
           {!contentIsLoading && rooms.map((room) => {
             return (
-              <Space.Compact 
-                direction="vertical" 
+            <Space.Compact 
+              size="small"
+              align="start"
+                direction="horizontal" 
                 style={{
                   width: 'calc(100%/26)', 
-                  marginTop: '1.5rem'
+                  padding: '8px 0'
                 }} 
                 key={room._id}>
                 <Button 
                   onClick={() => showModal(room)} 
-                  style={{height: '4.5rem', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')}} 
+                  style={{ height: '100%', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')}} 
                   block>
                   <Text>{room.roomNum}</Text>
                 </Button>
