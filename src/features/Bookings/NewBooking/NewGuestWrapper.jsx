@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { NewGuestForm } from '../Guests/NewGuestForm'
+import { NewGuestForm } from '../../Guests/NewGuestForm'
 import { CurrentModalState } from './Index';
 
 export const NewGuest = (props) => {

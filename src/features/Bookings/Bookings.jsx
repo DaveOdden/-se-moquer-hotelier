@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { BookingsAPI } from 'src/api/BookingsAPI'
 import { useAggregatedBookings } from 'src/hooks/useAggregatedBookings'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
-import { BookingDetail } from './BookingDetail'
+import { BookingDetail } from './BookingsDetail/BookingDetail'
 import { BookingsTable } from './BookingsTable'
-import { NewBookingContainer } from '../NewBooking/Index'
+import { NewBookingContainer } from './NewBooking/Index'
 
 export default function Bookings(props) {
   const bookings = useAggregatedBookings();
