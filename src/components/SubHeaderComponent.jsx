@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Flex, Steps, Modal, Space, Typography, Button, Checkbox, Form, Input } from 'antd';
-import { PlusCircleOutlined, InfoCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { Flex, Modal, Space, Typography, Button, Input } from 'antd';
+import { PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
 const { Title, Paragraph, Text, Link } = Typography;
 import { depluralize } from "../utils/helper"
 
