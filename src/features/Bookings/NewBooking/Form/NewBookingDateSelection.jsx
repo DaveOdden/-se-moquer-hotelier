@@ -1,8 +1,24 @@
+import React, { useState } from 'react';
 import { Space, Form, DatePicker, TimePicker } from 'antd';
+import dayjs from 'dayjs';
 
 export const NewBookingDateSelection = (props) => {
   const { onCheckinDateSelection, onCheckoutDateSelection, setCheckinTime, setCheckoutTime } = props
+  const [checkinDate, setCheckinDate] = useState()
+
+  const disableDatesPriorToToday = (current) => {
+    return current.isBefore(dayjs(new Date()).subtract(1, 'day')) ? true : false
+  }
   
+  const disableDatesPriorToCheckIn = (current) => {
+    return current.isBefore(checkinDate) ? true : false
+  }
+
+  const onChangeOfDateSelection = (val) => {
+    setCheckinDate(val)
+    onCheckinDateSelection(val)
+  }
+
   return (
     <>
       <Space>
@@ -13,7 +29,9 @@ export const NewBookingDateSelection = (props) => {
             required: true,
             message: 'Check-in date is required',
           }]}>
-          <DatePicker onChange={onCheckinDateSelection} />
+          <DatePicker 
+            onChange={onChangeOfDateSelection} 
+            disabledDate={disableDatesPriorToToday} />
         </Form.Item>
         <Form.Item 
           name="checkinTime" 
@@ -37,7 +55,9 @@ export const NewBookingDateSelection = (props) => {
             required: true,
             message: 'Check-out date is required',
           }]}>
-          <DatePicker onChange={onCheckoutDateSelection} />
+          <DatePicker 
+            onChange={onCheckoutDateSelection} 
+            disabledDate={disableDatesPriorToCheckIn} />
         </Form.Item>
         <Form.Item 
           name="checkoutTime" 

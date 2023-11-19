@@ -17,7 +17,7 @@ export const BookingDetailContent = (props) => {
           width: '120px'
         }}>
         { !data?.paid && <Descriptions.Item label="Paid">Pending Payment</Descriptions.Item> }
-        <Descriptions.Item label="Room">#{data?.room?._id}</Descriptions.Item>
+        <Descriptions.Item label="Room">#{data?.room?.roomNum}</Descriptions.Item>
         <Descriptions.Item label="Guest Name">{data?.guest?.firstName} {data?.guest?.lastName}</Descriptions.Item>
         <Descriptions.Item label="Confirmation #">{data?._id}</Descriptions.Item>
       </Descriptions>

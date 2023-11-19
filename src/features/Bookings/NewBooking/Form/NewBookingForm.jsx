@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
-import { Form, Button } from 'antd';
+import React, { useState, useEffect } from 'react'
+import dayjs from 'dayjs'
+import { Form, Button } from 'antd'
 import { NewGuestPrompt } from '../NewGuestPrompt'
 import { NewBookingGuestSelection } from './NewBookingGuestSelection'
 import { NewBookingDateSelection } from './NewBookingDateSelection'
@@ -18,8 +18,8 @@ export const NewBookingForm = (props) => {
   /* Date / Time States */
   const [checkinDate, setCheckinDate] = useState(null);
   const [checkoutDate, setCheckoutDate] = useState(null);
-  const [checkinTime, setCheckinTime] = useState(dayjs('12:00'));
-  const [checkoutTime, setCheckoutTime] = useState(dayjs('10:30'));
+  const [checkinTime, setCheckinTime] = useState(dayjs('12.00.00', 'HH:mm:ss'));
+  const [checkoutTime, setCheckoutTime] = useState(dayjs('10.30.00', 'HH:mm:ss'));
   const [durationOfStay, setDurationOfStay] = useState(0);
 
   /* Room States */
@@ -29,6 +29,7 @@ export const NewBookingForm = (props) => {
 
   let showDateSelection = selectedGuest
   let showRoomSelection = selectedGuest && checkinDate && checkoutDate && checkinTime && checkoutTime
+  let showNewGuestPrompt = selectedGuest === null
 
   const populateRoomDropdown = () => {
     if(checkoutDate && checkinDate) {
@@ -46,8 +47,8 @@ export const NewBookingForm = (props) => {
       setSelectedRoom(-1)
   }
 
-  const onRoomSelection = (val) => {
-    setSelectedRoom(val)
+  const onRoomSelection = (val, obj) => {
+    setSelectedRoom(obj.id)
   }
 
   const moveToNextStep = () => {
@@ -55,8 +56,8 @@ export const NewBookingForm = (props) => {
       formData: {
         guest: selectedGuest._id,
         room: selectedRoom,
-        checkinDate: checkinDate,
-        checkoutDate: checkoutDate,
+        checkinDate: dayjs(`${checkinDate.format('YYYY-MM-DD')}T${checkinTime.format('HH:mm:ss')}`).toISOString(),
+        checkoutDate: dayjs(`${checkoutDate.format('YYYY-MM-DD')}T${checkoutTime.format('HH:mm:ss')}`).toISOString(),
         paid: true,
         billing: {
           rate: 140,
@@ -66,6 +67,8 @@ export const NewBookingForm = (props) => {
       },
       guestDetails: {...selectedGuest},
     }
+
+    console.log(data);
 
     returnFormData(data)
   }
@@ -82,7 +85,9 @@ export const NewBookingForm = (props) => {
       form={bookingForm}
       validateTrigger="onChange">
       <NewBookingGuestSelection setSelectedGuest={setSelectedGuest} />
-      { selectedGuest === null && <NewGuestPrompt /> }
+      { showNewGuestPrompt && (
+        <NewGuestPrompt /> 
+      ) }
       { showDateSelection && (
         <NewBookingDateSelection
           onCheckinDateSelection={setCheckinDate}
