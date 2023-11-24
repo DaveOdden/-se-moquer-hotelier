@@ -7,6 +7,7 @@ export const useBookings = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
   const refetchRecords = () => getBookings()
+  
   const getBookings = () => {
     try {
       toggleLoading(true)

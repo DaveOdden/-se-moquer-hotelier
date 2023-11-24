@@ -7,20 +7,22 @@ import { NewBookingDateSelection } from './NewBookingDateSelection'
 import { NewBookingRoomSelection } from './NewBookingRoomSelection'
 import { BookingsAPI } from 'src/api/BookingsAPI'
 import { calculateDuration } from 'src/utils/dateHelpers.js'
+import { useSettings } from 'src/hooks/useSettings'
 
 export const NewBookingForm = (props) => {
-  const { returnFormData, returnSelectedGuestData } = props
-  const [bookingForm] = Form.useForm();
+  const { returnFormData } = props
+  const [bookingForm] = Form.useForm()
+  const { settings } = useSettings()
 
   /* Guest States */
-  const [selectedGuest, setSelectedGuest] = useState(undefined);
+  const [selectedGuest, setSelectedGuest] = useState(undefined)
 
   /* Date / Time States */
-  const [checkinDate, setCheckinDate] = useState(null);
-  const [checkoutDate, setCheckoutDate] = useState(null);
-  const [checkinTime, setCheckinTime] = useState(dayjs('12.00.00', 'HH:mm:ss'));
-  const [checkoutTime, setCheckoutTime] = useState(dayjs('10.30.00', 'HH:mm:ss'));
-  const [durationOfStay, setDurationOfStay] = useState(0);
+  const [checkinDate, setCheckinDate] = useState(null)
+  const [checkoutDate, setCheckoutDate] = useState(null)
+  const [checkinTime, setCheckinTime] = useState(dayjs('12.30.00', 'HH:mm:ss'))
+  const [checkoutTime, setCheckoutTime] = useState(dayjs('10.30.00', 'HH:mm:ss'))
+  const [durationOfStay, setDurationOfStay] = useState(0)
 
   /* Room States */
   const [rooms, setRooms] = useState([]);
@@ -32,6 +34,7 @@ export const NewBookingForm = (props) => {
   let showNewGuestPrompt = selectedGuest === null
 
   const populateRoomDropdown = () => {
+    console.log('populateRoomDropdown');
     if(checkoutDate && checkinDate) {
       setRoomLoadingState(true)
       BookingsAPI.getRoomsByAvailability(checkinDate, checkoutDate).then((res) => {
@@ -52,15 +55,17 @@ export const NewBookingForm = (props) => {
   }
 
   const moveToNextStep = () => {
+    let formattedCheckinTime = dayjs.isDayjs(checkinTime) ? checkinTime.format('HH:mm:ss') : checkinTime
+    let formattedCheckoutTime = dayjs.isDayjs(checkoutTime) ? checkoutTime.format('HH:mm:ss') : checkoutTime
     let data = {
       formData: {
         guest: selectedGuest._id,
         room: selectedRoom,
-        checkinDate: dayjs(`${checkinDate.format('YYYY-MM-DD')}T${checkinTime.format('HH:mm:ss')}`).toISOString(),
-        checkoutDate: dayjs(`${checkoutDate.format('YYYY-MM-DD')}T${checkoutTime.format('HH:mm:ss')}`).toISOString(),
+        checkinDate: dayjs(`${checkinDate.format('YYYY-MM-DD')}T${formattedCheckinTime}`).toISOString(),
+        checkoutDate: dayjs(`${checkoutDate.format('YYYY-MM-DD')}T${formattedCheckoutTime}`).toISOString(),
         paid: true,
         billing: {
-          rate: 140,
+          rate: settings?.properties?.roomRate,
           days: durationOfStay,
           additional: 0,
         }
@@ -71,14 +76,18 @@ export const NewBookingForm = (props) => {
     returnFormData(data)
   }
 
+  useEffect(() => {
+    setCheckinTime(settings?.properties?.checkinTime)
+    setCheckoutTime(settings?.properties?.checkoutTime)
+  }, [settings])
   useEffect(() => populateRoomDropdown(), [checkinDate, checkoutDate])
 
   return (
     <Form 
       id="bookingForm" 
       initialValues={{
-        checkinTime: dayjs('12:00', 'HH:mm'),
-        checkoutTime: dayjs('10:30', 'HH:mm'),
+        checkinTime: dayjs(checkinTime, 'HH:mm:ss'),
+        checkoutTime: dayjs(checkoutTime, 'HH:mm:ss'),
       }}
       form={bookingForm}
       validateTrigger="onChange">

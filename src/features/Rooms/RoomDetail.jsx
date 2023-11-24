@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { Calendar } from 'antd'
 import { RoomsAPI } from '../../api/RoomAPI'
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 
 export default function Rooms(props) {
   const [room, setRoom] = useState([]);
   
   const getRoomData = () => {
     RoomsAPI.get(props.room._id).then((res) => {
-      console.log(res);
       setRoom(res.message)
     })
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { GuestAPI } from '../api/GuestAPI';
 
 export const useGuestAutoCompleteData = () => {
@@ -10,6 +10,7 @@ export const useGuestAutoCompleteData = () => {
   const getGuestData = () => {
     try {
       toggleLoading(true)
+      setDataLoaded(false)
       GuestAPI.getGuestsForAutocomplete().then((res) => {
         setGuestsForAutoComplete(res.message)
         setDataLoaded(true)
@@ -25,7 +26,6 @@ export const useGuestAutoCompleteData = () => {
   useEffect(() => getGuestData, [])
 
   return { guestsKeyValueSet, isLoading, dataLoaded, error }
-
 }
 
 export const useGuestData = () => {
@@ -33,10 +33,12 @@ export const useGuestData = () => {
   const [isLoading, toggleLoading] = useState(false);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const refetchRecords = () => getGuests()
 
   const getGuests = () => {
     try {
       toggleLoading(true)
+      setDataLoaded(false)
       GuestAPI.get().then((res) => {
         setRecords(res.message)
         setDataLoaded(true)
@@ -51,6 +53,5 @@ export const useGuestData = () => {
 
   useEffect(() => getGuests, [])
 
-  return { records, isLoading, dataLoaded, error, getGuests }
-
+  return { records, isLoading, dataLoaded, error, refetchRecords }
 }
