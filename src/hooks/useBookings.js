@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { BookingsAPI } from 'src/api/BookingsAPI';
 
 export const useBookings = () => {
@@ -12,10 +12,10 @@ export const useBookings = () => {
     try {
       toggleLoading(true)
       setDataLoaded(false)
-      useMemo( BookingsAPI.get().then((res) => {
+      BookingsAPI.get().then((res) => {
         setRecords(res.message)
         setDataLoaded(true)
-      }))
+      })
     }
     catch(err){
       setError(err)
