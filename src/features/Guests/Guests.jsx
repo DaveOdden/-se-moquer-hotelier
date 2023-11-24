@@ -5,6 +5,7 @@ import { useGuestData } from 'src/hooks/useGuests'
 import { NewGuestForm } from './NewGuestForm'
 import { GuestTable } from './GuestTable'
 import { GuestDetail } from './GuestDetail'
+import { convertFormDataForAPI } from './guestHelpers'
 
 export default function Guests() {
   const guests = useGuestData();
@@ -18,25 +19,6 @@ export default function Guests() {
 
   const createGuest = (formData) => {
     setLoadingState(true);
-    let preppedFormData = {
-      ...formData,
-      address: {
-        street: formData.street,
-        city: formData.city,
-        state: formData.state,
-        zip: formData.zip
-      },
-      currentlyAssignedRoom: "",
-      status: "good",
-      storedCreditCard: {},
-      history: [],
-      signUpDate: new Date(),
-    };
-    delete preppedFormData.street
-    delete preppedFormData.city
-    delete preppedFormData.state
-    delete preppedFormData.zip
-
     setNewGuestFormStatus({
       loading: true, 
       response: null, 
@@ -44,7 +26,7 @@ export default function Guests() {
       pristine: false
     })
 
-    GuestAPI.post(preppedFormData).then((res) => {
+    GuestAPI.post(convertFormDataForAPI(formData)).then((res) => {
       if(res.success) {
         setLoadingState(false);
         setNewGuestFormStatus({
@@ -57,6 +39,7 @@ export default function Guests() {
           message: 'Success. Guest Added',
           type: 'success'
         })
+        guests.refetchRecords()
       } else {
         setNewGuestFormStatus({
           loading: false, 
@@ -98,6 +81,7 @@ export default function Guests() {
             error: null, 
             pristine: false
           })
+          guests.refetchRecords()
         }, 1200)
         setTimeout( hideDetail, 800)
       } else {
@@ -129,6 +113,7 @@ export default function Guests() {
             error: null, 
             pristine: false
           })
+          guests.refetchRecords()
         }, 1200)
         setTimeout( hideDetail, 800)
       } else {
@@ -161,8 +146,6 @@ export default function Guests() {
     setSearchValue(currentSearch);
   }
 
-  useEffect(() => guests.getGuests(), [newGuestFormStatus, editGuestFormStatus]);
-
   return (
     <FeatureWrapper
       subHeaderProps={{
@@ -172,7 +155,9 @@ export default function Guests() {
         formStatus: newGuestFormStatus,
         search: searchTable
       }}
-      newRecordComponent={<NewGuestForm submitFn={createGuest} />}
+      newRecordComponent={(
+        <NewGuestForm submitFn={createGuest} />
+      )}
       toastNotification={toastNotification}>
       <GuestTable 
         isLoading={guests.isLoading}

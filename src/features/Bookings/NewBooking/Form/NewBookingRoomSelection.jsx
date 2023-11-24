@@ -1,4 +1,4 @@
-import { Form, AutoComplete } from 'antd';
+import { Form, AutoComplete } from 'antd'
 
 export const NewBookingRoomSelection = (props) => {
   const { 

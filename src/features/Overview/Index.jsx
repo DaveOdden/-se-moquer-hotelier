@@ -5,9 +5,10 @@ const { Content } = Layout
 
 const contentStyle = {
   textAlign: 'center',
-  height: 'calc(100vh - 241px)',
+  height: 'calc(100vh - 128px)',
   color: '#333',
   backgroundColor: '#fff',
+  padding: '32px'
 };
 
 export const Overview = () => {

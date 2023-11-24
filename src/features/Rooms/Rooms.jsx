@@ -6,6 +6,7 @@ import SubHeaderComponent from '../../components/SubHeaderComponent'
 import RoomDetail from './RoomDetail'
 import { RoomsAPI } from '../../api/RoomAPI'
 import { BookingsAPI } from '../../api/BookingsAPI'
+import { useSettings } from 'src/hooks/useSettings'
 
 const headerStyle = {
   textAlign: 'center',
@@ -19,37 +20,10 @@ const headerStyle = {
 
 const contentStyle = {
   textAlign: 'center',
-  height: 'calc(100vh - 241px)',
+  height: 'calc(100vh - 194px)',
   color: '#333',
   backgroundColor: '#fff',
 };
-
-const columns = [
-  {
-    title: 'Room Num.',
-    dataIndex: 'room',
-    key: 'room',
-    type: 'regular'
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    type: 'regular'
-  },
-  {
-    title: 'Guest',
-    dataIndex: 'guest',
-    key: 'guest',
-    type: 'regular'
-  },
-  {
-    title: 'Availability',
-    dataIndex: 'availability',
-    key: 'availability',
-    type: 'regular'
-  },
-];
 
 export default function Rooms() {
   const [rooms, setRooms] = useState([]);
@@ -58,7 +32,7 @@ export default function Rooms() {
   const [contentIsLoading, setLoadingState] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const roomsPerFloor = 26;
+  const { settings } = useSettings();
 
   const showModal = (selectedRoom) => {
     setIsModalOpen(true);
@@ -94,14 +68,14 @@ export default function Rooms() {
       </Header>
       <Content style={contentStyle}>
         <Flex wrap="wrap" justify="flex-start" style={{ background: '#f5f5f5', height: '100%', padding: '8px 0' }}>
-          {!contentIsLoading && rooms.map((room) => {
+          {!contentIsLoading && settings?.properties?.roomsPerFloor && rooms.map((room) => {
             return (
             <Space.Compact 
               size="small"
               align="start"
                 direction="horizontal" 
                 style={{
-                  width: 'calc(100%/26)', 
+                  width: `calc(100%/${settings?.properties?.roomsPerFloor})`, 
                   padding: '8px 0'
                 }} 
                 key={room._id}>
