@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Flex, Typography, Modal, Space, Button, message } from 'antd'
+import { Layout, Flex, Typography, Modal, Space, Button, Spin, message } from 'antd'
 const { Header, Content } = Layout
 const { Text } = Typography
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import RoomDetail from './RoomDetail'
 import { RoomsAPI } from '../../api/RoomAPI'
 import { BookingsAPI } from '../../api/BookingsAPI'
-import { useSettings } from 'src/hooks/useSettings'
+import { useSettings } from 'src/hooks/useSettingsQuery'
+import { useRooms } from 'src/hooks/useRoomsQuery'
 
 const headerStyle = {
   textAlign: 'center',
@@ -26,13 +27,14 @@ const contentStyle = {
 };
 
 export default function Rooms() {
-  const [rooms, setRooms] = useState([]);
+  const rooms = useRooms()
+  const settings = useSettings();
+  //const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState({});
   const [bookings, setRoomBookings] = useState([]);
   const [contentIsLoading, setLoadingState] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { settings } = useSettings();
 
   const showModal = (selectedRoom) => {
     setIsModalOpen(true);
@@ -44,50 +46,65 @@ export default function Rooms() {
     setSelectedRoom({});
   };
 
-  const getBookedRooms = () => {
-    BookingsAPI.get().then((res) => {
-      setRoomBookings(res.arrayOfRoomsBooked);
-    })
-  }
+  // const getBookedRooms = () => {
+  //   BookingsAPI.get().then((res) => {
+  //     setRoomBookings(res.arrayOfRoomsBooked);
+  //   })
+  // }
   
-  const getRoomData = () => {
-    RoomsAPI.get().then((res) => {
-      setRooms(res.message);
-      setLoadingState(false);
-      getBookedRooms();
-    })
-  }
+  // const getRoomData = () => {
+  //   RoomsAPI.get().then((res) => {
+  //     setRooms(res.message);
+  //     setLoadingState(false);
+  //     getBookedRooms();
+  //   })
+  // }
   
-  useEffect(() => getRoomData, []);
+  // useEffect(() => getRoomData, []);
 
   return (
     <>
       {contextHolder}
       <Header style={headerStyle}>
-        <SubHeaderComponent feature="rooms" recordCount={0} newRecordBtn={false} />
+        <SubHeaderComponent 
+          feature="rooms" 
+          recordCount={0} 
+          newRecordBtn={false} />
       </Header>
       <Content style={contentStyle}>
-        <Flex wrap="wrap" justify="flex-start" style={{ background: '#f5f5f5', height: '100%', padding: '8px 0' }}>
-          {!contentIsLoading && settings?.properties?.roomsPerFloor && rooms.map((room) => {
+        <Flex 
+          wrap="wrap" 
+          justify="flex-start" 
+          style={{ 
+            background: '#f5f5f5', 
+            height: '100%', 
+            padding: '8px 0' 
+          }}>
+          {rooms.isSuccess && settings.isSuccess ? rooms.data.map((room) => {
             return (
-            <Space.Compact 
-              size="small"
-              align="start"
-                direction="horizontal" 
-                style={{
-                  width: `calc(100%/${settings?.properties?.roomsPerFloor})`, 
-                  padding: '8px 0'
-                }} 
-                key={room._id}>
-                <Button 
-                  onClick={() => showModal(room)} 
-                  style={{ height: '100%', borderRadius: 0, background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')}} 
-                  block>
-                  <Text>{room.roomNum}</Text>
-                </Button>
-              </Space.Compact>
+              <>{room.roomNum}</>
+            // <Space.Compact 
+            //   size="small"
+            //   align="start"
+            //   direction="horizontal" 
+            //   style={{
+            //     width: `calc(100%/${settings.data.properties.roomsPerFloor})`, 
+            //     padding: '8px 0'
+            //   }} 
+            //   key={room._id}>
+            //   <Button 
+            //     onClick={() => showModal(room)} 
+            //     style={{ 
+            //       height: '100%', 
+            //       borderRadius: 0, 
+            //       background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white')
+            //     }} 
+            //     block>
+            //     <Text>{room.roomNum}</Text>
+            //   </Button>
+            //</Space.Compact>
             )
-          })}
+          }) : <Spin />}
         </Flex>
       </Content>
       <Modal 

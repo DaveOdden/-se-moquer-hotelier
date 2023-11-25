@@ -1,14 +1,14 @@
 import React from 'react'
 import { Statistic, Spin } from 'antd'
-import { useOccupiedRooms } from 'src/hooks/useRooms'
+import { useOccupiedRooms } from 'src/hooks/useRoomsQuery'
 
 export const BookedRoomsWidget = () => {
   const occupiedRooms = useOccupiedRooms();
 
-  return occupiedRooms.length ? (
+  return occupiedRooms?.data?.length ? (
       <Statistic 
         title="Occupied Rooms" 
-        value={occupiedRooms.length} 
+        value={occupiedRooms.data.length} 
         valueStyle={{fontSize: '3rem'}} />
     ) : (
       <Spin />

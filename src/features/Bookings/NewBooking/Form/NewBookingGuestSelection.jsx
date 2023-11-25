@@ -1,10 +1,10 @@
-import React from 'react';
-import { AutoComplete, Form, Input } from 'antd';
+import React from 'react'
+import { AutoComplete, Form, Input } from 'antd'
 import { GuestAPI } from '../../../../api/GuestAPI.js'
-import { useGuestAutoCompleteData } from '../../../../hooks/useGuests.js';
+import { useGuestAutoComplete } from 'src/hooks/useGuestsQuery'
 
 export const NewBookingGuestSelection = (props) => {
-  const guest = useGuestAutoCompleteData()
+  const guest = useGuestAutoComplete()
   const { setSelectedGuest } = props;
 
   const onGuestSearch = (query) => {

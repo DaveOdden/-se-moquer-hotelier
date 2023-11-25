@@ -7,7 +7,7 @@ import { NewBookingDateSelection } from './NewBookingDateSelection'
 import { NewBookingRoomSelection } from './NewBookingRoomSelection'
 import { BookingsAPI } from 'src/api/BookingsAPI'
 import { calculateDuration } from 'src/utils/dateHelpers.js'
-import { useSettings } from 'src/hooks/useSettings'
+import { useSettings } from 'src/hooks/useSettingsQuery'
 
 export const NewBookingForm = (props) => {
   const { returnFormData } = props

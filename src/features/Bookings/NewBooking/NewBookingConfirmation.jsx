@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Space, Flex, Button, Descriptions, Divider, Statistic } from 'antd'
 import { writtenOutDateTime } from 'src/utils/dataTransformation'
-import { useSettings } from 'src/hooks/useSettings'
+import { useSettings } from 'src/hooks/useSettingsQuery'
 
 export const BookingConfirmation = (props) => {
   const { settings } = useSettings();
