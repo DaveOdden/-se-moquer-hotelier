@@ -5,7 +5,7 @@ import { useGuests } from 'src/hooks/useGuestsQuery'
 import { NewGuestForm } from './NewGuestForm'
 import { GuestTable } from './GuestTable'
 import { GuestDetail } from './GuestDetail'
-import { convertFormDataForAPI } from './guestHelpers'
+import { convertFormDataForAPI } from './utils/guestHelpers'
 
 export default function Guests() {
   const guests = useGuests();
@@ -83,7 +83,7 @@ export default function Guests() {
           })
           guests.refetchRecords()
         }, 1200)
-        setTimeout( hideDetail, 800)
+        setTimeout( setSelectedRecord(null), 800)
       } else {
         setToastNotification({
           message: 'Error. Something screwed up...',
@@ -131,21 +131,6 @@ export default function Guests() {
     })
   }
 
-  const showDetail = (record) => {
-    setShowGuestDetail(true)
-    setSelectedRecord(record)
-  }
-
-  const hideDetail = () => {
-    setShowGuestDetail(false)
-    setSelectedRecord(null)
-  }
-
-  const searchTable = (e) => {
-    const currentSearch = e.target.value;
-    setSearchValue(currentSearch);
-  }
-
   return (
     <FeatureWrapper
       subHeaderProps={{
@@ -153,21 +138,21 @@ export default function Guests() {
         recordCount: guests?.data?.length,
         newRecordBtn: true,
         formStatus: newGuestFormStatus,
-        search: searchTable
+        search: (e) => setSearchValue(e.target.value)
       }}
+      toastNotification={toastNotification}
       newRecordComponent={(
         <NewGuestForm submitFn={createGuest} />
-      )}
-      toastNotification={toastNotification}>
+      )}>
       <GuestTable 
         isLoading={guests?.isPending}
         tableData={guests?.data}
-        onRowClick={showDetail} 
+        onRowClick={(record) => setSelectedRecord(record)} 
         searchTerms={searchValue} />
       <GuestDetail 
-        show={showGuestDetail} 
+        show={() => selectedRecord !== null} 
         data={selectedRecord} 
-        onClose={hideDetail}
+        onClose={() => setSelectedRecord(null)}
         updateGuest={updateGuest} 
         deleteGuest={deleteGuest} 
         editGuestFormStatus={editGuestFormStatus} />

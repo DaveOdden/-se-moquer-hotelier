@@ -26,7 +26,7 @@ export default function Bookings(props) {
   const [searchValue, setSearchValue] = useState('');
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
-  async function createBooking(formData) {
+  const createBooking = formData => {
     setNewBookingFormStatus({
       loading: true, 
       response: null, 
@@ -64,7 +64,7 @@ export default function Bookings(props) {
     })
   }
 
-  const deleteBooking = (id) => {
+  const deleteBooking = id => {
     BookingsAPI.delete(id).then((res) => {
       if(res.success) {
         setToastNotification({
@@ -111,8 +111,10 @@ export default function Bookings(props) {
         formStatus: newBookingFormStatus,
         search: (e) => setSearchValue(e.target.value)
       }}
-      newRecordComponent={<NewBookingContainer submitFn={createBooking} />}
-      toastNotification={toastNotification}>
+      toastNotification={toastNotification}
+      newRecordComponent={(
+        <NewBookingContainer submitFn={createBooking} />
+      )}>
       <BookingsTable
         guests={guests}
         bookings={bookings}

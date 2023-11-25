@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Table } from 'antd'
-import { getAdditionalDataForEachBooking } from './aggregateBookings'
+import { getAdditionalDataForEachBooking } from './utils/aggregateBookings'
 
 export const BookingsTable = (props) => {
   const { guests, bookings, rooms, onRowClick, searchTerms } = props;
