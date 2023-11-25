@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { GuestAPI } from 'src/api/GuestAPI'
-import { useGuestData } from 'src/hooks/useGuests'
+import { useGuests } from 'src/hooks/useGuestsQuery'
 import { NewGuestForm } from './NewGuestForm'
 import { GuestTable } from './GuestTable'
 import { GuestDetail } from './GuestDetail'
 import { convertFormDataForAPI } from './guestHelpers'
 
 export default function Guests() {
-  const guests = useGuestData();
+  const guests = useGuests();
   const [contentIsLoading, setLoadingState] = useState(true);
   const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
   const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
@@ -150,7 +150,7 @@ export default function Guests() {
     <FeatureWrapper
       subHeaderProps={{
         feature: "Guests", 
-        recordCount: guests.length,
+        recordCount: guests?.data?.length,
         newRecordBtn: true,
         formStatus: newGuestFormStatus,
         search: searchTable
@@ -160,8 +160,8 @@ export default function Guests() {
       )}
       toastNotification={toastNotification}>
       <GuestTable 
-        isLoading={guests.isLoading}
-        tableData={guests.records}
+        isLoading={guests?.isPending}
+        tableData={guests?.data}
         onRowClick={showDetail} 
         searchTerms={searchValue} />
       <GuestDetail 

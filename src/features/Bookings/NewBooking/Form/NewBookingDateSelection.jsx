@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Space, Form, DatePicker, TimePicker } from 'antd'
-import { useSettings } from 'src/hooks/useSettings'
+import { useSettings } from 'src/hooks/useSettingsQuery'
 import dayjs from 'dayjs'
 import { isSameDay } from 'src/utils/dateHelpers'
 

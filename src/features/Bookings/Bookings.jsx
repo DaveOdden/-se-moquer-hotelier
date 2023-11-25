@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { BookingsAPI } from 'src/api/BookingsAPI'
-import { useAggregatedBookings } from 'src/hooks/useAggregatedBookings'
+import { useQueries } from '@tanstack/react-query'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import BookingDetail from './BookingsDetail/Index'
 import { BookingsTable } from './BookingsTable'
 import NewBookingContainer from './NewBooking/Index'
+import { GuestAPI } from 'src/api/GuestAPI';
+import { BookingsAPI } from 'src/api/BookingsAPI';
+import { RoomsAPI } from 'src/api/RoomAPI'
 
 export default function Bookings(props) {
-  const bookings = useAggregatedBookings();
+  const [guests, bookings, rooms] = useQueries({
+    queries: [
+      { queryKey: ["guests"], queryFn: () => GuestAPI.get().then((res) => res.message) },
+      { queryKey: ["bookings"], queryFn: () => BookingsAPI.get().then((res) => res.message) },
+      { queryKey: ["rooms"], queryFn: () => RoomsAPI.get().then((res) => res.message) },
+    ]
+  })
+  
+  const dataIsLoading = [guests, bookings, rooms].some(query => query.isPending)
+  const allDataFetched = [guests, bookings, rooms].every(query => query.isSuccess)
+  const error = [guests, bookings, rooms].some(query => query.error)
+
   const [newBookingFormStatus, setNewBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
-  const [showBookingDetail, setShowBookingDetail] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
@@ -67,7 +79,7 @@ export default function Bookings(props) {
             pristine: false
           })
         }, 1200)
-        setTimeout( hideDetail, 800)
+        setTimeout( setSelectedRecord(null), 800)
       } else {
         setToastNotification({
           message: "Error. Something screwed up...",
@@ -83,27 +95,12 @@ export default function Bookings(props) {
     })
   }
 
-  const showDetail = (record) => {
-    setShowBookingDetail(true)
-    setSelectedRecord(record)
-  }
-
-  const hideDetail = () => {
-    setShowBookingDetail(false)
-    setSelectedRecord(null)
-  }
-
-  const searchTable = (e) => {
-    const currentSearch = e.target.value;
-    setSearchValue(currentSearch);
-  }
-
   const refetchAggregatedData = () => {
     if(newBookingFormStatus.response)
       bookings.refetchBookings()
   }
 
-  useEffect(() => refetchAggregatedData(), [newBookingFormStatus]);
+  //useEffect(() => refetchAggregatedData(), [newBookingFormStatus]);
 
   return (
     <FeatureWrapper
@@ -112,20 +109,21 @@ export default function Bookings(props) {
         recordCount: 0,
         newRecordBtn: true,
         formStatus: newBookingFormStatus,
-        search: searchTable
+        search: (e) => setSearchValue(e.target.value)
       }}
       newRecordComponent={<NewBookingContainer submitFn={createBooking} />}
       toastNotification={toastNotification}>
-      <BookingsTable 
-        isLoading={bookings.isLoading}
-        tableData={bookings.records}
-        onRowClick={showDetail} 
+      <BookingsTable
+        guests={guests}
+        bookings={bookings}
+        rooms={rooms}
+        onRowClick={(record) => setSelectedRecord(record)} 
         searchTerms={searchValue} />
       <BookingDetail 
-        show={showBookingDetail} 
+        show={() => selectedRecord !== null} 
         data={selectedRecord}
         deleteBooking={deleteBooking} 
-        onClose={hideDetail} />
+        onClose={() => setSelectedRecord(null)} />
     </FeatureWrapper>
   )
 }

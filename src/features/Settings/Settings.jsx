@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Space, Flex, Spin } from 'antd'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
-import { useSettings } from 'src/hooks/useSettings'
+import { useSettings } from 'src/hooks/useSettingsQuery'
 import { Properties } from './Properties'
 
 export const Settings = () => {
-  const { settings, isLoading, dataLoaded, error, refetchSettings } = useSettings()
+  const settings = useSettings()
   const [toastNotification, setToastNotification] = useState({ message: null, type: null})
 
   return (
@@ -22,17 +22,16 @@ export const Settings = () => {
           background: '#f5f5f5',
           height: '100%' 
         }}>
-        { dataLoaded ? (
         <Space 
           direction="vertical" 
           size="middle" 
           style={{ 
-            maxWidth: '600px', 
+            width: '600px', 
             display: 'flex', 
             marginTop: '64px' 
           }}>
           <Properties settings={settings} />
-        </Space>) : <Spin /> }
+        </Space>
       </Flex>
     </FeatureWrapper>
   )

@@ -1,7 +1,10 @@
+import { useMemo } from 'react'
 import { Table } from 'antd'
+import { getAdditionalDataForEachBooking } from './aggregateBookings'
 
 export const BookingsTable = (props) => {
-  const { tableData, isLoading, onRowClick, searchTerms } = props;
+  const { guests, bookings, rooms, onRowClick, searchTerms } = props;
+  const tableData = useMemo( () => getAdditionalDataForEachBooking(guests, bookings, rooms), [bookings])
 
   const columns = [
     {
@@ -50,7 +53,7 @@ export const BookingsTable = (props) => {
     <Table 
       dataSource={tableData} 
       columns={columns} 
-      loading={isLoading}
+      loading={[guests, bookings, rooms].some(query => query.isPending)}
       size="middle"
       pagination={false}
       rowKey={(record) => record._id}
