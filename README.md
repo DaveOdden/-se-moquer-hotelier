@@ -17,6 +17,7 @@ This repo is the front-end layer only.
 - Data Fetching - [React Query](https://tanstack.com/query/v4/docs/react/overview)
 - UI Kit - [Ant Design](https://ant.design/)
 - Unit Testing - [Vitest](https://vitest.dev/)
+- Date Formatting - [DayJS](https://day.js.org/)
 
 ## API Layer & Data Storage
 
