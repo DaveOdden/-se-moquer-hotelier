@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
-import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons';
-import EditGuestForm from "./EditGuestForm"
+import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons'
+import { EditGuestForm } from "./EditGuestForm"
+import { useGuest } from 'src/hooks/useGuestsQuery'
+import { transformDataForDescription } from './utils/guestHelpers'
 
 export const GuestDetail = (props) => {
-  const [isOpen, setOpenState] = useState(false);
-  const [isEditing, setEditState] = useState(false);
-  const [descriptionContent, setDescriptionContent] = useState(null);
-  const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
+  const { guestId, updateGuest, deleteGuest, formStatus, showDrawer, hideDrawer } = props
+  const guest = useGuest(guestId)
+  const [isEditing, setEditState] = useState(false)
+  const [descriptionContent, setDescriptionContent] = useState(null)
 
   const actionItems = [
     {
@@ -33,87 +35,57 @@ export const GuestDetail = (props) => {
         <DeleteOutlined />
       ),
       danger: true,
-      onClick: () => props.deleteGuest(props.data._id)
+      onClick: () => deleteGuest(guest._id)
     },
   ]
   
   const onClose = () => {
-    setOpenState(false);
     setEditState(false);
-    props.onClose();
+    hideDrawer();
   };
 
-  const transformDataForDescription = () => {
-    let descriptionContent = [];
-    function loopOverProperties(dataObj) {
-      let index = 0;
-      for(const key in dataObj) {
-        if(typeof dataObj[key] != "object") {
-          descriptionContent.push({
-            key: index,
-            label: key,
-            children: dataObj[key]
-          })
-          index++
-        } else {
-          loopOverProperties(dataObj[key])
-        }
-      }
-    }
-    if(props.data) {
-      loopOverProperties(props.data)
-      setDescriptionContent(descriptionContent);
-    }
-  }
+  useEffect(() => { // loop over guest's raw data for content display
+    if(guest)
+      setDescriptionContent( transformDataForDescription(guest) )
+  }, [guest]);
 
-  useEffect(() => {
-    transformDataForDescription()
-  }, [props.data]);
-
-  useEffect(() => {
-    setOpenState(props.show)
-  }, [props.show]);
-
-  useEffect(() => {
-    setEditGuestFormStatus(props.editGuestFormStatus)
-    if(props.editGuestFormStatus.response == true ){
+  useEffect(() => { // revert to read-only when form is updated
+    if(formStatus.response)
       setEditState(false)
-    }
-  }, [props.editGuestFormStatus]);
+  }, [formStatus]);
 
   return (
-    <>
-      <Drawer 
-        title="Guest Information" 
-        placement="right" 
-        open={isOpen}
-        onClose={onClose} 
-        getContainer={false}
-        extra={
-          <Space>
-            { !isEditing && <Dropdown menu={{ items: actionItems }} placement="bottomRight">
+    <Drawer 
+      title="Guest Information" 
+      placement="right" 
+      open={showDrawer()}
+      onClose={onClose} 
+      getContainer={false}
+      extra={
+        <Space>
+          { isEditing ? (
+            <Button type="text" onClick={() => setEditState(false)}>
+              <LineOutlined />
+            </Button>
+          ) : (
+            <Dropdown menu={{ items: actionItems }} placement="bottomRight">
               <MoreOutlined />
-            </Dropdown> }
-            { isEditing && <Button type="text" onClick={() => setEditState(false)}><LineOutlined /></Button>}
-          </Space>
-        }
-      >
-        { !isEditing && 
-          <Descriptions 
-            items={descriptionContent} 
-            column={1} 
-            layout="small" 
-            contentStyle={{textAlign: 'left'}}
-          />
-        }
-        { isEditing && 
-          <EditGuestForm 
-            formData={props.data} 
-            submitFn={props.updateGuest} 
-            editGuestFormStatus={editGuestFormStatus}
-          /> 
-        }
-      </Drawer>
-    </>
+            </Dropdown> 
+          )}
+        </Space>
+      }>
+      { isEditing ? 
+        <EditGuestForm 
+          formData={guest} 
+          formSubmit={updateGuest} 
+          formStatus={formStatus} />
+        :
+        <Descriptions 
+          items={descriptionContent} 
+          column={1} 
+          layout="small" 
+          contentStyle={{textAlign: 'left'}} />
+      }
+    </Drawer>
   )
 }

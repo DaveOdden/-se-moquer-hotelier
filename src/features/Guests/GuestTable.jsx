@@ -1,4 +1,5 @@
 import { Table } from 'antd';
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 
 export const GuestTable = (props) => {
   const { tableData, isLoading, onRowClick, searchTerms } = props;
@@ -68,22 +69,24 @@ export const GuestTable = (props) => {
   ];
 
   return (
-    <Table 
-      dataSource={tableData} 
-      columns={columnDefinitions} 
-      size="middle" 
-      rowKey={(record) => record._id}
-      loading={isLoading}
-      pagination={false}
-      onRow={(record, rowIndex) => {
-        return {
-          onClick: (event) => {
-            onRowClick(record, rowIndex)
-          }
-        };
-      }}
-      scroll={{
-        y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
-      }} />
+    <ErrorBoundary>
+      <Table 
+        dataSource={tableData} 
+        columns={columnDefinitions} 
+        size="middle" 
+        rowKey={(record) => record._id}
+        loading={isLoading}
+        pagination={false}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              onRowClick(record, rowIndex)
+            }
+          };
+        }}
+        scroll={{
+          y: 'calc(100vh - 241px)' // table header height, sub header height, header height, container margin
+        }} />
+    </ErrorBoundary>
   )
 }

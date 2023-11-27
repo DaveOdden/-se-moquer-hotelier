@@ -20,3 +20,24 @@ export const convertFormDataForAPI = formData => {
     signUpDate: new Date(),
   }
 }
+
+export const transformDataForDescription = (guest) => {
+  let descriptionContent = [];
+  const loopOverProperties = dataObj => {
+    let index = 0;
+    for(const key in dataObj) {
+      if(typeof dataObj[key] != "object") {
+        descriptionContent.push({
+          key: index,
+          label: key,
+          children: dataObj[key]
+        })
+        index++
+      } else {
+        loopOverProperties(dataObj[key])
+      }
+    }
+  }
+  loopOverProperties(guest)
+  return descriptionContent
+}

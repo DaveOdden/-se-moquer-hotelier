@@ -1,62 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
-import { GuestAPI } from 'src/api/GuestAPI'
-import { useGuests } from 'src/hooks/useGuestsQuery'
+import { useGuests, useCreateGuest, useUpdateGuest, useDeleteGuest } from 'src/hooks/useGuestsQuery'
 import { NewGuestForm } from './NewGuestForm'
 import { GuestTable } from './GuestTable'
 import { GuestDetail } from './GuestDetail'
 import { convertFormDataForAPI } from './utils/guestHelpers'
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 
 export default function Guests() {
   const guests = useGuests();
-  const [contentIsLoading, setLoadingState] = useState(true);
-  const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
-  const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
-  const [showGuestDetail, setShowGuestDetail] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
-  const [searchValue, setSearchValue] = useState('');
+  const { mutate: addGuest } = useCreateGuest()
+  const { mutate: modifyGuest } = useUpdateGuest()
+  const { mutate: removeGuest } = useDeleteGuest()
+
+  const [newGuestFormStatus, setNewGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true})
+  const [editGuestFormStatus, setEditGuestFormStatus] = useState({ loading: false, response: null, error: null, pristine: true})
+  const [selectedGuestId, setSelectedGuestId] = useState(null)
+  const [searchValue, setSearchValue] = useState('')
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
-  const createGuest = (formData) => {
-    setLoadingState(true);
+  const createGuest = formData => {
     setNewGuestFormStatus({
       loading: true, 
       response: null, 
       error: null, 
       pristine: false
     })
-
-    GuestAPI.post(convertFormDataForAPI(formData)).then((res) => {
-      if(res.success) {
-        setLoadingState(false);
-        setNewGuestFormStatus({
-          loading: false, 
-          response: true, 
-          error: null, 
-          pristine: false
-        })
-        setToastNotification({
-          message: 'Success. Guest Added',
-          type: 'success'
-        })
-        guests.refetchRecords()
-      } else {
-        setNewGuestFormStatus({
-          loading: false, 
-          response: null, 
-          error: true, 
-          pristine: false
-        })
-        setToastNotification({
-          message: 'Error. Something screwed up...',
-          type: 'error'
-        })
-      }
+    addGuest(convertFormDataForAPI(formData), {
+      onSettled: (response) => onCreateSettled(response)
     })
   }
 
   const updateGuest = (id, formData) => {
-    let preppedFormData = {
+    let payload = {
       ...formData,
       lastUpdated: new Date(),
     };
@@ -68,94 +44,79 @@ export default function Guests() {
       pristine: false
     })
 
-    GuestAPI.update(id, preppedFormData).then((res) => {
-      if(res.success) {
-        setToastNotification({
-          message: 'Success. Guest updated',
-          type: 'success'
-        })
-        setTimeout( () => {
-          setEditGuestFormStatus({
-            loading: false, 
-            response: true, 
-            error: null, 
-            pristine: false
-          })
-          guests.refetchRecords()
-        }, 1200)
-        setTimeout( setSelectedRecord(null), 800)
-      } else {
-        setToastNotification({
-          message: 'Error. Something screwed up...',
-          type: 'error'
-        })
-        setEditGuestFormStatus({
-          loading: false, 
-          response: null, 
-          error: true, 
-          pristine: false
-        })
+    modifyGuest({id, payload}, {
+      onSettled: (response) => onUpdateSettled(response)
+    })
+  }
+
+  const deleteGuest = id => {
+    removeGuest(id, {
+      onSettled: (response) => {
+        popToast(response)
+        resetViewAfterSuccess(response)
       }
     })
   }
 
-  const deleteGuest = (id) => {
-    GuestAPI.delete(id).then((res) => {
-      if(res.success) {
-        setToastNotification({
-          message: 'Success. Guest deleted',
-          type: 'success'
-        })
-        setTimeout( () => {
-          setEditGuestFormStatus({
-            loading: false, 
-            response: true, 
-            error: null, 
-            pristine: false
-          })
-          guests.refetchRecords()
-        }, 1200)
-        setTimeout( hideDetail, 800)
-      } else {
-        setToastNotification({
-          message: 'Error. Something screwed up...',
-          type: 'error'
-        })
-        setEditGuestFormStatus({
-          loading: null, 
-          response: null, 
-          error: true, 
-          pristine: false
-        })
-      }
+  const onCreateSettled = response => {
+    setNewGuestFormStatus({
+      loading: false, 
+      response: response.success ? true : null, 
+      error: response.success ? null : true, 
+      pristine: false
     })
+    popToast(response)
+    resetViewAfterSuccess(response)
+  }
+
+  const onUpdateSettled = response => {
+    setEditGuestFormStatus({
+      loading: false, 
+      response: response.success ? true : null, 
+      error: response.success ? null : true, 
+      pristine: false
+    })
+    popToast(response)
+  }
+
+  const popToast = response => {
+    setToastNotification({
+      message: response.message || `${response.status ? `${response.status}`: ''} Error: Something Went Wrong`,
+      type: response.success ? 'success' : 'error' 
+    })
+  }
+
+  const resetViewAfterSuccess = response => {
+    selectedGuestId && response.success == true ? setSelectedGuestId(null) : null
   }
 
   return (
-    <FeatureWrapper
-      subHeaderProps={{
-        feature: "Guests", 
-        recordCount: guests?.data?.length,
-        newRecordBtn: true,
-        formStatus: newGuestFormStatus,
-        search: (e) => setSearchValue(e.target.value)
-      }}
-      toastNotification={toastNotification}
-      newRecordComponent={(
-        <NewGuestForm submitFn={createGuest} />
-      )}>
-      <GuestTable 
-        isLoading={guests?.isPending}
-        tableData={guests?.data}
-        onRowClick={(record) => setSelectedRecord(record)} 
-        searchTerms={searchValue} />
-      <GuestDetail 
-        show={() => selectedRecord !== null} 
-        data={selectedRecord} 
-        onClose={() => setSelectedRecord(null)}
-        updateGuest={updateGuest} 
-        deleteGuest={deleteGuest} 
-        editGuestFormStatus={editGuestFormStatus} />
-    </FeatureWrapper>
+    <ErrorBoundary>
+      <FeatureWrapper
+        subHeaderProps={{
+          featureName: "Guests", 
+          recordCount: guests?.data?.length,
+          newRecordBtn: true,
+          newRecordStatus: newGuestFormStatus,
+          search: (e) => setSearchValue(e.target.value)
+        }}
+        toastNotification={toastNotification}
+        newRecordComponent={(
+          <NewGuestForm submitFn={createGuest} />
+        )}>
+        <GuestTable 
+          isLoading={guests?.isPending}
+          tableData={guests?.data}
+          onRowClick={(record) => setSelectedGuestId(record._id)} 
+          searchTerms={searchValue} />
+        <GuestDetail 
+          guestId={selectedGuestId} 
+          updateGuest={updateGuest} 
+          deleteGuest={deleteGuest} 
+          formStatus={editGuestFormStatus}
+          showDrawer={() => selectedGuestId !== null} 
+          hideDrawer={() => setSelectedGuestId(null)} />
+      </FeatureWrapper>
+    </ErrorBoundary>
   )
 }
