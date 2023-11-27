@@ -1,4 +1,3 @@
-import React from 'react'
 import FeatureNav from './FeatureNav'
 import { Row, Col } from 'antd'
 import { Typography } from 'antd'

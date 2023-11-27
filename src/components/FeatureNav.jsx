@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DatabaseOutlined, SettingOutlined, UserOutlined, ReadOutlined, PartitionOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useNavigate, useLocation } from "react-router-dom";

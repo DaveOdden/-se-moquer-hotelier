@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useQueries } from '@tanstack/react-query'
+import { useState } from 'react'
+import { useCreateBooking, useUpdateBooking, useDeleteBooking } from 'src/hooks/useBookingsQuery'
+import { useAllFeatures } from 'src/hooks/useAllQuery'
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
+
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import BookingDetail from './BookingsDetail/Index'
 import { BookingsTable } from './BookingsTable'
 import NewBookingContainer from './NewBooking/Index'
-import { GuestAPI } from 'src/api/GuestAPI';
-import { BookingsAPI } from 'src/api/BookingsAPI';
-import { RoomsAPI } from 'src/api/RoomAPI'
 
 export default function Bookings(props) {
-  const [guests, bookings, rooms] = useQueries({
-    queries: [
-      { queryKey: ["guests"], queryFn: () => GuestAPI.get().then((res) => res.message) },
-      { queryKey: ["bookings"], queryFn: () => BookingsAPI.get().then((res) => res.message) },
-      { queryKey: ["rooms"], queryFn: () => RoomsAPI.get().then((res) => res.message) },
-    ]
-  })
-  
+  const [guests, bookings, rooms] = useAllFeatures()
+  const { mutate: addBooking } = useCreateBooking()
+  const { mutate: modifyBooking } = useUpdateBooking()
+  const { mutate: removeBooking } = useDeleteBooking()
+
   const dataIsLoading = [guests, bookings, rooms].some(query => query.isPending)
   const allDataFetched = [guests, bookings, rooms].every(query => query.isSuccess)
   const error = [guests, bookings, rooms].some(query => query.error)
@@ -33,99 +30,67 @@ export default function Bookings(props) {
       error: null, 
       pristine: false
     })
-    BookingsAPI.post(formData).then((res) => {
-      if(res.success) {
-        setTimeout(() => {
-          setToastNotification({
-            message: "Booking Successful",
-            type: 'success'
-          })
-        },700)
-        setTimeout(() => {
-          setNewBookingFormStatus({
-            loading: false, 
-            response: true, 
-            error: null, 
-            pristine: false
-          })
-        },900)
-      } else {
-        setToastNotification({
-          message: "Error. Something screwed up...",
-          type: 'error'
-        })
-        setNewBookingFormStatus({
-          loading: null, 
-          response: null, 
-          error: true, 
-          pristine: false
-        })
-      }
+    addBooking(formData, {
+      onSettled: (response) => onCreateSettled(response)
     })
+  }
+
+  const onCreateSettled = (response) => {
+    setTimeout( () => {
+      setNewBookingFormStatus({
+        loading: false, 
+        response: response.success ? true : null, 
+        error: response.success ? null : true, 
+        pristine: false
+      })
+    }, 1200)
+    popToast(response)
   }
 
   const deleteBooking = id => {
-    BookingsAPI.delete(id).then((res) => {
-      if(res.success) {
-        setToastNotification({
-          message: "Booking Deleted",
-          type: 'success'
-        })    
-        setTimeout( () => {
-          setNewBookingFormStatus({
-            loading: false, 
-            response: true, 
-            error: null, 
-            pristine: false
-          })
-        }, 1200)
-        setTimeout( setSelectedRecord(null), 800)
-      } else {
-        setToastNotification({
-          message: "Error. Something screwed up...",
-          type: 'error'
-        })
-        setNewBookingFormStatus({
-          loading: null, 
-          response: null, 
-          error: true, 
-          pristine: false
-        })
-      }
+    removeBooking(id, {
+      onSettled: (response) => onDeleteSettled(response)
     })
   }
 
-  const refetchAggregatedData = () => {
-    if(newBookingFormStatus.response)
-      bookings.refetchBookings()
+  const onDeleteSettled = (res) => {
+    popToast(res)
+    res.success ? setTimeout( setSelectedRecord(null), 800) : null
   }
 
-  //useEffect(() => refetchAggregatedData(), [newBookingFormStatus]);
+  const popToast = response => {
+    setToastNotification({
+      message: response.message || `${response.status ? `${response.status}`: ''} Error: Something Went Wrong`,
+      type: response.success ? 'success' : 'error' 
+    })
+  }
 
   return (
-    <FeatureWrapper
-      subHeaderProps={{
-        feature: "Bookings", 
-        recordCount: 0,
-        newRecordBtn: true,
-        formStatus: newBookingFormStatus,
-        search: (e) => setSearchValue(e.target.value)
-      }}
-      toastNotification={toastNotification}
-      newRecordComponent={(
-        <NewBookingContainer submitFn={createBooking} />
-      )}>
-      <BookingsTable
-        guests={guests}
-        bookings={bookings}
-        rooms={rooms}
-        onRowClick={(record) => setSelectedRecord(record)} 
-        searchTerms={searchValue} />
-      <BookingDetail 
-        show={() => selectedRecord !== null} 
-        data={selectedRecord}
-        deleteBooking={deleteBooking} 
-        onClose={() => setSelectedRecord(null)} />
-    </FeatureWrapper>
+    <ErrorBoundary>
+      <FeatureWrapper
+        subHeaderProps={{
+          featureName: "Bookings", 
+          recordCount: 0,
+          newRecordBtn: true,
+          newRecordStatus: newBookingFormStatus,
+          search: (e) => setSearchValue(e.target.value)
+        }}
+        toastNotification={toastNotification}
+        newRecordComponent={(
+          <NewBookingContainer submitFn={createBooking} />
+        )}>
+        <BookingsTable
+          guests={guests}
+          bookings={bookings}
+          rooms={rooms}
+          onRowClick={(record) => setSelectedRecord(record)} 
+          searchTerms={searchValue} />
+        <BookingDetail 
+          show={() => selectedRecord !== null} 
+          data={selectedRecord}
+          deleteBooking={deleteBooking} 
+          onClose={() => setSelectedRecord(null)} />
+      </FeatureWrapper>
+    </ErrorBoundary>
   )
 }

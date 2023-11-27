@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Flex, Modal, Space, Typography, Button, Input } from 'antd';
-import { PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
-const { Title, Text } = Typography;
+import { useState, useEffect } from 'react'
+import { Flex, Modal, Space, Typography, Button, Input } from 'antd'
+import { PlusCircleOutlined, SearchOutlined } from '@ant-design/icons'
+const { Title, Text } = Typography
 import { depluralize } from "../utils/helper"
 
 export default function SubHeaderComponent(props) {
@@ -12,10 +12,9 @@ export default function SubHeaderComponent(props) {
   const hideModal = () => setIsModalOpen(false)
 
   useEffect(() => {
-    if(newRecordStatus && newRecordStatus.response) {
-      setIsModalOpen(false);
-    }
-  },[newRecordStatus]);
+    if(newRecordStatus && newRecordStatus.response)
+      setIsModalOpen(false)
+  },[newRecordStatus])
 
   return (
     <>

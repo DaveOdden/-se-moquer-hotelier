@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { useGuests, useCreateGuest, useUpdateGuest, useDeleteGuest } from 'src/hooks/useGuestsQuery'
 import { NewGuestForm } from './NewGuestForm'
@@ -31,6 +31,16 @@ export default function Guests() {
     })
   }
 
+  const onCreateSettled = response => {
+    setNewGuestFormStatus({
+      loading: false, 
+      response: response.success ? true : null, 
+      error: response.success ? null : true, 
+      pristine: false
+    })
+    popToast(response)
+  }
+
   const updateGuest = (id, formData) => {
     let payload = {
       ...formData,
@@ -49,26 +59,6 @@ export default function Guests() {
     })
   }
 
-  const deleteGuest = id => {
-    removeGuest(id, {
-      onSettled: (response) => {
-        popToast(response)
-        resetViewAfterSuccess(response)
-      }
-    })
-  }
-
-  const onCreateSettled = response => {
-    setNewGuestFormStatus({
-      loading: false, 
-      response: response.success ? true : null, 
-      error: response.success ? null : true, 
-      pristine: false
-    })
-    popToast(response)
-    resetViewAfterSuccess(response)
-  }
-
   const onUpdateSettled = response => {
     setEditGuestFormStatus({
       loading: false, 
@@ -79,15 +69,24 @@ export default function Guests() {
     popToast(response)
   }
 
+  const deleteGuest = id => {
+    removeGuest(id, {
+      onSettled: (response) => {
+        popToast(response)
+        exitDrawerAfterDelete(response)
+      }
+    })
+  }
+
+  const exitDrawerAfterDelete = response => {
+    selectedGuestId && response.success == true ? setSelectedGuestId(null) : null
+  }
+
   const popToast = response => {
     setToastNotification({
       message: response.message || `${response.status ? `${response.status}`: ''} Error: Something Went Wrong`,
       type: response.success ? 'success' : 'error' 
     })
-  }
-
-  const resetViewAfterSuccess = response => {
-    selectedGuestId && response.success == true ? setSelectedGuestId(null) : null
   }
 
   return (

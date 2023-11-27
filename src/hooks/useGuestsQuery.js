@@ -1,5 +1,5 @@
 import { useQueryClient, useQuery, useMutation } from '@tanstack/react-query'
-import { GuestAPI } from '../api/GuestAPI';
+import { GuestAPI } from '../api/GuestAPI'
 
 export const useGuests = () => {
   return useQuery({

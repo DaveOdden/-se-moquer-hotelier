@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { NewGuestForm } from '../../Guests/NewGuestForm'
@@ -13,8 +13,7 @@ export const NewGuest = (props) => {
         type="link"
         icon={<ArrowLeftOutlined />} 
         onClick={() => setCurrentView('newBookingForm')}
-        size="small"
-      >
+        size="small">
         Back to Booking Form
       </Button>
       <NewGuestForm submitFn={() => {}} />
