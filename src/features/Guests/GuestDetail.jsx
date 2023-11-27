@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
 import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons'
 import { EditGuestForm } from "./EditGuestForm"

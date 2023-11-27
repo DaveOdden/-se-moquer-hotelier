@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Layout, message } from 'antd'
 const { Header, Content } = Layout
 import SubHeaderComponent from 'src/components/SubHeaderComponent'

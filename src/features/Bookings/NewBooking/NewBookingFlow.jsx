@@ -1,5 +1,4 @@
-
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Carousel } from 'antd'
 import { NewBookingForm } from './Form/NewBookingForm'
 import { BookingConfirmation } from './NewBookingConfirmation'

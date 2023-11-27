@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Space, Form, DatePicker, TimePicker } from 'antd'
 import { useSettings } from 'src/hooks/useSettingsQuery'
 import dayjs from 'dayjs'
 import { isSameDay } from 'src/utils/dateHelpers'
 
 export const NewBookingDateSelection = (props) => {
-  const { onCheckinDateSelection, onCheckoutDateSelection, setCheckinTime, setCheckoutTime } = props
+  const {
+    checkinTime,
+    checkoutTime,
+    onCheckinDateSelection, 
+    onCheckoutDateSelection, 
+    setCheckinTime, 
+    setCheckoutTime } = props
   const [checkinDate, setCheckinDate] = useState()
   const [checkoutDate, setCheckoutDate] = useState()
   const { settings } = useSettings()
+
+  console.log(checkinTime)
+  console.log(checkoutTime)
 
   const disableDatesPriorToToday = current => {
     return current.isBefore(dayjs(new Date()).subtract(1, 'day')) ? true : false
@@ -29,8 +38,9 @@ export const NewBookingDateSelection = (props) => {
   }
 
   const addMinStayDurationToCheckoutDate = checkoutDate => {
+    const DEFAULT_MIN_STAY = 24
     let minStayDuration = settings?.properties?.minStayDuration
-    return checkoutDate.add(minStayDuration, 'hour');
+    return checkoutDate.add(minStayDuration || DEFAULT_MIN_STAY, 'hour')
   }
 
   return (
@@ -41,7 +51,7 @@ export const NewBookingDateSelection = (props) => {
           label="CheckIn Date"
           rules={[{
             required: true,
-            message: 'Check-in date is required',
+            message: 'Checkin date is required',
           }]}>
           <DatePicker 
             onChange={onChangeOfCheckinDate} 
@@ -52,16 +62,14 @@ export const NewBookingDateSelection = (props) => {
           label="Checkin Time"
           rules={[{
             required: true,
-            message: 'Check-in time is required',
+            message: 'Checkin time is required',
           }]}>
           <TimePicker 
             use12Hour={true}
             minuteStep={15} 
             format="h:mm a"
-            onSelect={(val) => {
-              console.log(val);
-              setCheckinTime(val)}
-            }
+            onSelect={val => setCheckinTime(val)}
+            value={checkinTime}
             disabledTime={(now) => {
               return ({
                 disabledHours: () => {
@@ -94,7 +102,7 @@ export const NewBookingDateSelection = (props) => {
           label="Checkout Date"
           rules={[{
             required: true,
-            message: 'Check-out date is required',
+            message: 'Checkout date is required',
           }]}>
           <DatePicker 
             onChange={onChangeOfCheckoutDate} 
@@ -103,18 +111,16 @@ export const NewBookingDateSelection = (props) => {
         <Form.Item 
           name="checkoutTime" 
           label="Checkout Time"
+          value={checkoutTime}
           rules={[{
             required: true,
-            message: 'Check-out time is required',
+            message: 'Checkout time is required',
           }]}>
           <TimePicker 
             use12Hours 
             minuteStep={15} 
             format="h:mm a"
-            onSelect={(val) =>  {
-              console.log(val);
-              setCheckinTime(val)}
-            }/>
+            onSelect={val => setCheckinTime(val)} />
         </Form.Item>
       </Space> 
     </>

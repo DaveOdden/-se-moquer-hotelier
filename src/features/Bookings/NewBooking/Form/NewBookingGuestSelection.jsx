@@ -1,26 +1,14 @@
-import React from 'react'
 import { AutoComplete, Form, Input } from 'antd'
 import { GuestAPI } from '../../../../api/GuestAPI.js'
 import { useGuestAutoComplete } from 'src/hooks/useGuestsQuery'
+import { onGuestSearch } from 'src/features/Bookings/utils/newBookingGuestSearch'
 
 export const NewBookingGuestSelection = (props) => {
   const guest = useGuestAutoComplete()
-  const { setSelectedGuest } = props;
+  const { setSelectedGuest, setGuestSearchHasResults } = props;
 
-  const onGuestSearch = (query) => {
-    let hasMatch = false;
-    for (const el of guest.guestsKeyValueSet) {
-      let hasValueMatch, hasLabelMatch = false;
-      hasLabelMatch = el.label.indexOf(query) !== -1 ? true : false
-      hasValueMatch = el.value.indexOf(query) !== -1 ? true : false
-      if(hasLabelMatch || hasValueMatch) {
-        hasMatch = true
-        break;
-      }
-    }
-    if(!hasMatch) {
-      setSelectedGuest(null)
-    }
+  const onSearch = (query) => {
+    setGuestSearchHasResults(onGuestSearch(query, guest.data))
   }
 
   const onGuestSelection = (value, data) => {
@@ -39,9 +27,9 @@ export const NewBookingGuestSelection = (props) => {
         message: 'Select a guest',
       }]}>
       <AutoComplete
-        options={guest.guestsKeyValueSet}
+        options={guest.data}
         filterOption={true}
-        onSearch={onGuestSearch}
+        onSearch={onSearch}
         onSelect={onGuestSelection}>
         <Input.Search
           placeholder={guest.isLoading ? 'Loading...' : 'Search by Name'} 

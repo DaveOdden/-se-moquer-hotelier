@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Flex, Button, Typography } from 'antd';
 const { Text } = Typography;
 import { CurrentModalState } from './NewBookingContainer';

@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
-import { Form, Button } from 'antd'
+import { Form } from 'antd'
 import { NewGuestPrompt } from '../NewGuestPrompt'
 import { NewBookingGuestSelection } from './NewBookingGuestSelection'
 import { NewBookingDateSelection } from './NewBookingDateSelection'
 import { NewBookingRoomSelection } from './NewBookingRoomSelection'
+import { NewBookingSubmitButton } from './NewBookingSubmitButton'
 import { BookingsAPI } from 'src/api/BookingsAPI'
 import { calculateDuration } from 'src/utils/dateHelpers.js'
 import { useSettings } from 'src/hooks/useSettingsQuery'
 
 export const NewBookingForm = (props) => {
   const { returnFormData } = props
-  const [bookingForm] = Form.useForm()
-  const { settings } = useSettings()
+  const [ bookingForm ] = Form.useForm()
+  const { data: settings } = useSettings()
 
   /* Guest States */
+  const [guestSearchHasResults, setGuestSearchHasResults] = useState(undefined)
   const [selectedGuest, setSelectedGuest] = useState(undefined)
 
   /* Date / Time States */
   const [checkinDate, setCheckinDate] = useState(null)
   const [checkoutDate, setCheckoutDate] = useState(null)
-  const [checkinTime, setCheckinTime] = useState(dayjs('12.30.00', 'HH:mm:ss'))
+  const [checkinTime, setCheckinTime] = useState(dayjs('2.30.00', 'HH:mm:ss'))
   const [checkoutTime, setCheckoutTime] = useState(dayjs('10.30.00', 'HH:mm:ss'))
   const [durationOfStay, setDurationOfStay] = useState(0)
 
@@ -31,10 +33,9 @@ export const NewBookingForm = (props) => {
 
   let showDateSelection = selectedGuest
   let showRoomSelection = selectedGuest && checkinDate && checkoutDate && checkinTime && checkoutTime
-  let showNewGuestPrompt = selectedGuest === null
+  let showNewGuestPrompt = guestSearchHasResults === null
 
   const populateRoomDropdown = () => {
-    console.log('populateRoomDropdown');
     if(checkoutDate && checkinDate) {
       setRoomLoadingState(true)
       BookingsAPI.getRoomsByAvailability(checkinDate, checkoutDate).then((res) => {
@@ -76,10 +77,14 @@ export const NewBookingForm = (props) => {
     returnFormData(data)
   }
 
-  useEffect(() => {
-    setCheckinTime(settings?.properties?.checkinTime)
-    setCheckoutTime(settings?.properties?.checkoutTime)
+  useEffect(() => { // update checkin/checkout time from settings
+    if(settings) {
+      console.log(settings)
+      setCheckinTime(dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
+      setCheckoutTime(dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
+    }
   }, [settings])
+
   useEffect(() => populateRoomDropdown(), [checkinDate, checkoutDate])
 
   return (
@@ -91,12 +96,16 @@ export const NewBookingForm = (props) => {
       }}
       form={bookingForm}
       validateTrigger="onChange">
-      <NewBookingGuestSelection setSelectedGuest={setSelectedGuest} />
+      <NewBookingGuestSelection 
+        setSelectedGuest={setSelectedGuest} 
+        setGuestSearchHasResults={setGuestSearchHasResults} />
       { showNewGuestPrompt && (
         <NewGuestPrompt /> 
       ) }
       { showDateSelection && (
         <NewBookingDateSelection
+          checkinTime={settings.properties.checkinTime}
+          checkoutTime={settings.properties.checkoutTime}
           onCheckinDateSelection={setCheckinDate}
           onCheckoutDateSelection={setCheckoutDate}
           setCheckinTime={setCheckinTime}
@@ -109,20 +118,7 @@ export const NewBookingForm = (props) => {
             roomIsLoading={roomIsLoading}
             onRoomSelection={onRoomSelection}
             onRoomSelectionChange={onRoomSelectionChange} /> 
-          <Form.Item shouldUpdate style={{textAlign: 'right', marginBottom: '0'}}>
-            {(bookingForm) => {
-              const { guest, checkinDate, checkinTime, checkoutDate, checkoutTime, room } = bookingForm.getFieldsValue();
-              const formIsComplete = !!guest && !!checkinDate && !!checkinTime && !!checkoutDate && !!checkoutTime && !!room;
-              return (
-                <Button 
-                  type="primary" 
-                  disabled={!formIsComplete}
-                  onClick={moveToNextStep}>
-                  Next
-                </Button>
-              );
-            }}
-          </Form.Item>
+          <NewBookingSubmitButton bookingForm={bookingForm} moveToNextStep={moveToNextStep} />
         </>
       ) }
     </Form>

@@ -2,7 +2,7 @@ import { Space, Form, Input, Button } from 'antd';
 
 export const NewGuestForm = (props) => {
   return (
-    <Form id="guestsForm" onFinish={props.submitFn}>
+    <Form id="guestsForm" style={{marginTop: '24px'}} onFinish={props.submitFn}>
       <Form.Item name="firstName" label="First Name">
         <Input placeholder="John"/>
       </Form.Item>
@@ -34,13 +34,13 @@ export const NewGuestForm = (props) => {
         </Form.Item>
       </Space>
 
-      <Form.Item name="licenseNumber">
+      <Form.Item name="licenseNumber" label="Licence #">
         <Input placeholder="000000000001"/>
       </Form.Item>
       <Form.Item name="notes">
         <Input.TextArea placeholder="Notes"/>
       </Form.Item>
-      <Form.Item>
+      <Form.Item style={{textAlign: 'right', marginBottom: '0'}}>
         <Button  type="primary" key="submit" htmlType="submit">
           Submit
         </Button>

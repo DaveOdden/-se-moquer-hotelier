@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Space, Flex, Button, Descriptions, Divider, Statistic } from 'antd'
 import { writtenOutDateTime } from 'src/utils/dataTransformation'
 import { useSettings } from 'src/hooks/useSettingsQuery'
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
 
 export const BookingConfirmation = (props) => {
-  const { settings } = useSettings();
+  const { data: settings } = useSettings();
   const { 
     formData,
     guestDetails, 
@@ -19,7 +20,7 @@ export const BookingConfirmation = (props) => {
   }
 
   return (
-    <>
+    <ErrorBoundary>
       <Space direction="vertical">
         <Descriptions 
           size="small"
@@ -38,7 +39,7 @@ export const BookingConfirmation = (props) => {
         <Divider style={{ margin: 0 }}/>
         <Flex justify="space-between">
           <Descriptions column={1}>
-            <Descriptions.Item label="Rate">${settings?.properties?.roomRate} x {formData?.billing?.days}</Descriptions.Item>
+            <Descriptions.Item label="Rate">${settings?.properties?.roomRate} x {formData?.billing.days}</Descriptions.Item>
           </Descriptions>
           <Statistic 
             title="Total" 
@@ -46,7 +47,7 @@ export const BookingConfirmation = (props) => {
               textAlign: 'right', 
               marginBottom: '32px'
             }} 
-            value={`$${settings?.properties?.roomRate * formData?.billing?.days}`} />
+            value={`$${settings?.properties?.roomRate * formData?.billing.days}`} />
         </Flex>
       </Space>
       <Flex justify="space-between">
@@ -58,6 +59,6 @@ export const BookingConfirmation = (props) => {
             Confirm Booking
         </Button>
       </Flex>
-    </>
+    </ErrorBoundary>
   )
 }

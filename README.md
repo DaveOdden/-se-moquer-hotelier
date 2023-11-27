@@ -29,6 +29,8 @@ This repo is the front-end layer only.
 
 - All function-based components (no class based)
   - Functional components have a simpler syntax, no lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
+- Not importing React `import React from 'react'`
+  - As of React v17, you no longer have to include dependency to transform JSX
 - Conditional Rendering
   - e.g. (`{ dataIsAvailable && <ComponentToShow /> }`)
 - ContextAPI

@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import { Space, Form, Input, Button } from 'antd';
 
 export const EditGuestForm = (props) => {
   const { formData, formStatus, formSubmit } = props
 
   const submitForm = editedFormData => formSubmit(formData._id, editedFormData)
-
-  // useEffect(() => {
-  //   formData ? setFormData(formData) : null
-  // }, [formData]);
-
-  // useEffect(() => {
-  //   setformStatus(formStatus)
-  // }, [formStatus]);
 
   return (
     <Form id="guestsForm" onFinish={submitForm} initialValues={formData}>
@@ -53,7 +44,7 @@ export const EditGuestForm = (props) => {
       <Form.Item name="notes" disabled={formStatus.loading}>
         <Input.TextArea placeholder="Notes" disabled={formStatus.loading}/>
       </Form.Item>
-      <Form.Item disabled={formStatus.loading}>
+      <Form.Item disabled={formStatus.loading} style={{textAlign: 'right', marginBottom: '0'}}>
         <Button  type="primary" key="submit" htmlType="submit" disabled={formStatus.loading}>
           Submit
         </Button>

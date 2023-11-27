@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import { useState, createContext } from 'react';
 import { NewGuest } from './NewGuestWrapper'
 import { NewBookingFlow } from './NewBookingFlow'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
