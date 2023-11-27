@@ -1,5 +1,5 @@
 import './App.css'
-import React from 'react';
+import React from 'react'
 import { Layout, Row, Col } from 'antd';
 const { Header } = Layout;
 import HeaderComponent from './components/HeaderComponent'
@@ -8,7 +8,7 @@ import Bookings from './features/Bookings/Bookings'
 import Guests from './features/Guests/Guests'
 import Rooms from './features/Rooms/Rooms'
 import { Settings } from './features/Settings/Settings'
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom"
 
 const headerStyle = {
   textAlign: 'center',

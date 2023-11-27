@@ -14,6 +14,7 @@ This repo is the front-end layer only.
 - Front End Build Tool - [Vite](https://vitejs.dev/)
 - Front End Framework - [React](https://react.dev/)
 - SPA Router - [React Router](https://github.com/remix-run/react-router#readme)
+- Data Fetching - [React Query](https://tanstack.com/query/v4/docs/react/overview)
 - UI Kit - [Ant Design](https://ant.design/)
 - Unit Testing - [Vitest](https://vitest.dev/)
 
@@ -37,8 +38,9 @@ This repo is the front-end layer only.
   - Disable form fields and buttons during API calls to avoid duplicate calls.
 - Absolute Dependency Paths
 - Spread Syntax
-- Destructuring
-- Smart parent / Dumb Children Pattern
+- Destructuring with Aliasing
+  - e.g. ` const { mutate: addGuest } = useCreateGuest()`
+- Container Parent / Presentation Child Pattern (smart parent / dumb children)
 - Custom Hooks
   - Only use Higher Order Components (HOC) or Render Props when absolutely necessary.
 - `<ErrorBoundary />`

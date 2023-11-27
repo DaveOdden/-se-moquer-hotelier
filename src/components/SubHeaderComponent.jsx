@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Flex, Modal, Space, Typography, Button, Input } from 'antd';
 import { PlusCircleOutlined, SearchOutlined } from '@ant-design/icons';
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Text } = Typography;
 import { depluralize } from "../utils/helper"
 
-const headingStyle = {
-  margin: 0,
-  fontSize: '1.4rem',
-};
-
 export default function SubHeaderComponent(props) {
-  const { feature, recordCount, formStatus, search } = props;
+  const { featureName, recordCount, newRecordBtn, newRecordStatus, search } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => setIsModalOpen(true)
-  const handleCancel = () => setIsModalOpen(false)
+  const hideModal = () => setIsModalOpen(false)
 
   useEffect(() => {
-    if(formStatus && formStatus.response) {
+    if(newRecordStatus && newRecordStatus.response) {
       setIsModalOpen(false);
     }
-  },[formStatus]);
+  },[newRecordStatus]);
 
   return (
     <>
@@ -32,17 +27,17 @@ export default function SubHeaderComponent(props) {
           level={2} 
           style={{textTransform: 'capitalize', margin: 0, fontSize: 20}}>
           <Space>
-            {feature}
+            {featureName}
             {recordCount > 0 && <Text data-testid="record-count">({recordCount})</Text>}
           </Space>
         </Title>
         <Space align="center">
           <Input 
             addonBefore={<SearchOutlined />} 
-            style={{verticalAlign: 'middle',marginTop: -2}} 
+            style={{verticalAlign: 'middle', marginTop: -2}} 
             placeholder="search"
             onChange={(e) => search(e)} />
-          { props.newRecordBtn ? (
+          { newRecordBtn &&
             <Button
               type="primary"
               shape="round"
@@ -51,16 +46,16 @@ export default function SubHeaderComponent(props) {
               onClick={showModal}
               style={{textTransform: 'capitalize'}}
               data-testid="action-button">
-              New {depluralize(props.feature)}
+              New {depluralize(featureName)}
             </Button>
-          ) : null }
+          }
         </Space>
       </Flex>
       <Modal 
-        title={`New ${depluralize(props.feature)}`} 
+        title={`New ${depluralize(featureName)}`} 
         open={isModalOpen} 
         footer={null}
-        onCancel={handleCancel}
+        onCancel={hideModal}
         destroyOnClose={true}>
         {props.children}
       </Modal>
