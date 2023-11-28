@@ -8,6 +8,13 @@ export const useBookings = () => {
   });
 }
 
+export const useArrayOfRoomsBooked = () => {
+  return useQuery({
+    queryKey: ['roomsbooked'],
+    queryFn: () => BookingsAPI.get().then((res) => res.arrayOfRoomsBooked),
+  });
+}
+
 export const useCreateBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({

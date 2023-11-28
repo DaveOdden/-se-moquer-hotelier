@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import { useCreateBooking, useUpdateBooking, useDeleteBooking } from 'src/hooks/useBookingsQuery'
 import { useAllFeatures } from 'src/hooks/useAllQuery'
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary';
-
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
-import BookingDetail from './BookingsDetail/Index'
 import { BookingsTable } from './BookingsTable'
+import BookingDetail from './BookingsDetail/Index'
 import NewBookingContainer from './NewBooking/Index'
 
 export default function Bookings(props) {

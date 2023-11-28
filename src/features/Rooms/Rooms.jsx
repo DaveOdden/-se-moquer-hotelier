@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Layout, Flex, Modal, Spin, message } from 'antd'
+import { Layout, Flex, Modal, Spin } from 'antd'
 const { Header, Content } = Layout
 import SubHeaderComponent from '../../components/SubHeaderComponent'
 import { RoomGrid } from './RoomGrid'
@@ -27,9 +27,6 @@ const contentStyle = {
 export default function Rooms() {
   const rooms = useRooms()
   const [selectedRoom, setSelectedRoom] = useState({});
-  const [bookings, setRoomBookings] = useState([]);
-  const [contentIsLoading, setLoadingState] = useState(true);
-  const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showRoomGrid, setShowRoomGrid] = useState(false);
 
@@ -43,25 +40,10 @@ export default function Rooms() {
     setSelectedRoom({});
   };
 
-  // const getBookedRooms = () => {
-  //   BookingsAPI.get().then((res) => {
-  //     setRoomBookings(res.arrayOfRoomsBooked);
-  //   })
-  // }
-  
-  // const getRoomData = () => {
-  //   RoomsAPI.get().then((res) => {
-  //     setRooms(res.message);
-  //     setLoadingState(false);
-  //     getBookedRooms();
-  //   })
-  // }
-  
   useEffect(() => setShowRoomGrid(true),[])
 
   return (
     <ErrorBoundary>
-      {contextHolder}
       <Header style={headerStyle}>
         <SubHeaderComponent 
           featureName="rooms" 
@@ -75,9 +57,9 @@ export default function Rooms() {
           style={{ 
             background: '#f5f5f5', 
             height: '100%', 
-            padding: '8px 0' 
+            padding: '8px 0'
           }}>
-          { rooms.data && showRoomGrid && <RoomGrid rooms={rooms.data} /> || <Spin style={{  width: '100%', textAlign: 'center',  margin: '32px'}}/> }
+          { rooms.data && showRoomGrid && <RoomGrid rooms={rooms.data} showModal={showModal} /> || <Spin style={{  width: '100%', textAlign: 'center',  margin: '32px'}}/> }
         </Flex>
       </Content>
       <Modal 

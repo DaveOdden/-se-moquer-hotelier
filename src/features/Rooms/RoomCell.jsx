@@ -2,7 +2,7 @@ import { Typography, Space, Button } from 'antd'
 const { Text } = Typography
 
 export const RoomCell = props => {
-  const { room, width } = props 
+  const { room, width, showModal, bookedRooms } = props 
   return (
     <Space.Compact 
       size="small"
@@ -13,16 +13,15 @@ export const RoomCell = props => {
         padding: '8px 0'
       }}>
       <Button 
+        block
         onClick={() => showModal(room)} 
         style={{ 
           height: '100%', 
           borderRadius: 0, 
-        }} 
-        block>
+          background: (bookedRooms && bookedRooms.includes(room._id) ? '#f0f0f0' : 'white')
+        }}>
         <Text>{room.roomNum}</Text>
       </Button>
     </Space.Compact>
   )
 }
-
-/* background: (bookings && bookings.includes(room._id) ? '#f0f0f0' : 'white') */
