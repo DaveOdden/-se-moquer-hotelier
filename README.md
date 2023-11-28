@@ -54,6 +54,7 @@ This repo is the front-end layer only.
 ### New Booking Form
 
 ![new booking form diagram](./docs/UnMoquerHotelier-NewBooking.jpg)
+![new booking flow diagram](./docs/UnMoquerHotelier-NewBookingFlow.jpg)
 ![new booking db diagram](./docs/UnMoquerHotelier-NewBookingDBUpdates.jpg)
 
 
