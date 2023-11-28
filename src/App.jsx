@@ -1,3 +1,4 @@
+import { Routes, Route, Outlet } from "react-router-dom"
 import './App.css'
 import { Layout, Row, Col } from 'antd';
 const { Header } = Layout;
@@ -7,7 +8,6 @@ import Bookings from './features/Bookings/Bookings'
 import Guests from './features/Guests/Guests'
 import Rooms from './features/Rooms/Rooms'
 import { Settings } from './features/Settings/Settings'
-import { Routes, Route, Outlet } from "react-router-dom"
 
 const headerStyle = {
   textAlign: 'center',
@@ -49,7 +49,7 @@ const App = () => {
               <Route path="guests" element={<Guests />} />
               <Route path="rooms" element={<Rooms />} />
               <Route path="settings" element={<Settings />} />
-              <Route path="*" element={<h1>No</h1>} />
+              <Route path="*" element={<h1>None</h1>} />
             </Route>
           </Routes>
         </Layout>

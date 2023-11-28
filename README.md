@@ -26,7 +26,7 @@ This repo is the front-end layer only.
 
 ![image infrastructure diagram](./docs/UnMoquerHotelier-Infrastructure.jpg)
 
-## Techniques
+## Techniques & Decisions
 
 - All function-based components (no class based)
   - Functional components have a simpler syntax, no lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
