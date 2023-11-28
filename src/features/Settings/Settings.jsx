@@ -11,7 +11,7 @@ export const Settings = () => {
   return (
     <FeatureWrapper
       subHeaderProps={{
-        feature: "Settings", 
+        featureName: "Settings", 
         recordCount: 0,
         newRecordBtn: false,
       }}
