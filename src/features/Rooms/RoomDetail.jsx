@@ -3,7 +3,7 @@ import { Calendar } from 'antd'
 import { RoomsAPI } from '../../api/RoomAPI'
 import dayjs from 'dayjs'
 
-export default function Rooms(props) {
+export const RoomDetail = props => {
   const [room, setRoom] = useState([]);
   
   const getRoomData = () => {
