@@ -1,4 +1,3 @@
-import React from 'react'
 import { Descriptions, Divider } from 'antd'
 import { BookedCalendar } from './BookedCalendar'
 

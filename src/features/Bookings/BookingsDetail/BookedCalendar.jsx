@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Calendar } from 'antd'
 import { getArrayOfDatesBooked } from 'src/utils/dateHelpers'
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Statistic, Spin } from 'antd'
 import { useOccupiedRooms } from 'src/hooks/useRoomsQuery'
 

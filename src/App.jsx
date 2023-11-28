@@ -1,5 +1,4 @@
 import './App.css'
-import React from 'react'
 import { Layout, Row, Col } from 'antd';
 const { Header } = Layout;
 import HeaderComponent from './components/HeaderComponent'

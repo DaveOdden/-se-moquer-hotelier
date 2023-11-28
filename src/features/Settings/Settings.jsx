@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Space, Flex, Spin } from 'antd'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { useSettings } from 'src/hooks/useSettingsQuery'
