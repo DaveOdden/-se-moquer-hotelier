@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      minWidth: {
+        'menu': '525px',
+      },
       maxWidth: {
         'app': '1440px',
       },
