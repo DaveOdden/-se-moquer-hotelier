@@ -8,6 +8,11 @@ export const useBookings = () => {
   });
 }
 
+export const useBooking = (id) => {
+  const queryClient = useQueryClient();
+  return queryClient.getQueryData(['bookings'])?.find((d) => d._id === id)
+}
+
 export const useArrayOfRoomsBooked = () => {
   return useQuery({
     queryKey: ['roomsbooked'],

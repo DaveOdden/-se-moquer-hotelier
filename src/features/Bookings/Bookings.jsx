@@ -18,7 +18,9 @@ export default function Bookings(props) {
   const error = [guests, bookings, rooms].some(query => query.error)
 
   const [newBookingFormStatus, setNewBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
-  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [editBookingFormStatus, setEditBookingFormStatus] = useState({ loading: false, response: null, error: null, pristine: true});
+  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [fullBookingDetails, setFullBookingDetails] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [toastNotification, setToastNotification] = useState({ message: null, type: null});
 
@@ -37,6 +39,30 @@ export default function Bookings(props) {
   const onCreateSettled = (response) => {
     setTimeout( () => {
       setNewBookingFormStatus({
+        loading: false, 
+        response: response.success ? true : null, 
+        error: response.success ? null : true, 
+        pristine: false
+      })
+    }, 1200)
+    popToast(response)
+  }
+
+  const updateBooking = formData => {
+    setEditBookingFormStatus({
+      loading: true, 
+      response: null, 
+      error: null, 
+      pristine: false
+    })
+    modifyBooking(formData, {
+      onSettled: (response) => onUpdateSettled(response)
+    })
+  }
+
+  const onUpdateSettled = (response) => {
+    setTimeout( () => {
+      setEditBookingFormStatus({
         loading: false, 
         response: response.success ? true : null, 
         error: response.success ? null : true, 
@@ -82,13 +108,19 @@ export default function Bookings(props) {
           guests={guests}
           bookings={bookings}
           rooms={rooms}
-          onRowClick={(record) => setSelectedRecord(record)} 
+          onRowClick={(record) => {
+            setFullBookingDetails(record)
+            setSelectedBookingId(record._id)
+          }} 
           searchTerms={searchValue} />
         <BookingDetail 
-          show={() => selectedRecord !== null} 
-          data={selectedRecord}
+          bookingId={selectedBookingId}
+          fullBookingDetails={fullBookingDetails} // aggregated guest and room data with row's booking data
+          updateBooking={updateBooking} 
           deleteBooking={deleteBooking} 
-          onClose={() => setSelectedRecord(null)} />
+          formStatus={editBookingFormStatus} 
+          showDrawer={() => selectedBookingId !== null}
+          hideDrawer={() => setSelectedBookingId(null)} />
       </FeatureWrapper>
     </ErrorBoundary>
   )
