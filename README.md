@@ -10,15 +10,16 @@ This repo is the front-end layer only.
 
 ## Tooling List
 
-- Package Manager - [Yarn](https://yarnpkg.com/)
-- Front End Build Tool - [Vite](https://vitejs.dev/)
-- Front End Framework - [React](https://react.dev/)
-- SPA Router - [React Router](https://github.com/remix-run/react-router#readme)
-- Data Fetching - [React Query](https://tanstack.com/query/v4/docs/react/overview)
-- UI Kit - [Ant Design](https://ant.design/)
-- CSS Framework - [Tailwind](https://tailwindcss.com/)
-- Unit Testing - [Vitest](https://vitest.dev/)
-- Date Formatting - [DayJS](https://day.js.org/)
+- [Yarn](https://yarnpkg.com/) - Package Manager
+- [Vite](https://vitejs.dev/) - Front End Build Tool
+- [React](https://react.dev/) - Front End Framework
+- [React Router](https://github.com/remix-run/react-router#readme) - SPA Router
+- [React Query](https://tanstack.com/query/v4/docs/react/overview) - Data Fetching
+- [React Testing Library](https://testing-library.com/) - React Testing
+- [Vitest](https://vitest.dev/) - Unit Testing
+- [Ant Design](https://ant.design/) - UI Kit
+- [Tailwind](https://tailwindcss.com/) - CSS Framework
+- [DayJS](https://day.js.org/) - Date Formatting
 
 ## API Layer & Data Storage
 
