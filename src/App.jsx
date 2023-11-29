@@ -1,7 +1,7 @@
 import { Routes, Route, Outlet } from "react-router-dom"
 import './App.css'
-import { Layout, Row, Col } from 'antd';
-const { Header } = Layout;
+import { Layout, Row, Col } from 'antd'
+const { Header } = Layout
 import HeaderComponent from './components/HeaderComponent'
 import {Overview} from './features/Overview/Index'
 import Bookings from './features/Bookings/Bookings'

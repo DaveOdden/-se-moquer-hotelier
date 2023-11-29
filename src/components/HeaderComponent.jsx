@@ -10,9 +10,9 @@ export default function HeaderComponent() {
       align="stretch"
       justify="space-between">
       <Flex align="center">
-        <Title>
-          <ShopOutlined className="text-2xl pr-2" />
-          <Text className="text-2xl">Un Moquer Hotelier</Text>
+        <Title level={1}>
+          <ShopOutlined className="pr-2" />
+          Un Moquer Hotelier
         </Title>
       </Flex>
       <Flex align="end">        
