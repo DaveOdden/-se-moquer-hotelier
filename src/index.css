@@ -1,12 +1,6 @@
 @tailwind base;
 @tailwind utilities;
 
-@layer base {
-  button.ant-btn-primary, [type='button'].ant-btn-primary, [type='submit'].ant-btn-primary  {
-    background-color: #1677ff;
-  }
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
