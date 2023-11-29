@@ -19,7 +19,7 @@ const App = () => {
         span="24"
         className="max-w-app max-h-app rounded-2xl overflow-hidden border border-slate-950">
         <Layout>
-          <Header style={headerStyle} className="bg-white h-16 text-slate-800 border-b border-slate-100 px-4">
+          <Header className="bg-white h-16 text-slate-800 border-b border-slate-100 px-4">
             <HeaderComponent/>
           </Header>
           <Routes>
