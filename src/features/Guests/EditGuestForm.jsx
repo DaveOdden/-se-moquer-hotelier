@@ -44,7 +44,7 @@ export const EditGuestForm = (props) => {
       <Form.Item name="notes" disabled={formStatus.loading}>
         <Input.TextArea placeholder="Notes" disabled={formStatus.loading}/>
       </Form.Item>
-      <Form.Item disabled={formStatus.loading} style={{textAlign: 'right', marginBottom: '0'}}>
+      <Form.Item disabled={formStatus.loading} className="mb-0 text-right">
         <Button  type="primary" key="submit" htmlType="submit" disabled={formStatus.loading}>
           Submit
         </Button>

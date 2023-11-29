@@ -24,11 +24,7 @@ export const BookingConfirmation = (props) => {
       <Space direction="vertical">
         <Descriptions 
           size="small"
-          style={{
-            marginTop: '16px', 
-            display: 'flex', 
-            justifyContent: 'flex-end'
-          }} 
+          className="mt-4"
           column={1}>
           <Descriptions.Item label="Guest Name">{guestDetails?.firstName} {guestDetails?.lastName}</Descriptions.Item>
           <Descriptions.Item label="License #">{guestDetails?.licenseNumber}</Descriptions.Item>
@@ -36,17 +32,14 @@ export const BookingConfirmation = (props) => {
           <Descriptions.Item label="Check Out">{writtenOutDateTime(formData?.checkoutDate)}</Descriptions.Item>
           <Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
         </Descriptions>
-        <Divider style={{ margin: 0 }}/>
+        <Divider className="m-0" />
         <Flex justify="space-between">
           <Descriptions column={1}>
             <Descriptions.Item label="Rate">${settings?.properties?.roomRate} x {formData?.billing.days}</Descriptions.Item>
           </Descriptions>
           <Statistic 
-            title="Total" 
-            style={{
-              textAlign: 'right', 
-              marginBottom: '32px'
-            }} 
+            title="Total"
+            className="text-right mb-8"
             value={`$${settings?.properties?.roomRate * formData?.billing.days}`} />
         </Flex>
       </Space>

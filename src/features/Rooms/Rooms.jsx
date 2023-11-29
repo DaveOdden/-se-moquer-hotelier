@@ -7,23 +7,6 @@ import { RoomDetail } from './RoomDetail'
 import { useRooms } from 'src/hooks/useRoomsQuery'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 
-const headerStyle = {
-  textAlign: 'center',
-  color: '#333',
-  height: 64,
-  paddingInline: 16,
-  lineHeight: '64px',
-  backgroundColor: '#fff',
-  borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
-};
-
-const contentStyle = {
-  textAlign: 'center',
-  height: 'calc(100vh - 194px)',
-  color: '#333',
-  backgroundColor: '#fff',
-};
-
 export default function Rooms() {
   const rooms = useRooms()
   const [selectedRoom, setSelectedRoom] = useState({});
@@ -44,22 +27,18 @@ export default function Rooms() {
 
   return (
     <ErrorBoundary>
-      <Header style={headerStyle}>
+      <Header className="bg-white h-16 text-slate-800 px-4">
         <SubHeaderComponent 
           featureName="rooms" 
           recordCount={0} 
           newRecordBtn={false} />
       </Header>
-      <Content style={contentStyle}>
+      <Content className="bg-white text-slate-800 h-content border-t border-slate-100">
         <Flex 
           wrap="wrap" 
-          justify="flex-start" 
-          style={{ 
-            background: '#f5f5f5', 
-            height: '100%', 
-            padding: '8px 0'
-          }}>
-          { rooms.data && showRoomGrid && <RoomGrid rooms={rooms.data} showModal={showModal} /> || <Spin style={{  width: '100%', textAlign: 'center',  margin: '32px'}}/> }
+          justify="flex-start"
+          className="h-full py-8 bg-slate-100">
+          { rooms.data && showRoomGrid && <RoomGrid rooms={rooms.data} showModal={showModal} /> || <Spin className="w-full text-center m-8" /> }
         </Flex>
       </Content>
       <Modal 

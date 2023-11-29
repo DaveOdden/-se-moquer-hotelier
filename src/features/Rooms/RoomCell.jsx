@@ -3,23 +3,20 @@ const { Text } = Typography
 
 export const RoomCell = props => {
   const { room, width, showModal, bookedRooms } = props 
+  const cellBgColor = (bookedRooms && bookedRooms.includes(room._id) ? 'slate-200' : 'white')
   return (
     <Space.Compact 
       size="small"
       align="start"
       direction="horizontal" 
+      className="py-2"
       style={{
         width: width,
-        padding: '8px 0'
       }}>
       <Button 
         block
         onClick={() => showModal(room)} 
-        style={{ 
-          height: '100%', 
-          borderRadius: 0, 
-          background: (bookedRooms && bookedRooms.includes(room._id) ? '#f0f0f0' : 'white')
-        }}>
+        className={`h-full rounded-none bg-${cellBgColor}`}>
         <Text>{room.roomNum}</Text>
       </Button>
     </Space.Compact>
