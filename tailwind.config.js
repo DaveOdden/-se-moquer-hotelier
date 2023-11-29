@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      height: {
+        'content': 'calc(100vh - 128px)',
+      },
       minWidth: {
         'menu': '525px',
       },

@@ -2,17 +2,9 @@ import { Layout } from 'antd'
 import { BookedRoomsWidget } from './BookedRoomsWidget'
 const { Content } = Layout
 
-const contentStyle = {
-  textAlign: 'center',
-  height: 'calc(100vh - 128px)',
-  color: '#333',
-  backgroundColor: '#fff',
-  padding: '32px'
-};
-
 export const Overview = () => {
   return (
-    <Content style={contentStyle}>
+    <Content className="bg-white text-slate-800 h-content border-t border-slate-100">
       <BookedRoomsWidget />
     </Content>
   )

@@ -22,6 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               Table: {
                 cellPaddingInlineMD: 16,
                 headerBg: '#fff'
+              },
+              Typography: {
+                titleMarginBottom: 0,
               }
             }
           }}>

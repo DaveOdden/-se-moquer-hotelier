@@ -58,6 +58,6 @@ export const BookedCalendar = (props) => {
       mode="month" 
       fullscreen={false} 
       fullCellRender={dateCellRender}
-      style={{marginTop: '-20px'}} />
+      className="-mt-5" />
   )
 }

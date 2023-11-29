@@ -6,7 +6,7 @@ export const NewBookingSubmitButton = (props) => {
   const formIsComplete = !!guest && !!checkinDate && !!checkinTime && !!checkoutDate && !!checkoutTime && !!room;
 
   return (
-    <Form.Item shouldUpdate style={{textAlign: 'right', marginBottom: '0'}}>
+    <Form.Item shouldUpdate className="text-right mb-0">
       <Button 
         type="primary" 
         disabled={!formIsComplete}

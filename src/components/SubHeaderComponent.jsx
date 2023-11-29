@@ -22,18 +22,16 @@ export default function SubHeaderComponent(props) {
         gap="middle" 
         justify="space-between" 
         align="center">
-        <Title 
-          level={2} 
-          style={{textTransform: 'capitalize', margin: 0, fontSize: 20}}>
+        <Title level={2}>
           <Space>
-            {featureName}
+            <Text className="capitalize text-xl">{featureName}</Text>
             {recordCount > 0 && <Text data-testid="record-count">({recordCount})</Text>}
           </Space>
         </Title>
         <Space align="center">
           <Input 
             addonBefore={<SearchOutlined />} 
-            style={{verticalAlign: 'middle', marginTop: -2}} 
+            className="align-middle -mt-1"
             placeholder="search"
             onChange={(e) => search(e)} />
           { newRecordBtn &&
@@ -43,7 +41,7 @@ export default function SubHeaderComponent(props) {
               icon={<PlusCircleOutlined />}
               size="medium"
               onClick={showModal}
-              style={{textTransform: 'capitalize'}}
+              className="capitalize"
               data-testid="action-button">
               New {depluralize(featureName)}
             </Button>
