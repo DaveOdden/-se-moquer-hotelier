@@ -16,6 +16,7 @@ This repo is the front-end layer only.
 - SPA Router - [React Router](https://github.com/remix-run/react-router#readme)
 - Data Fetching - [React Query](https://tanstack.com/query/v4/docs/react/overview)
 - UI Kit - [Ant Design](https://ant.design/)
+- CSS Framework - [Tailwind](https://tailwindcss.com/)
 - Unit Testing - [Vitest](https://vitest.dev/)
 - Date Formatting - [DayJS](https://day.js.org/)
 

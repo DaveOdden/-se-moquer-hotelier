@@ -9,41 +9,22 @@ import Guests from './features/Guests/Guests'
 import Rooms from './features/Rooms/Rooms'
 import { Settings } from './features/Settings/Settings'
 
-const headerStyle = {
-  textAlign: 'center',
-  color: '#333',
-  height: 64,
-  paddingInline: 16,
-  lineHeight: '64px',
-  backgroundColor: '#fff',
-  borderBottom: '1px solid rgba(5, 5, 5, 0.06)',
-};
-
 const App = () => {
   return (
     <Row
       align="middle"
       justify="center"
-      style={{
-        padding: '32px 0'
-      }}>
+      className="py-8">
       <Col 
         span="24"
-        style={{
-          maxWidth: 1440,
-          height: '100%',
-          maxHeight: 'calc(100vh - 64px)',
-          borderRadius: 16,
-          overflow: 'hidden',
-          border: '1px solid #111',
-        }}>
+        className="max-w-app max-h-app rounded-2xl overflow-hidden border border-slate-950">
         <Layout>
-          <Header style={headerStyle}>
+          <Header style={headerStyle} className="bg-white h-16 text-slate-800 border-b border-slate-100 px-4">
             <HeaderComponent/>
           </Header>
           <Routes>
             <Route path="/" element={<MockLayout />}>
-              <Route index element={<h1>Home</h1>} />
+              <Route index element={<Overview />} />
               <Route path="overview" element={<Overview />} />
               <Route path="bookings" element={<Bookings />} />
               <Route path="guests" element={<Guests />} />
