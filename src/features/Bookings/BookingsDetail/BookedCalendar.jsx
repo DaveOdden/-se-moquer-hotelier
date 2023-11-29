@@ -42,7 +42,7 @@ export const BookedCalendar = (props) => {
   const dateCellRender = (currentDate) => {
     if(data) {
       if (isOtherBooking(currentDate)) {
-        return <div style={{background: '#eee'}}>{currentDate.date()}</div>;
+        return <div className="bg-zinc-100">{currentDate.date()}</div>;
       }
       if (thisBooking(currentDate)) {
         return <div style={{background: '#1677ff', color: 'white', borderRadius: borderRadiusForSeries(currentDate)}}>{currentDate.date()}</div>;

@@ -22,11 +22,9 @@ export default function SubHeaderComponent(props) {
         gap="middle" 
         justify="space-between" 
         align="center">
-        <Title level={2}>
-          <Space>
-            <Text className="capitalize text-xl">{featureName}</Text>
-            {recordCount > 0 && <Text data-testid="record-count">({recordCount})</Text>}
-          </Space>
+        <Title level={2} className="capitalize">
+          {featureName}
+          {recordCount > 0 && <Text data-testid="record-count" className="pl-2 align-text-bottom">({recordCount})</Text>}
         </Title>
         <Space align="center">
           <Input 

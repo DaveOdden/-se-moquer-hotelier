@@ -1,9 +1,8 @@
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
 
 @layer base {
-  button, [type='button'], [type='reset'], [type='submit'] {
+  button.ant-btn-primary, [type='button'].ant-btn-primary, [type='submit'].ant-btn-primary  {
     background-color: #1677ff;
   }
 }

@@ -37,7 +37,7 @@ export default function Rooms() {
         <Flex 
           wrap="wrap" 
           justify="flex-start"
-          className="h-full py-8 bg-slate-100">
+          className="h-full py-8 bg-zinc-100">
           { rooms.data && showRoomGrid && <RoomGrid rooms={rooms.data} showModal={showModal} /> || <Spin className="w-full text-center m-8" /> }
         </Flex>
       </Content>

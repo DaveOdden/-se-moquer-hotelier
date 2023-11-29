@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      width: {
+        'settings-card': '600px',
+      },
       height: {
         'content': 'calc(100vh - 128px)',
       },
