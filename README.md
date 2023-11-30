@@ -12,7 +12,7 @@ This repo is the front-end layer only.
 
 - [Yarn](https://yarnpkg.com/) - Package Manager
 - [Vite](https://vitejs.dev/) - Front End Build Tool
-- [React](https://react.dev/) - Front End Framework
+- [React](https://react.dev/) - Front End Composition
 - [React Router](https://github.com/remix-run/react-router#readme) - SPA Router
 - [React Query](https://tanstack.com/query/v4/docs/react/overview) - Data Fetching
 - [React Testing Library](https://testing-library.com/) - React Testing
