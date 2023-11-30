@@ -16,7 +16,7 @@ describe('FeatureNav', () => {
     )
   });
   
-  it("renders header", () => {
+  it("renders navigation", () => {
     render(
       <BrowserRouter>
         <FeatureNav />

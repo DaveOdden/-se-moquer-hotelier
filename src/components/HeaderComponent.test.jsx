@@ -16,7 +16,7 @@ describe('HeaderComponent', () => {
     )
   });
   
-  it("renders header", () => {
+  it("renders app heading", () => {
     render(
       <BrowserRouter>
         <HeaderComponent />

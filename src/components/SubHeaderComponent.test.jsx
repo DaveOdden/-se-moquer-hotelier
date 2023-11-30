@@ -76,7 +76,6 @@ describe('SubHeaderComponent', () => {
         Test
       </SubHeaderComponent>
     );
-    //await act( async () => render(<TestApp/>));
     const btn = screen.getByText("New test");
     fireEvent.click(btn);
     expect(screen.getByRole('dialog')).toBeInTheDocument()
