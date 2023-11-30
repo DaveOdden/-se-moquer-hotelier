@@ -17,7 +17,7 @@ This repo is the front-end layer only.
 - [React Query](https://tanstack.com/query/v4/docs/react/overview) - Data Fetching
 - [React Testing Library](https://testing-library.com/) - React Testing
 - [Vitest](https://vitest.dev/) - Unit Testing
-- [Ant Design](https://ant.design/) - UI Kit
+- [Ant Design](https://ant.design/) - React UI Component Library
 - [Tailwind](https://tailwindcss.com/) - CSS Framework
 - [DayJS](https://day.js.org/) - Date Formatting
 
