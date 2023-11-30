@@ -30,24 +30,33 @@ This repo is the front-end layer only.
 
 ## Techniques & Decisions
 
+### Code Style
+
 - All function-based components (no class based)
   - Functional components have a simpler syntax, no lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
 - Avoid inline styles whenever possible.
   - Use tailwind classes, extend tailwind theme (`tailwind.config.js`), or leverage Ant Design theme provider customizations.
+- Naming and structure should suffice in lieu of commenting in _most_ cases.
+- To achieve consistent component naming conventions, only use named component exports, no defaults.
+
+### Patterns
+
 - Not importing React `import React from 'react'`
   - As of React v17, you no longer have to include dependency to transform JSX
+- Absolute Dependency Paths (`'src/'`)
+- Spread Syntax
+  - e.g. `<BookingConfirmation {...bookingDetails} />`
 - Conditional Rendering
   - e.g. (`{ dataIsAvailable && <ComponentToShow /> }`)
 - ContextAPI
-  - Used to avoid ugly prop drilling with New Booking modal states
+  - Used to avoid ugly prop drilling managing New Booking modal states
 - Loading State Pattern
   - Toggle `isLoading` state variables during processes.
   - Disable form fields and buttons during API calls to avoid duplicate calls.
-- Absolute Dependency Paths
-- Spread Syntax
 - Destructuring with Aliasing
   - e.g. ` const { mutate: addGuest } = useCreateGuest()`
 - Container Parent / Presentation Child Pattern (smart parent / dumb children)
+  - All core features exhibit this pattern (Overview, Bookings, Guests, Rooms, and Settings)
 - Custom Hooks
   - Only use Higher Order Components (HOC) or Render Props when absolutely necessary.
 - `<ErrorBoundary />`
