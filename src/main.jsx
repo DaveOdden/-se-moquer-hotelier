@@ -18,10 +18,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <QueryClientProvider client={queryClient}>
         <ConfigProvider
           theme={{
+            token: {
+              fontSizeHeading1: '1.5rem',
+              fontSizeHeading2: '1.25rem'
+            },
             components: {
               Table: {
                 cellPaddingInlineMD: 16,
                 headerBg: '#fff'
+              },
+              Typography: {
+                titleMarginBottom: 0,
               }
             }
           }}>

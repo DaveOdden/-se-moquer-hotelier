@@ -45,5 +45,12 @@ export default function FeatureNav() {
     setCurrent(e.key);
     navigate(`/${e.key}`);
   };
-  return <Menu style={{minWidth: '525px'}} onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return (
+    <Menu 
+      className="min-w-menu" 
+      onClick={onClick} 
+      selectedKeys={[current]} 
+      mode="horizontal" 
+      items={items} />
+  )
 }

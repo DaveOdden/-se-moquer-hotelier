@@ -21,7 +21,7 @@ export const NewBookingGuestSelection = (props) => {
     <Form.Item 
       name="guest" 
       label="Guest" 
-      style={{marginTop: '32px'}}
+      className="mt-8"
       rules={[{
         required: true,
         message: 'Select a guest',

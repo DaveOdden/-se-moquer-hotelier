@@ -14,22 +14,15 @@ export const Settings = () => {
         featureName: "Settings", 
         recordCount: 0,
         newRecordBtn: false,
-      }}
+      }}  
       toastNotification={toastNotification}>
       <Flex 
         justify="center" 
-        style={{ 
-          background: '#f5f5f5',
-          height: '100%' 
-        }}>
+        className="h-full bg-zinc-100">
         <Space 
-          direction="vertical" 
           size="middle" 
-          style={{ 
-            width: '600px', 
-            display: 'flex', 
-            marginTop: '64px' 
-          }}>
+          direction="vertical" 
+          className="flex w-settings-card mt-16">
           <Properties settings={settings} />
         </Space>
       </Flex>
