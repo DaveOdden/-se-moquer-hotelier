@@ -6,7 +6,7 @@ import SubHeaderComponent from 'src/components/SubHeaderComponent'
 export const FeatureWrapper = (props) => {
   const { subHeaderProps, newRecordComponent, toastNotification } = props
   const [messageApi, contextHolder] = message.useMessage();
-  const showMessage = () => toastNotification.type ? messageApi[toastNotification.type](toastNotification.message) : undefined
+  const showMessage = () => toastNotification?.type ? messageApi[toastNotification.type](toastNotification.message) : undefined
 
   useEffect(() => showMessage(), [toastNotification]);
 

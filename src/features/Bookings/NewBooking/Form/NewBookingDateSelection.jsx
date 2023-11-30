@@ -16,9 +16,6 @@ export const NewBookingDateSelection = (props) => {
   const [checkoutDate, setCheckoutDate] = useState()
   const { settings } = useSettings()
 
-  console.log(checkinTime)
-  console.log(checkoutTime)
-
   const disableDatesPriorToToday = current => {
     return current.isBefore(dayjs(new Date()).subtract(1, 'day')) ? true : false
   }

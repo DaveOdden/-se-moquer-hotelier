@@ -26,8 +26,10 @@ export const findDatesToDisable = (poolOfDates, passedDate) => {
   return poolOfDates.includes(incomingDate)
 }
 
+export const convertToDayJS = (date) => typeof date === 'string' ? dayjs(date) : date
+
 export const isSameDay = (earlierDate, laterDate) => {
-  let earlierDateDayJS = !dayjs.isDayjs(earlierDate) ? dayjs(earlierDate) : earlierDate
-  let laterDateDayJS = !dayjs.isDayjs(laterDate) ? dayjs(laterDate) : laterDate
+  let earlierDateDayJS = convertToDayJS(earlierDate)
+  let laterDateDayJS = convertToDayJS(laterDate)
   return dayjs(earlierDateDayJS.format('YYYY-MM-DD')).isSame(laterDateDayJS.format('YYYY-MM-DD'))
 }
