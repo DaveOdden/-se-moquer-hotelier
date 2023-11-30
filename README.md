@@ -32,6 +32,9 @@ This repo is the front-end layer only.
 
 - All function-based components (no class based)
   - Functional components have a simpler syntax, no lifecycle methods, constructors or boilerplate. You can express the same logic with less characters without losing readability.
+- Avoid inline styles whenever possible.
+  - Use tailwind classes, extend tailwind theme (`tailwind.config.js`), or leverage Ant Design theme provider customizations.
+- Strive for as complete testing code coverage as possible.
 - Not importing React `import React from 'react'`
   - As of React v17, you no longer have to include dependency to transform JSX
 - Conditional Rendering
