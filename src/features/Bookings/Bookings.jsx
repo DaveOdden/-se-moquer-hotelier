@@ -48,27 +48,25 @@ export default function Bookings(props) {
     popToast(response)
   }
 
-  const updateBooking = formData => {
+  const updateBooking = newData => {
     setEditBookingFormStatus({
       loading: true, 
       response: null, 
       error: null, 
       pristine: false
     })
-    modifyBooking(formData, {
+    modifyBooking(newData, {
       onSettled: (response) => onUpdateSettled(response)
     })
   }
 
   const onUpdateSettled = (response) => {
-    setTimeout( () => {
-      setEditBookingFormStatus({
-        loading: false, 
-        response: response.success ? true : null, 
-        error: response.success ? null : true, 
-        pristine: false
-      })
-    }, 1200)
+    setEditBookingFormStatus({
+      loading: false, 
+      response: response.success ? true : null, 
+      error: response.success ? null : true, 
+      pristine: false
+    })
     popToast(response)
   }
 
@@ -87,6 +85,15 @@ export default function Bookings(props) {
     setToastNotification({
       message: response.message || `${response.status ? `${response.status}`: ''} Error: Something Went Wrong`,
       type: response.success ? 'success' : 'error' 
+    })
+  }
+
+  const resetEditForm = () => {
+    setEditBookingFormStatus({
+      loading: false, 
+      response: null, 
+      error: null, 
+      pristine: true
     })
   }
 
@@ -119,6 +126,7 @@ export default function Bookings(props) {
           updateBooking={updateBooking} 
           deleteBooking={deleteBooking} 
           formStatus={editBookingFormStatus} 
+          resetEditForm={resetEditForm}
           showDrawer={() => selectedBookingId !== null}
           hideDrawer={() => setSelectedBookingId(null)} />
       </FeatureWrapper>

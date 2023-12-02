@@ -36,6 +36,7 @@ export const useUpdateBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) => {
+      console.log(data)
       return BookingsAPI.update(data.id, data.payload)
     },
     onSettled: async (data, error, variables, context) => {
