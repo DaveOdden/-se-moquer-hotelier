@@ -1,3 +1,3 @@
 import { BookingDetail } from './BookingDetail'
 
-export default BookingDetail;
+export default BookingDetail
