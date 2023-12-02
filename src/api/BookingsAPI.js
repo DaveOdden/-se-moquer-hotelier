@@ -14,7 +14,7 @@ export const BookingsAPI = {
       method: "POST",
       body: JSON.stringify(data)
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;
     }
@@ -25,7 +25,7 @@ export const BookingsAPI = {
       method: "PUT",
       body: JSON.stringify(payload)
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;
     }
@@ -35,7 +35,7 @@ export const BookingsAPI = {
     const response = await fetch(`${url}${apiPath}?id=${id}`, {
       method: "DELETE",
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;
     }

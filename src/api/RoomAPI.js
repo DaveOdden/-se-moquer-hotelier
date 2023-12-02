@@ -8,6 +8,11 @@ export const RoomsAPI = {
     let jsonResponse = await response.json();
     return jsonResponse;
   },
+  getRoom: async (id) => {
+    const response = await fetch(`${url}/getOneRoom?id=${id}`);
+    let jsonResponse = await response.json();
+    return jsonResponse;
+  },
   getRoomsForAutoComplete: async (id) => {
     const response = await fetch(`${url}/getRoomsForAutocomplete`);
     let jsonResponse = await response.json();
@@ -23,7 +28,7 @@ export const RoomsAPI = {
       method: "POST",
       body: JSON.stringify(data)
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;
     }
@@ -34,7 +39,7 @@ export const RoomsAPI = {
       method: "PUT",
       body: JSON.stringify(payload)
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;
     }
@@ -44,7 +49,7 @@ export const RoomsAPI = {
     const response = await fetch(`${url}${apiPath}?id=${id}`, {
       method: "DELETE",
     });
-    if(response.status === 200) {
+    if (response.status === 200) {
       let jsonResponse = await response.json();
       return jsonResponse;
     }

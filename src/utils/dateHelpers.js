@@ -10,15 +10,22 @@ export const getArrayOfDatesBooked = (pastDate, futureDate) => {
   let countOfDays = endDate.diff(startDate, 'day', true)
 
   let arrayOfDatesStaying = []
-  for(let x = 0; x <= countOfDays; x++) {
-    if(x === 0) {
+  for (let x = 0; x <= countOfDays; x++) {
+    if (x === 0) {
       arrayOfDatesStaying.push(startDate.format('YYYY-MM-DD'))
     } else {
       arrayOfDatesStaying.push(startDate.add(x, 'day').format('YYYY-MM-DD'))
     }
   }
-
   return arrayOfDatesStaying
+}
+
+export const isRoomAvailableDuringDates = (datesBooked, proposedDates) => {
+  for (let date of proposedDates) {
+    if (datesBooked.includes(date))
+      return false;
+  }
+  return true
 }
 
 export const findDatesToDisable = (poolOfDates, passedDate) => {
