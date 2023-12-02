@@ -1,3 +1,3 @@
-import { NewBookingContainer } from './NewBookingContainer.jsx';
+import { NewBookingContainer } from './NewBookingContainer.jsx'
 
-export default NewBookingContainer;
+export default NewBookingContainer
