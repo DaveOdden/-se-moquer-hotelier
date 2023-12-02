@@ -3,6 +3,7 @@ import { BookedCalendar } from './BookedCalendar'
 
 export const BookingDetailContent = (props) => {
   const { data } = props
+
   return (
     <>
       <Descriptions 

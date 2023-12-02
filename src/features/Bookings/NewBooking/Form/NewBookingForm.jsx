@@ -79,7 +79,6 @@ export const NewBookingForm = (props) => {
 
   useEffect(() => { // update checkin/checkout time from settings
     if(settings) {
-      console.log(settings)
       setCheckinTime(dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
       setCheckoutTime(dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
     }
@@ -116,8 +115,8 @@ export const NewBookingForm = (props) => {
           <NewBookingRoomSelection
             rooms={rooms}
             roomIsLoading={roomIsLoading}
-            onRoomSelection={onRoomSelection}
-            onRoomSelectionChange={onRoomSelectionChange} /> 
+            onChange={onRoomSelectionChange}
+            onRoomSelection={onRoomSelection} /> 
           <NewBookingSubmitButton bookingForm={bookingForm} moveToNextStep={moveToNextStep} />
         </>
       ) }

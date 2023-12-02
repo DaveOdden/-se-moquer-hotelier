@@ -8,6 +8,11 @@ export const useBookings = () => {
   });
 }
 
+export const useBooking = (id) => {
+  const queryClient = useQueryClient();
+  return queryClient.getQueryData(['bookings'])?.find((d) => d._id === id)
+}
+
 export const useArrayOfRoomsBooked = () => {
   return useQuery({
     queryKey: ['roomsbooked'],
@@ -31,6 +36,7 @@ export const useUpdateBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data) => {
+      console.log(data)
       return BookingsAPI.update(data.id, data.payload)
     },
     onSettled: async (data, error, variables, context) => {

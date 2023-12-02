@@ -49,7 +49,7 @@ export const BookingConfirmation = (props) => {
           type="primary" 
           onClick={kickOffFormSubmission} 
           loading={isLoading}>
-            Confirm Booking
+          Confirm Booking
         </Button>
       </Flex>
     </ErrorBoundary>
