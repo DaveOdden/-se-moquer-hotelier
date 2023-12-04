@@ -12,13 +12,15 @@ import {
 import dayjs from 'dayjs'
 
 import { useRoom } from 'src/hooks/useRoomsQuery'
-import { BookingsAPI } from 'src/api/BookingsAPI'
 import { NewBookingRoomSelection } from 'src/features/Bookings/NewBooking/Form/NewBookingRoomSelection'
 import { EditDateSubmit } from 'src/features/Bookings/EditBooking/EditDateSubmit'
 import {
 	getArrayOfDatesBooked,
 	isRoomAvailableDuringDates,
 } from 'src/utils/dateHelpers'
+
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
 
 export const EditCheckoutDate = (props) => {
 	// props
@@ -102,10 +104,14 @@ export const EditCheckoutDate = (props) => {
 
 	const getAvailableRooms = () => {
 		setRoomLoadingState(true)
-		BookingsAPI.getRoomsByAvailability(
-			data.checkinDate,
-			selectedCheckoutDate
-		).then(setAvailableRooms)
+		AppAPI.call({
+			protocol: 'GET',
+			endpoint: apiPaths.roomByAvailability,
+			payload: {
+				checkinDate: data.checkinDate,
+				checkoutDate: selectedCheckoutDate,
+			},
+		}).then(setAvailableRooms)
 	}
 
 	const showChangeRoom = () => {
