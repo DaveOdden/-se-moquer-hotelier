@@ -4,7 +4,7 @@ export const AppAPI = {
   call: async (config) => {
     let queryString = config.id ? `?id=${config.id}` : '';
     const response = await fetch(`${apiUrl}${config.endpoint}${queryString}`,{
-      method: config.protocol,
+      method: config.method,
       body: config.payload ? JSON.stringify(config.payload) : null,
       headers: new Headers({
         'Authorization': apiKey, 

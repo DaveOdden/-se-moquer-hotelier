@@ -9,7 +9,7 @@ export const RoomDetail = (props) => {
 
 	const getRoomData = () => {
 		AppAPI.call({
-			protocol: 'GET',
+			method: 'GET',
 			endpoint: apiPaths.rooms,
 			id: props.room._id,
 		}).then((res) => {

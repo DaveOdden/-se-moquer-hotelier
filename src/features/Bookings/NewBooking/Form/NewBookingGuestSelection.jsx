@@ -14,7 +14,7 @@ export const NewBookingGuestSelection = (props) => {
 
 	const onGuestSelection = (value, data) => {
 		AppAPI.getOne({
-			protocol: 'GET',
+			method: 'GET',
 			endpoint: apiPaths.guests,
 			id: data.id,
 		}).then((res) => {

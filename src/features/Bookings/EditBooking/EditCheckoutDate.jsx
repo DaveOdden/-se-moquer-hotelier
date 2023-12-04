@@ -105,7 +105,7 @@ export const EditCheckoutDate = (props) => {
 	const getAvailableRooms = () => {
 		setRoomLoadingState(true)
 		AppAPI.call({
-			protocol: 'GET',
+			method: 'GET',
 			endpoint: apiPaths.roomByAvailability,
 			payload: {
 				checkinDate: data.checkinDate,

@@ -48,7 +48,7 @@ export const NewBookingForm = (props) => {
 		if (checkoutDate && checkinDate) {
 			setRoomLoadingState(true)
 			AppAPI.call({
-				protocol: 'GET',
+				method: 'GET',
 				endpoint: apiPaths.roomByAvailability,
 				payload: {
 					checkinDate: checkinDate,

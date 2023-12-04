@@ -30,7 +30,7 @@ export const EditRoom = (props) => {
 		if (data.checkinDate && data.checkoutDate) {
 			setRoomLoadingState(true)
 			AppAPI.call({
-				protocol: 'GET',
+				method: 'GET',
 				endpoint: apiPaths.roomByAvailability,
 				payload: {
 					checkinDate: data.checkinDate,
