@@ -20,10 +20,7 @@ export const Settings = () => {
 			}}
 			toastNotification={toastNotification}>
 			<Flex justify="center" className="h-full bg-zinc-100">
-				<Space
-					size="middle"
-					direction="vertical"
-					className="flex w-settings-card mt-16">
+				<Space size="middle" direction="vertical" className="flex w-settings-card mt-16">
 					<Properties settings={settings} />
 				</Space>
 			</Flex>

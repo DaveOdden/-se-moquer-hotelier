@@ -14,27 +14,15 @@ export const GuestTable = (props) => {
 			filteredValue: [searchTerms],
 			onFilter: (value, record) => {
 				return (
-					String(record.firstName)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
+					String(record.firstName).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.lastName).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.email).toLowerCase().includes(value.toLowerCase()) ||
-					String(record.address.street)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.address.city)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.address.state)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.address.zip)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.licenseNumber)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
+					String(record.address.street).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.address.city).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.address.state).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.address.zip).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.licenseNumber).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.status).toLowerCase().includes(value.toLowerCase())
 				)
 			},

@@ -24,9 +24,7 @@ export const NewBookingForm = (props) => {
 	const [checkinDate, setCheckinDate] = useState(null)
 	const [checkoutDate, setCheckoutDate] = useState(null)
 	const [checkinTime, setCheckinTime] = useState(dayjs('2.30.00', 'HH:mm:ss'))
-	const [checkoutTime, setCheckoutTime] = useState(
-		dayjs('10.30.00', 'HH:mm:ss')
-	)
+	const [checkoutTime, setCheckoutTime] = useState(dayjs('10.30.00', 'HH:mm:ss'))
 	const [durationOfStay, setDurationOfStay] = useState(0)
 
 	/* Room States */
@@ -137,10 +135,7 @@ export const NewBookingForm = (props) => {
 						onChange={onRoomSelectionChange}
 						onRoomSelection={onRoomSelection}
 					/>
-					<NewBookingSubmitButton
-						bookingForm={bookingForm}
-						moveToNextStep={moveToNextStep}
-					/>
+					<NewBookingSubmitButton bookingForm={bookingForm} moveToNextStep={moveToNextStep} />
 				</>
 			)}
 		</Form>

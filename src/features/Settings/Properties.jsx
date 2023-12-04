@@ -17,15 +17,9 @@ export const Properties = (props) => {
 					</Flex>
 				) : (
 					<Descriptions column={1}>
-						<Descriptions.Item label="Room Rate">
-							${settings.data.properties.roomRate}
-						</Descriptions.Item>
-						<Descriptions.Item label="Checkin Time">
-							{settings.data.properties.checkinTime}
-						</Descriptions.Item>
-						<Descriptions.Item label="Checkout Time">
-							{settings.data.properties.checkoutTime}
-						</Descriptions.Item>
+						<Descriptions.Item label="Room Rate">${settings.data.properties.roomRate}</Descriptions.Item>
+						<Descriptions.Item label="Checkin Time">{settings.data.properties.checkinTime}</Descriptions.Item>
+						<Descriptions.Item label="Checkout Time">{settings.data.properties.checkoutTime}</Descriptions.Item>
 					</Descriptions>
 				)}
 			</Space>

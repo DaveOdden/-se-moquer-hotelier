@@ -21,9 +21,7 @@ export const BookingConfirmation = (props) => {
 					<Descriptions.Item label="Guest Name">
 						{guestDetails?.firstName} {guestDetails?.lastName}
 					</Descriptions.Item>
-					<Descriptions.Item label="License #">
-						{guestDetails?.licenseNumber}
-					</Descriptions.Item>
+					<Descriptions.Item label="License #">{guestDetails?.licenseNumber}</Descriptions.Item>
 					<Descriptions.Item label="Check In">
 						{writtenOutDateTime(formData?.checkinDate)}
 					</Descriptions.Item>
@@ -42,18 +40,13 @@ export const BookingConfirmation = (props) => {
 					<Statistic
 						title="Total"
 						className="text-right mb-8"
-						value={`$${
-							settings?.properties?.roomRate * formData?.billing.days
-						}`}
+						value={`$${settings?.properties?.roomRate * formData?.billing.days}`}
 					/>
 				</Flex>
 			</Space>
 			<Flex justify="space-between">
 				<Button onClick={backButtonAction}>Back</Button>
-				<Button
-					type="primary"
-					onClick={kickOffFormSubmission}
-					loading={isLoading}>
+				<Button type="primary" onClick={kickOffFormSubmission} loading={isLoading}>
 					Confirm Booking
 				</Button>
 			</Flex>

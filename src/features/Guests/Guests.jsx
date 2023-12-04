@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
-import {
-	useGuests,
-	useCreateGuest,
-	useUpdateGuest,
-	useDeleteGuest,
-} from 'src/hooks/useGuestsQuery'
+import { useGuests, useCreateGuest, useUpdateGuest, useDeleteGuest } from 'src/hooks/useGuestsQuery'
 import { NewGuestForm } from './NewGuestForm'
 import { GuestTable } from './GuestTable'
 import { GuestDetail } from './GuestDetail'
@@ -100,18 +95,14 @@ export default function Guests() {
 	}
 
 	const exitDrawerAfterDelete = (response) => {
-		selectedGuestId && response.success == true
-			? setSelectedGuestId(null)
-			: null
+		selectedGuestId && response.success == true ? setSelectedGuestId(null) : null
 	}
 
 	const popToast = (response) => {
 		setToastNotification({
 			message:
 				response.message ||
-				`${
-					response.status ? `${response.status}` : ''
-				} Error: Something Went Wrong`,
+				`${response.status ? `${response.status}` : ''} Error: Something Went Wrong`,
 			type: response.success ? 'success' : 'error',
 		})
 	}

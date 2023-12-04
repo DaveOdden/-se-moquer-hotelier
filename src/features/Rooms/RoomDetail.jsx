@@ -19,9 +19,7 @@ export const RoomDetail = (props) => {
 
 	const findDatesToDisable = (current) => {
 		if (room && room.datesBooked && room.datesBooked.length) {
-			let index = room.datesBooked.findIndex(
-				(date) => date === dayjs(current).format('YYYY-MM-DD')
-			)
+			let index = room.datesBooked.findIndex((date) => date === dayjs(current).format('YYYY-MM-DD'))
 			return index > -1 && true
 		}
 	}
@@ -31,13 +29,7 @@ export const RoomDetail = (props) => {
 	return (
 		<>
 			<h3>Room #{room.roomNum}</h3>
-			{room && (
-				<Calendar
-					mode="month"
-					fullscreen={false}
-					disabledDate={findDatesToDisable}
-				/>
-			)}
+			{room && <Calendar mode="month" fullscreen={false} disabledDate={findDatesToDisable} />}
 		</>
 	)
 }

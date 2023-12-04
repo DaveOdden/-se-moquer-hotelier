@@ -28,17 +28,10 @@ export default function Rooms() {
 	return (
 		<ErrorBoundary>
 			<Header className="bg-white h-16 text-slate-800 px-4">
-				<SubHeaderComponent
-					featureName="rooms"
-					recordCount={0}
-					newRecordBtn={false}
-				/>
+				<SubHeaderComponent featureName="rooms" recordCount={0} newRecordBtn={false} />
 			</Header>
 			<Content className="bg-white text-slate-800 h-content border-t border-slate-100">
-				<Flex
-					wrap="wrap"
-					justify="flex-start"
-					className="h-full py-8 bg-zinc-100">
+				<Flex wrap="wrap" justify="flex-start" className="h-full py-8 bg-zinc-100">
 					{(rooms.data && showRoomGrid && (
 						<RoomGrid rooms={rooms.data} showModal={showModal} />
 					)) || <Spin className="w-full text-center m-8" />}

@@ -36,10 +36,7 @@ export const NewBookingFlow = (props) => {
 	}
 
 	return (
-		<Carousel
-			dots={false}
-			ref={carouselRef}
-			beforeChange={onBeforeChangeCarousel}>
+		<Carousel dots={false} ref={carouselRef} beforeChange={onBeforeChangeCarousel}>
 			<div>
 				<div style={setCarouselSlideHeight(0)}>
 					<NewBookingForm returnFormData={collectFormData} />

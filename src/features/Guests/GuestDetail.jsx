@@ -1,24 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
-import {
-	MoreOutlined,
-	DeleteOutlined,
-	EditOutlined,
-	LineOutlined,
-} from '@ant-design/icons'
+import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons'
 import { EditGuestForm } from './EditGuestForm'
 import { useGuest } from 'src/hooks/useGuestsQuery'
 import { transformDataForDescription } from './utils/guestHelpers'
 
 export const GuestDetail = (props) => {
-	const {
-		guestId,
-		updateGuest,
-		deleteGuest,
-		formStatus,
-		showDrawer,
-		hideDrawer,
-	} = props
+	const { guestId, updateGuest, deleteGuest, formStatus, showDrawer, hideDrawer } = props
 	const guest = useGuest(guestId)
 	const [isEditing, setEditState] = useState(false)
 	const [descriptionContent, setDescriptionContent] = useState(null)
@@ -75,11 +63,7 @@ export const GuestDetail = (props) => {
 				</Space>
 			}>
 			{isEditing ? (
-				<EditGuestForm
-					formData={guest}
-					formSubmit={updateGuest}
-					formStatus={formStatus}
-				/>
+				<EditGuestForm formData={guest} formSubmit={updateGuest} formStatus={formStatus} />
 			) : (
 				<Descriptions
 					items={descriptionContent}

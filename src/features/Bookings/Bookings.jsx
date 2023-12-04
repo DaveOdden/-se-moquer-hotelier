@@ -1,9 +1,5 @@
 import { useState } from 'react'
-import {
-	useCreateBooking,
-	useUpdateBooking,
-	useDeleteBooking,
-} from 'src/hooks/useBookingsQuery'
+import { useCreateBooking, useUpdateBooking, useDeleteBooking } from 'src/hooks/useBookingsQuery'
 import { useAllFeatures } from 'src/hooks/useAllQuery'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
@@ -12,31 +8,23 @@ import BookingDetail from './BookingsDetail/Index'
 import NewBookingContainer from './NewBooking/Index'
 
 export default function Bookings(props) {
+	const INITIAL_FORM_STATE = {
+		loading: false,
+		response: null,
+		error: null,
+		pristine: true,
+	}
 	const [guests, bookings, rooms] = useAllFeatures()
 	const { mutate: addBooking } = useCreateBooking()
 	const { mutate: modifyBooking } = useUpdateBooking()
 	const { mutate: removeBooking } = useDeleteBooking()
 
-	const dataIsLoading = [guests, bookings, rooms].some(
-		(query) => query.isPending
-	)
-	const allDataFetched = [guests, bookings, rooms].every(
-		(query) => query.isSuccess
-	)
+	const dataIsLoading = [guests, bookings, rooms].some((query) => query.isPending)
+	const allDataFetched = [guests, bookings, rooms].every((query) => query.isSuccess)
 	const error = [guests, bookings, rooms].some((query) => query.error)
 
-	const [newBookingFormStatus, setNewBookingFormStatus] = useState({
-		loading: false,
-		response: null,
-		error: null,
-		pristine: true,
-	})
-	const [editBookingFormStatus, setEditBookingFormStatus] = useState({
-		loading: false,
-		response: null,
-		error: null,
-		pristine: true,
-	})
+	const [newBookingFormStatus, setNewBookingFormStatus] = useState(INITIAL_FORM_STATE)
+	const [editBookingFormStatus, setEditBookingFormStatus] = useState(INITIAL_FORM_STATE)
 	const [selectedBookingId, setSelectedBookingId] = useState(null)
 	const [fullBookingDetails, setFullBookingDetails] = useState(null)
 	const [searchValue, setSearchValue] = useState('')
@@ -106,43 +94,34 @@ export default function Bookings(props) {
 		setToastNotification({
 			message:
 				response.message ||
-				`${
-					response.status ? `${response.status}` : ''
-				} Error: Something Went Wrong`,
+				`${response.status ? `${response.status}` : ''} Error: Something Went Wrong`,
 			type: response.success ? 'success' : 'error',
 		})
 	}
 
-	const resetEditForm = () => {
-		setEditBookingFormStatus({
-			loading: false,
-			response: null,
-			error: null,
-			pristine: true,
-		})
-	}
+	const resetEditForm = () => setEditBookingFormStatus(INITIAL_FORM_STATE)
 
 	return (
 		<ErrorBoundary>
 			<FeatureWrapper
+				toastNotification={toastNotification}
+				newRecordComponent={<NewBookingContainer submitFn={createBooking} />}
 				subHeaderProps={{
 					featureName: 'Bookings',
 					recordCount: 0,
 					newRecordBtn: true,
 					newRecordStatus: newBookingFormStatus,
 					search: (e) => setSearchValue(e.target.value),
-				}}
-				toastNotification={toastNotification}
-				newRecordComponent={<NewBookingContainer submitFn={createBooking} />}>
+				}}>
 				<BookingsTable
 					guests={guests}
 					bookings={bookings}
 					rooms={rooms}
+					searchTerms={searchValue}
 					onRowClick={(record) => {
 						setFullBookingDetails(record)
 						setSelectedBookingId(record._id)
 					}}
-					searchTerms={searchValue}
 				/>
 				<BookingDetail
 					bookingId={selectedBookingId}

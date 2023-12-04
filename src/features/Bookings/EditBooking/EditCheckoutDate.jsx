@@ -1,23 +1,11 @@
 import { useState, useEffect } from 'react'
-import {
-	Col,
-	Row,
-	Space,
-	Form,
-	Button,
-	DatePicker,
-	TimePicker,
-	Alert,
-} from 'antd'
+import { Col, Row, Space, Form, Button, DatePicker, TimePicker, Alert } from 'antd'
 import dayjs from 'dayjs'
 
 import { useRoom } from 'src/hooks/useRoomsQuery'
 import { NewBookingRoomSelection } from 'src/features/Bookings/NewBooking/Form/NewBookingRoomSelection'
 import { EditDateSubmit } from 'src/features/Bookings/EditBooking/EditDateSubmit'
-import {
-	getArrayOfDatesBooked,
-	isRoomAvailableDuringDates,
-} from 'src/utils/dateHelpers'
+import { getArrayOfDatesBooked, isRoomAvailableDuringDates } from 'src/utils/dateHelpers'
 
 import { AppAPI } from 'src/api/API'
 import { apiPaths } from 'src/api/constants'
@@ -35,9 +23,7 @@ export const EditCheckoutDate = (props) => {
 		data?.checkoutDate ? dayjs(data.checkoutDate) : ''
 	)
 	const [selectedCheckoutTime, setSelectedCheckoutTime] = useState(
-		data?.checkoutDate
-			? dayjs(dayjs(data.checkoutDate).format('HH:mm:ss'), 'HH:mm:ss')
-			: ''
+		data?.checkoutDate ? dayjs(dayjs(data.checkoutDate).format('HH:mm:ss'), 'HH:mm:ss') : ''
 	)
 	const [showWarning, setShowWarning] = useState(false)
 	const [isChangingRoom, setIsChangingRoom] = useState(false)
@@ -46,9 +32,7 @@ export const EditCheckoutDate = (props) => {
 	const [selectedRoom, setSelectedRoom] = useState(data.room._id)
 
 	// computation
-	const isSameDate = dayjs(data.checkoutDate).isSame(
-		dayjs(selectedCheckoutDate)
-	)
+	const isSameDate = dayjs(data.checkoutDate).isSame(dayjs(selectedCheckoutDate))
 
 	const submitForm = () => {
 		let formattedCheckoutDate = dayjs(selectedCheckoutDate).format('YYYY-MM-DD')
@@ -56,9 +40,7 @@ export const EditCheckoutDate = (props) => {
 		let newData = {
 			room: selectedRoom,
 			checkinDate: data.checkinDate,
-			checkoutDate: dayjs(
-				`${formattedCheckoutDate}T${formattedCheckoutTime}`
-			).toISOString(),
+			checkoutDate: dayjs(`${formattedCheckoutDate}T${formattedCheckoutTime}`).toISOString(),
 		}
 		let dataReadyForAPI = {
 			id: data._id,
@@ -74,10 +56,7 @@ export const EditCheckoutDate = (props) => {
 				dayjs(data.checkoutDate).add(1, 'day'),
 				newCheckoutDate
 			)
-			let roomIsAvailable = isRoomAvailableDuringDates(
-				data.room.datesBooked,
-				proposedNewDates
-			)
+			let roomIsAvailable = isRoomAvailableDuringDates(data.room.datesBooked, proposedNewDates)
 			if (!roomIsAvailable) setShowWarning(true)
 		}
 		setSelectedCheckoutDate(newCheckoutDate)
@@ -153,10 +132,7 @@ export const EditCheckoutDate = (props) => {
 								message: 'Checkout date is required',
 							},
 						]}>
-						<DatePicker
-							onChange={onCheckoutChange}
-							disabledDate={disableDatesPriorToCheckIn}
-						/>
+						<DatePicker onChange={onCheckoutChange} disabledDate={disableDatesPriorToCheckIn} />
 					</Form.Item>
 				</Col>
 				<Col span={12} align="left">
@@ -215,11 +191,7 @@ export const EditCheckoutDate = (props) => {
 					Cancel
 				</Button>
 
-				<EditDateSubmit
-					form={editCheckoutDateForm}
-					invalid={isSameDate}
-					submitForm={submitForm}
-				/>
+				<EditDateSubmit form={editCheckoutDateForm} invalid={isSameDate} submitForm={submitForm} />
 			</Space>
 		</Form>
 	)

@@ -22,9 +22,7 @@ export const NewBookingDateSelection = (props) => {
 	}
 
 	const disableDatesPriorToCheckIn = (current) => {
-		return current.isBefore(addMinStayDurationToCheckoutDate(checkinDate))
-			? true
-			: false
+		return current.isBefore(addMinStayDurationToCheckoutDate(checkinDate)) ? true : false
 	}
 
 	const onChangeOfCheckinDate = (val) => {
@@ -55,10 +53,7 @@ export const NewBookingDateSelection = (props) => {
 							message: 'Checkin date is required',
 						},
 					]}>
-					<DatePicker
-						onChange={onChangeOfCheckinDate}
-						disabledDate={disableDatesPriorToToday}
-					/>
+					<DatePicker onChange={onChangeOfCheckinDate} disabledDate={disableDatesPriorToToday} />
 				</Form.Item>
 				<Form.Item
 					name="checkinTime"
@@ -112,10 +107,7 @@ export const NewBookingDateSelection = (props) => {
 							message: 'Checkout date is required',
 						},
 					]}>
-					<DatePicker
-						onChange={onChangeOfCheckoutDate}
-						disabledDate={disableDatesPriorToCheckIn}
-					/>
+					<DatePicker onChange={onChangeOfCheckoutDate} disabledDate={disableDatesPriorToCheckIn} />
 				</Form.Item>
 				<Form.Item
 					name="checkoutTime"

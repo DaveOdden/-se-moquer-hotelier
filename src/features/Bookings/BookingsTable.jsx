@@ -18,30 +18,14 @@ export const BookingsTable = (props) => {
 			onFilter: (value, record) => {
 				return (
 					String(record.room._id).toLowerCase().includes(value.toLowerCase()) ||
-					String(record.guest._id)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.guest.fullName)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.guest.licenseNumber)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.guest.dob)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.checkinDate)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.checkoutDate)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.checkinDateReadable)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.checkoutDateReadable)
-						.toLowerCase()
-						.includes(value.toLowerCase())
+					String(record.guest._id).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.guest.fullName).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.guest.licenseNumber).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.guest.dob).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.checkinDate).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.checkoutDate).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.checkinDateReadable).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.checkoutDateReadable).toLowerCase().includes(value.toLowerCase())
 				)
 			},
 			width: '120px',

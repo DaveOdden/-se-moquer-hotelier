@@ -18,9 +18,7 @@ export const NewBookingRoomSelection = (props) => {
 				filterOption={true}
 				onSelect={onRoomSelection}
 				onChange={onChange}
-				placeholder={
-					roomIsLoading ? 'Loading...' : room?.value ? `#${room?.value}` : ''
-				}
+				placeholder={roomIsLoading ? 'Loading...' : room?.value ? `#${room?.value}` : ''}
 				disabled={roomIsLoading}
 			/>
 		</Form.Item>

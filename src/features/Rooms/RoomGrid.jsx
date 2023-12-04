@@ -8,9 +8,7 @@ export const RoomGrid = (props) => {
 	const settings = useSettings()
 	const bookedRooms = useArrayOfRoomsBooked()
 
-	const width = settings.data
-		? `calc(100%/${settings.data.properties.roomsPerFloor})`
-		: null
+	const width = settings.data ? `calc(100%/${settings.data.properties.roomsPerFloor})` : null
 	return settings.isLoading || bookedRooms.isLoading ? (
 		<Spin className="w-full text-center m-8" />
 	) : (

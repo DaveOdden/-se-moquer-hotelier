@@ -3,8 +3,7 @@ const { Text } = Typography
 
 export const RoomCell = (props) => {
 	const { room, width, showModal, bookedRooms } = props
-	const cellBgColor =
-		bookedRooms && bookedRooms.includes(room._id) ? 'slate-200' : 'white'
+	const cellBgColor = bookedRooms && bookedRooms.includes(room._id) ? 'slate-200' : 'white'
 	return (
 		<Space.Compact
 			size="small"

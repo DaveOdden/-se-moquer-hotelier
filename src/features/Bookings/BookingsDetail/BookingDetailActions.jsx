@@ -29,18 +29,13 @@ export const BookingDetailActions = (props) => {
 				open={showConfirmation}
 				content={
 					<Space>
-						<Button onClick={() => setShowConfirmation(false)}>
-							No
-						</Button>
+						<Button onClick={() => setShowConfirmation(false)}>No</Button>
 						<Button danger type="primary" onClick={cancelBooking}>
 							Yes
 						</Button>
 					</Space>
 				}>
-				<Button
-					className="w-full"
-					onClick={() => setShowConfirmation(true)}
-					danger>
+				<Button className="w-full" onClick={() => setShowConfirmation(true)} danger>
 					Cancel Booking
 				</Button>
 			</Popover>

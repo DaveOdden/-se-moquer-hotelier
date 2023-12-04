@@ -5,19 +5,11 @@ export const NewBookingSubmitButton = (props) => {
 	const { guest, checkinDate, checkinTime, checkoutDate, checkoutTime, room } =
 		bookingForm.getFieldsValue()
 	const formIsComplete =
-		!!guest &&
-		!!checkinDate &&
-		!!checkinTime &&
-		!!checkoutDate &&
-		!!checkoutTime &&
-		!!room
+		!!guest && !!checkinDate && !!checkinTime && !!checkoutDate && !!checkoutTime && !!room
 
 	return (
 		<Form.Item shouldUpdate className="text-right mb-0">
-			<Button
-				type="primary"
-				disabled={!formIsComplete}
-				onClick={moveToNextStep}>
+			<Button type="primary" disabled={!formIsComplete} onClick={moveToNextStep}>
 				Next
 			</Button>
 		</Form.Item>
