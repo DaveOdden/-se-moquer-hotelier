@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Drawer, Card } from 'antd'
 import { BookingDetailContent } from 'src/features/Bookings/BookingsDetail/BookingDetailContent'
 import { BookingDetailActions } from 'src/features/Bookings/BookingsDetail/BookingDetailActions'
-import { EditRoom } from 'src/features/Bookings/BookingsDetail/EditBooking/EditRoom'
-import { EditCheckoutDate } from 'src/features/Bookings/BookingsDetail/EditBooking/EditCheckoutDate'
+import { EditRoom } from 'src/features/Bookings/EditBooking/EditRoom'
+import { EditCheckoutDate } from 'src/features/Bookings/EditBooking/EditCheckoutDate'
 // import { useBooking } from 'src/hooks/useBookingsQuery'
 
 export const BookingDetail = (props) => {

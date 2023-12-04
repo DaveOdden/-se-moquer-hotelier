@@ -3,7 +3,7 @@ import { BookingsAPI } from 'src/api/BookingsAPI'
 import { Space, Form, Button } from 'antd'
 
 import { NewBookingRoomSelection } from 'src/features/Bookings/NewBooking/Form/NewBookingRoomSelection'
-import { EditRoomSubmit } from 'src/features/Bookings/BookingsDetail/EditBooking/EditRoomSubmit'
+import { EditRoomSubmit } from 'src/features/Bookings/EditBooking/EditRoomSubmit'
 
 export const EditRoom = (props) => {
 	const { data, updateBooking, formStatus, resetEditForm, setEditing } = props
