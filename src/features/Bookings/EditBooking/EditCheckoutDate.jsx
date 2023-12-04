@@ -14,7 +14,7 @@ import dayjs from 'dayjs'
 import { useRoom } from 'src/hooks/useRoomsQuery'
 import { BookingsAPI } from 'src/api/BookingsAPI'
 import { NewBookingRoomSelection } from 'src/features/Bookings/NewBooking/Form/NewBookingRoomSelection'
-import { EditDateSubmit } from 'src/features/Bookings/BookingsDetail/EditBooking/EditDateSubmit'
+import { EditDateSubmit } from 'src/features/Bookings/EditBooking/EditDateSubmit'
 import {
 	getArrayOfDatesBooked,
 	isRoomAvailableDuringDates,
