@@ -26,6 +26,7 @@ export const NewBookingFlow = (props) => {
 	}
 
 	const collectFormData = (formData) => {
+		console.log(formData)
 		setBookingDetails(formData)
 		goToCarouselIndex(1)
 	}

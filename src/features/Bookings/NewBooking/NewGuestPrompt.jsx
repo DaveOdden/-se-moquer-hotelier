@@ -9,16 +9,10 @@ export const NewGuestPrompt = () => {
 	return (
 		<Flex align="center" justify="space-between">
 			<Text className="inline-block text-xs">
-				<span className="font-bold">
-					This guest is not in our system.
-				</span>
-				<div>
-					Register this individual to start the booking process.
-				</div>
+				<span className="font-bold">This guest is not in our system.</span>
+				<div>Register this individual to start the booking process.</div>
 			</Text>
-			<Button
-				type="primary"
-				onClick={() => setCurrentView('newGuestForm')}>
+			<Button type="primary" onClick={() => setCurrentView('newGuestForm')}>
 				Create New Guest
 			</Button>
 		</Flex>

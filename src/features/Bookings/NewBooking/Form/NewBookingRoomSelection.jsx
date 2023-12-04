@@ -19,11 +19,7 @@ export const NewBookingRoomSelection = (props) => {
 				onSelect={onRoomSelection}
 				onChange={onChange}
 				placeholder={
-					roomIsLoading
-						? 'Loading...'
-						: room?.value
-						? `#${room?.value}`
-						: ''
+					roomIsLoading ? 'Loading...' : room?.value ? `#${room?.value}` : ''
 				}
 				disabled={roomIsLoading}
 			/>

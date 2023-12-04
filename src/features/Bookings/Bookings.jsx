@@ -133,9 +133,7 @@ export default function Bookings(props) {
 					search: (e) => setSearchValue(e.target.value),
 				}}
 				toastNotification={toastNotification}
-				newRecordComponent={
-					<NewBookingContainer submitFn={createBooking} />
-				}>
+				newRecordComponent={<NewBookingContainer submitFn={createBooking} />}>
 				<BookingsTable
 					guests={guests}
 					bookings={bookings}

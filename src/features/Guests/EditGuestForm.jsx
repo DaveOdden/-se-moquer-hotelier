@@ -26,14 +26,8 @@ export const EditGuestForm = (props) => {
 			<Form.Item name="phone" label="Phone" disabled={formStatus.loading}>
 				<Input placeholder="Phone" disabled={formStatus.loading} />
 			</Form.Item>
-			<Form.Item
-				name="dob"
-				label="Date of Birth"
-				disabled={formStatus.loading}>
-				<Input
-					placeholder="Date of Birth"
-					disabled={formStatus.loading}
-				/>
+			<Form.Item name="dob" label="Date of Birth" disabled={formStatus.loading}>
+				<Input placeholder="Date of Birth" disabled={formStatus.loading} />
 			</Form.Item>
 			<Form.Item
 				name={['address', 'street']}
@@ -80,20 +74,12 @@ export const EditGuestForm = (props) => {
 			</Space>
 
 			<Form.Item name="licenseNumber" disabled={formStatus.loading}>
-				<Input
-					placeholder="License Number"
-					disabled={formStatus.loading}
-				/>
+				<Input placeholder="License Number" disabled={formStatus.loading} />
 			</Form.Item>
 			<Form.Item name="notes" disabled={formStatus.loading}>
-				<Input.TextArea
-					placeholder="Notes"
-					disabled={formStatus.loading}
-				/>
+				<Input.TextArea placeholder="Notes" disabled={formStatus.loading} />
 			</Form.Item>
-			<Form.Item
-				disabled={formStatus.loading}
-				className="mb-0 text-right">
+			<Form.Item disabled={formStatus.loading} className="mb-0 text-right">
 				<Button
 					type="primary"
 					key="submit"

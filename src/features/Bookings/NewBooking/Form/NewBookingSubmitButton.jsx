@@ -2,14 +2,8 @@ import { Form, Button } from 'antd'
 
 export const NewBookingSubmitButton = (props) => {
 	const { bookingForm, moveToNextStep } = props
-	const {
-		guest,
-		checkinDate,
-		checkinTime,
-		checkoutDate,
-		checkoutTime,
-		room,
-	} = bookingForm.getFieldsValue()
+	const { guest, checkinDate, checkinTime, checkoutDate, checkoutTime, room } =
+		bookingForm.getFieldsValue()
 	const formIsComplete =
 		!!guest &&
 		!!checkinDate &&

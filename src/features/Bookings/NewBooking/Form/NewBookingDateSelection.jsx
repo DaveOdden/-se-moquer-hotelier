@@ -18,9 +18,7 @@ export const NewBookingDateSelection = (props) => {
 	const { settings } = useSettings()
 
 	const disableDatesPriorToToday = (current) => {
-		return current.isBefore(dayjs(new Date()).subtract(1, 'day'))
-			? true
-			: false
+		return current.isBefore(dayjs(new Date()).subtract(1, 'day')) ? true : false
 	}
 
 	const disableDatesPriorToCheckIn = (current) => {

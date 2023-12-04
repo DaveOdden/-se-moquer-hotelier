@@ -51,10 +51,8 @@ export const EditCheckoutDate = (props) => {
 	)
 
 	const submitForm = () => {
-		let formattedCheckoutDate =
-			dayjs(selectedCheckoutDate).format('YYYY-MM-DD')
-		let formattedCheckoutTime =
-			dayjs(selectedCheckoutTime).format('HH:mm:ss')
+		let formattedCheckoutDate = dayjs(selectedCheckoutDate).format('YYYY-MM-DD')
+		let formattedCheckoutTime = dayjs(selectedCheckoutTime).format('HH:mm:ss')
 		let newData = {
 			room: selectedRoom,
 			checkinDate: data.checkinDate,

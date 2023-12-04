@@ -17,9 +17,7 @@ export const BookingsTable = (props) => {
 			filteredValue: [searchTerms],
 			onFilter: (value, record) => {
 				return (
-					String(record.room._id)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
+					String(record.room._id).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.guest._id)
 						.toLowerCase()
 						.includes(value.toLowerCase()) ||

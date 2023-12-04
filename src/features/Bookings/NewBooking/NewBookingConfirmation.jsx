@@ -30,24 +30,20 @@ export const BookingConfirmation = (props) => {
 					<Descriptions.Item label="Check Out">
 						{writtenOutDateTime(formData?.checkoutDate)}
 					</Descriptions.Item>
-					<Descriptions.Item label="Payment">
-						Mock Payment
-					</Descriptions.Item>
+					<Descriptions.Item label="Payment">Mock Payment</Descriptions.Item>
 				</Descriptions>
 				<Divider className="m-0" />
 				<Flex justify="space-between">
 					<Descriptions column={1}>
 						<Descriptions.Item label="Rate">
-							${settings?.properties?.roomRate} x{' '}
-							{formData?.billing.days}
+							${settings?.properties?.roomRate} x {formData?.billing.days}
 						</Descriptions.Item>
 					</Descriptions>
 					<Statistic
 						title="Total"
 						className="text-right mb-8"
 						value={`$${
-							settings?.properties?.roomRate *
-							formData?.billing.days
+							settings?.properties?.roomRate * formData?.billing.days
 						}`}
 					/>
 				</Flex>

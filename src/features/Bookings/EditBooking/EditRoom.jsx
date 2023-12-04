@@ -65,11 +65,7 @@ export const EditRoom = (props) => {
 	}, [formStatus])
 
 	return (
-		<Form
-			id="editRoom"
-			form={editRoom}
-			onFinish={submitForm}
-			layout="vertical">
+		<Form id="editRoom" form={editRoom} onFinish={submitForm} layout="vertical">
 			<NewBookingRoomSelection
 				room={selectedRoom}
 				rooms={rooms}
