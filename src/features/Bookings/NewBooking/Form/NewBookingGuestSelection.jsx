@@ -1,7 +1,8 @@
 import { AutoComplete, Form, Input } from 'antd'
-import { GuestAPI } from '../../../../api/GuestAPI.js'
 import { useGuestAutoComplete } from 'src/hooks/useGuestsQuery'
 import { onGuestSearch } from 'src/features/Bookings/utils/newBookingGuestSearch'
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
 
 export const NewBookingGuestSelection = (props) => {
 	const guest = useGuestAutoComplete()
@@ -12,7 +13,11 @@ export const NewBookingGuestSelection = (props) => {
 	}
 
 	const onGuestSelection = (value, data) => {
-		GuestAPI.getOne(data.id).then((res) => {
+		AppAPI.getOne({
+			protocol: 'GET',
+			endpoint: apiPaths.guests,
+			id: data.id,
+		}).then((res) => {
 			setSelectedGuest(res.message)
 		})
 	}

@@ -1,14 +1,30 @@
 import { useQueries } from '@tanstack/react-query'
-import { GuestAPI } from '../api/GuestAPI'
-import { BookingsAPI } from 'src/api/BookingsAPI'
-import { RoomsAPI } from 'src/api/RoomAPI'
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
+
 
 export const useAllFeatures = () => {
   return useQueries({
     queries: [
-      { queryKey: ["guests"], queryFn: () => GuestAPI.get().then((res) => res.message) },
-      { queryKey: ["bookings"], queryFn: () => BookingsAPI.get().then((res) => res.message) },
-      { queryKey: ["rooms"], queryFn: () => RoomsAPI.get().then((res) => res.message) },
+      { 
+        queryKey: ["guests"], 
+        queryFn: () => AppAPI.call({
+          protocol: 'GET',
+          endpoint: apiPaths.guests
+        }).then((res) => res.message) 
+      }, { 
+        queryKey: ["bookings"], 
+        queryFn: () => AppAPI.call({
+          protocol: 'GET',
+          endpoint: apiPaths.bookings
+        }).then((res) => res.message) 
+      }, { 
+        queryKey: ["rooms"], 
+        queryFn: () => AppAPI.call({
+          protocol: 'GET',
+          endpoint: apiPaths.rooms
+        }).then((res) => res.message) 
+      },
     ]
   })
 }

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { BookingsAPI } from 'src/api/BookingsAPI'
 import { Space, Form, Button } from 'antd'
 
 import { NewBookingRoomSelection } from 'src/features/Bookings/NewBooking/Form/NewBookingRoomSelection'
 import { EditRoomSubmit } from 'src/features/Bookings/EditBooking/EditRoomSubmit'
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
 
 export const EditRoom = (props) => {
 	const { data, updateBooking, formStatus, resetEditForm, setEditing } = props
@@ -28,10 +29,14 @@ export const EditRoom = (props) => {
 	const initialPopulateRoomDropdown = () => {
 		if (data.checkinDate && data.checkoutDate) {
 			setRoomLoadingState(true)
-			BookingsAPI.getRoomsByAvailability(
-				data.checkinDate,
-				data.checkoutDate
-			).then((res) => {
+			AppAPI.call({
+				protocol: 'GET',
+				endpoint: apiPaths.roomByAvailability,
+				payload: {
+					checkinDate: data.checkinDate,
+					checkoutDate: data.checkoutDate,
+				},
+			}).then((res) => {
 				setRooms(res.message.roomsWithAvailabilityKeyVal)
 				setRoomLoadingState(false)
 			})

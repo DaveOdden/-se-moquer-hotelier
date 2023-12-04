@@ -6,9 +6,10 @@ import { NewBookingGuestSelection } from './NewBookingGuestSelection'
 import { NewBookingDateSelection } from './NewBookingDateSelection'
 import { NewBookingRoomSelection } from './NewBookingRoomSelection'
 import { NewBookingSubmitButton } from './NewBookingSubmitButton'
-import { BookingsAPI } from 'src/api/BookingsAPI'
 import { calculateDuration } from 'src/utils/dateHelpers.js'
 import { useSettings } from 'src/hooks/useSettingsQuery'
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
 
 export const NewBookingForm = (props) => {
 	const { returnFormData } = props
@@ -46,15 +47,18 @@ export const NewBookingForm = (props) => {
 	const populateRoomDropdown = () => {
 		if (checkoutDate && checkinDate) {
 			setRoomLoadingState(true)
-			BookingsAPI.getRoomsByAvailability(checkinDate, checkoutDate).then(
-				(res) => {
-					setDurationOfStay(
-						calculateDuration(checkinDate, checkoutDate)
-					)
-					setRooms(res.message.roomsWithAvailabilityKeyVal)
-					setRoomLoadingState(false)
-				}
-			)
+			AppAPI.call({
+				protocol: 'GET',
+				endpoint: apiPaths.roomByAvailability,
+				payload: {
+					checkinDate: checkinDate,
+					checkoutDate: checkoutDate,
+				},
+			}).then((res) => {
+				setDurationOfStay(calculateDuration(checkinDate, checkoutDate))
+				setRooms(res.message.roomsWithAvailabilityKeyVal)
+				setRoomLoadingState(false)
+			})
 		}
 	}
 

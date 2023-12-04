@@ -1,19 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { RoomsAPI } from '../api/RoomAPI'
-
-export const useRooms = () => {
-  return useQuery({
-    queryKey: ['rooms'],
-    queryFn: () => RoomsAPI.get().then((res) => res.message),
-  });
-}
-
-// export const useRoom = () => {
-//   return useQuery({
-//     queryKey: ['room', ],
-//     queryFn: () => RoomsAPI.get().then((res) => res.message),
-//   });
-// }
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
 
 
 export const useRoom = (id) => {
@@ -21,9 +8,22 @@ export const useRoom = (id) => {
   return queryClient.getQueryData(['rooms'])?.find((d) => d._id === id)
 }
 
+export const useRooms = () => {
+  return useQuery({
+    queryKey: ['rooms'],
+    queryFn: () => AppAPI.call({
+      protocol: 'GET',
+      endpoint: apiPaths.rooms
+    }).then((res) => res.message),
+  });
+}
+
 export const useOccupiedRooms = () => {
   return useQuery({
     queryKey: ['occupiedrooms'],
-    queryFn: () => RoomsAPI.getCurrentlyOccupiedRooms().then((res) => res.message),
+    queryFn: () => AppAPI.call({
+      protocol: 'GET',
+      endpoint: apiPaths.occupiedRooms
+    }).then((res) => res.message),
   });
 }

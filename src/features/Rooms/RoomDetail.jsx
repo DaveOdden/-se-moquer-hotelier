@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Calendar } from 'antd'
-import { RoomsAPI } from '../../api/RoomAPI'
 import dayjs from 'dayjs'
+import { AppAPI } from 'src/api/API'
+import { apiPaths } from 'src/api/constants'
 
 export const RoomDetail = (props) => {
 	const [room, setRoom] = useState([])
 
 	const getRoomData = () => {
-		RoomsAPI.get(props.room._id).then((res) => {
+		AppAPI.call({
+			protocol: 'GET',
+			endpoint: apiPaths.rooms,
+			id: props.room._id,
+		}).then((res) => {
 			setRoom(res.message)
 		})
 	}
