@@ -6,7 +6,7 @@ export const useSettings = () => {
   return useQuery({
     queryKey: ['settings'],
     queryFn: () => AppAPI.call({
-      protocol: 'GET',
+      method: 'GET',
       endpoint: apiPaths.settings
     }).then((res) => res.message),
   });

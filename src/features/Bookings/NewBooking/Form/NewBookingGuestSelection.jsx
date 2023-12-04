@@ -13,11 +13,12 @@ export const NewBookingGuestSelection = (props) => {
 	}
 
 	const onGuestSelection = (value, data) => {
-		AppAPI.getOne({
-			protocol: 'GET',
-			endpoint: apiPaths.guests,
+		AppAPI.call({
+			method: 'GET',
+			endpoint: apiPaths.guest,
 			id: data.id,
 		}).then((res) => {
+			console.log(res)
 			setSelectedGuest(res.message)
 		})
 	}
@@ -39,9 +40,7 @@ export const NewBookingGuestSelection = (props) => {
 				onSearch={onSearch}
 				onSelect={onGuestSelection}>
 				<Input.Search
-					placeholder={
-						guest.isLoading ? 'Loading...' : 'Search by Name'
-					}
+					placeholder={guest.isLoading ? 'Loading...' : 'Search by Name'}
 					disabled={guest.isLoading}
 				/>
 			</AutoComplete>

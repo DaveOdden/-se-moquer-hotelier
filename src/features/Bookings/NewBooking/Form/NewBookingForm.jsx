@@ -17,8 +17,7 @@ export const NewBookingForm = (props) => {
 	const { data: settings } = useSettings()
 
 	/* Guest States */
-	const [guestSearchHasResults, setGuestSearchHasResults] =
-		useState(undefined)
+	const [guestSearchHasResults, setGuestSearchHasResults] = useState(undefined)
 	const [selectedGuest, setSelectedGuest] = useState(undefined)
 
 	/* Date / Time States */
@@ -37,18 +36,14 @@ export const NewBookingForm = (props) => {
 
 	let showDateSelection = selectedGuest
 	let showRoomSelection =
-		selectedGuest &&
-		checkinDate &&
-		checkoutDate &&
-		checkinTime &&
-		checkoutTime
+		selectedGuest && checkinDate && checkoutDate && checkinTime && checkoutTime
 	let showNewGuestPrompt = guestSearchHasResults === null
 
 	const populateRoomDropdown = () => {
 		if (checkoutDate && checkinDate) {
 			setRoomLoadingState(true)
 			AppAPI.call({
-				protocol: 'GET',
+				method: 'GET',
 				endpoint: apiPaths.roomByAvailability,
 				payload: {
 					checkinDate: checkinDate,
@@ -82,14 +77,10 @@ export const NewBookingForm = (props) => {
 				guest: selectedGuest._id,
 				room: selectedRoom,
 				checkinDate: dayjs(
-					`${checkinDate.format(
-						'YYYY-MM-DD'
-					)}T${formattedCheckinTime}`
+					`${checkinDate.format('YYYY-MM-DD')}T${formattedCheckinTime}`
 				).toISOString(),
 				checkoutDate: dayjs(
-					`${checkoutDate.format(
-						'YYYY-MM-DD'
-					)}T${formattedCheckoutTime}`
+					`${checkoutDate.format('YYYY-MM-DD')}T${formattedCheckoutTime}`
 				).toISOString(),
 				paid: true,
 				billing: {

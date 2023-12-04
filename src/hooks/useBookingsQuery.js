@@ -11,7 +11,7 @@ export const useBookings = () => {
   return useQuery({
     queryKey: ['bookings'],
     queryFn: () => AppAPI.call({
-      protocol: 'GET',
+      method: 'GET',
       endpoint: apiPaths.bookings
     }).then((res) => res.message),
   });
@@ -21,7 +21,7 @@ export const useArrayOfRoomsBooked = () => {
   return useQuery({
     queryKey: ['roomsbooked'],
     queryFn: () => AppAPI.call({
-      protocol: 'GET',
+      method: 'GET',
       endpoint: apiPaths.bookings
     }).then((res) => res.arrayOfRoomsBooked),
   });
@@ -32,7 +32,7 @@ export const useCreateBooking = () => {
   return useMutation({
     mutationFn: (newBooking) => {
       return AppAPI.call({
-        protocol: 'POST',
+        method: 'POST',
         endpoint: apiPaths.bookings,
         payload: newBooking
       })
@@ -48,7 +48,7 @@ export const useUpdateBooking = () => {
   return useMutation({
     mutationFn: (data) => {
       return AppAPI.call({
-        protocol: 'PUT',
+        method: 'PUT',
         endpoint: apiPaths.bookings,
         id: data.id, 
         payload: data.payload
@@ -65,7 +65,7 @@ export const useDeleteBooking = () => {
   return useMutation({
     mutationFn: (id) => {
       return AppAPI.call({
-        protocol: 'DELETE',
+        method: 'DELETE',
         endpoint: apiPaths.bookings,
         id: id
       })

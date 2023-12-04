@@ -4,6 +4,7 @@ export const apiPaths = {
   bookings: "/bookings",
   bookingsByRoom: "/bookingsByRoom",
   guests: "/guests",
+  guest: "/getOneGuest",
   autocompleteGuests: "/getGuestsForAutocomplete",
   rooms: "/rooms",
   occupiedRooms: "/getCurrentlyOccupiedRooms",

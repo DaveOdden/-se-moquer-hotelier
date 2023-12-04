@@ -9,19 +9,19 @@ export const useAllFeatures = () => {
       { 
         queryKey: ["guests"], 
         queryFn: () => AppAPI.call({
-          protocol: 'GET',
+          method: 'GET',
           endpoint: apiPaths.guests
         }).then((res) => res.message) 
       }, { 
         queryKey: ["bookings"], 
         queryFn: () => AppAPI.call({
-          protocol: 'GET',
+          method: 'GET',
           endpoint: apiPaths.bookings
         }).then((res) => res.message) 
       }, { 
         queryKey: ["rooms"], 
         queryFn: () => AppAPI.call({
-          protocol: 'GET',
+          method: 'GET',
           endpoint: apiPaths.rooms
         }).then((res) => res.message) 
       },

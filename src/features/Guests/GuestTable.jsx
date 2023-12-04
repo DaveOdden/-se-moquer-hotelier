@@ -17,15 +17,9 @@ export const GuestTable = (props) => {
 					String(record.firstName)
 						.toLowerCase()
 						.includes(value.toLowerCase()) ||
-					String(record.lastName)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.phone)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
-					String(record.email)
-						.toLowerCase()
-						.includes(value.toLowerCase()) ||
+					String(record.lastName).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.email).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.address.street)
 						.toLowerCase()
 						.includes(value.toLowerCase()) ||
@@ -41,9 +35,7 @@ export const GuestTable = (props) => {
 					String(record.licenseNumber)
 						.toLowerCase()
 						.includes(value.toLowerCase()) ||
-					String(record.status)
-						.toLowerCase()
-						.includes(value.toLowerCase())
+					String(record.status).toLowerCase().includes(value.toLowerCase())
 				)
 			},
 		},

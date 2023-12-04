@@ -68,9 +68,7 @@ export const GuestDetail = (props) => {
 							<LineOutlined />
 						</Button>
 					) : (
-						<Dropdown
-							menu={{ items: actionItems }}
-							placement="bottomRight">
+						<Dropdown menu={{ items: actionItems }} placement="bottomRight">
 							<MoreOutlined />
 						</Dropdown>
 					)}

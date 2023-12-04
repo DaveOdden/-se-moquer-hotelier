@@ -30,7 +30,7 @@ export const EditRoom = (props) => {
 		if (data.checkinDate && data.checkoutDate) {
 			setRoomLoadingState(true)
 			AppAPI.call({
-				protocol: 'GET',
+				method: 'GET',
 				endpoint: apiPaths.roomByAvailability,
 				payload: {
 					checkinDate: data.checkinDate,
@@ -65,11 +65,7 @@ export const EditRoom = (props) => {
 	}, [formStatus])
 
 	return (
-		<Form
-			id="editRoom"
-			form={editRoom}
-			onFinish={submitForm}
-			layout="vertical">
+		<Form id="editRoom" form={editRoom} onFinish={submitForm} layout="vertical">
 			<NewBookingRoomSelection
 				room={selectedRoom}
 				rooms={rooms}

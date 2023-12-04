@@ -11,7 +11,7 @@ export const useGuests = () => {
   return useQuery({
     queryKey: ['guests'],
     queryFn: () => AppAPI.call({
-      protocol: 'GET', 
+      method: 'GET', 
       endpoint: apiPaths.guests
     }).then((res) => res.message),
   });
@@ -21,7 +21,7 @@ export const useGuestAutoComplete = () => {
   return useQuery({
     queryKey: ['guestsautocomplete'],
     queryFn: () => AppAPI.call({
-      protocol: 'GET', 
+      method: 'GET', 
       endpoint: apiPaths.autocompleteGuests
     }).then((res) => res.message),
   });
@@ -32,7 +32,7 @@ export const useCreateGuest = () => {
   return useMutation({
     mutationFn: (newGuest) => {
       return AppAPI.call({
-        protocol: 'POST', 
+        method: 'POST', 
         endpoint: apiPaths.guests,
         payload: newGuest
       })
@@ -48,7 +48,7 @@ export const useUpdateGuest = () => {
   return useMutation({
     mutationFn: (data) => {
       return AppAPI.call({
-        protocol: 'PUT', 
+        method: 'PUT', 
         endpoint: apiPaths.guests,
         id: data.id,
         payload: data.payload
@@ -65,7 +65,7 @@ export const useDeleteGuest = () => {
   return useMutation({
     mutationFn: (id) => {
       return AppAPI.call({
-        protocol: 'DELETE', 
+        method: 'DELETE', 
         endpoint: apiPaths.guests,
         id: id,
       })
