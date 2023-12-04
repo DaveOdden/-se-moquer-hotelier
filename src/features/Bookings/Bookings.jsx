@@ -146,7 +146,7 @@ export default function Bookings(props) {
 				/>
 				<BookingDetail
 					bookingId={selectedBookingId}
-					fullBookingDetails={fullBookingDetails} // aggregated guest and room data with row's booking data
+					fullBookingDetails={fullBookingDetails}
 					updateBooking={updateBooking}
 					deleteBooking={deleteBooking}
 					formStatus={editBookingFormStatus}
