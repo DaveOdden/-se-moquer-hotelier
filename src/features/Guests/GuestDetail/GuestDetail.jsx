@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Drawer, Descriptions, Button, Space, Dropdown } from 'antd'
 import { MoreOutlined, DeleteOutlined, EditOutlined, LineOutlined } from '@ant-design/icons'
-import { EditGuestForm } from './EditGuestForm'
+import { EditGuestForm } from '../EditGuest/EditGuestForm'
 import { useGuest } from 'src/hooks/useGuestsQuery'
-import { transformDataForDescription } from './utils/guestHelpers'
+import { transformDataForDescription } from '../utils/guestHelpers'
 
 export const GuestDetail = (props) => {
 	const { guestId, updateGuest, deleteGuest, formStatus, showDrawer, hideDrawer } = props

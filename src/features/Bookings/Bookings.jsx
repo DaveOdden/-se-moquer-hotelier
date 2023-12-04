@@ -1,19 +1,14 @@
 import { useState } from 'react'
 import { useCreateBooking, useUpdateBooking, useDeleteBooking } from 'src/hooks/useBookingsQuery'
-import { useAllFeatures } from 'src/hooks/useAllQuery'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { BookingsTable } from './BookingsTable'
 import BookingDetail from './BookingsDetail/Index'
 import NewBookingContainer from './NewBooking/Index'
+import { useAllFeatures } from 'src/hooks/useAllQuery'
+import { INITIAL_FORM_STATE } from 'src/utils/constants'
 
 export default function Bookings(props) {
-	const INITIAL_FORM_STATE = {
-		loading: false,
-		response: null,
-		error: null,
-		pristine: true,
-	}
 	const [guests, bookings, rooms] = useAllFeatures()
 	const { mutate: addBooking } = useCreateBooking()
 	const { mutate: modifyBooking } = useUpdateBooking()

@@ -1,11 +1,13 @@
 import { useState } from 'react'
+import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
+
 import { FeatureWrapper } from 'src/components/FeatureWrapper'
 import { useGuests, useCreateGuest, useUpdateGuest, useDeleteGuest } from 'src/hooks/useGuestsQuery'
-import { NewGuestForm } from './NewGuestForm'
+import { NewGuestForm } from './NewGuest/NewGuestForm'
 import { GuestTable } from './GuestTable'
-import { GuestDetail } from './GuestDetail'
+import { GuestDetail } from './GuestDetail/GuestDetail'
 import { convertFormDataForAPI } from './utils/guestHelpers'
-import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
+import { INITIAL_FORM_STATE } from 'src/utils/constants'
 
 export default function Guests() {
 	const guests = useGuests()
@@ -13,18 +15,8 @@ export default function Guests() {
 	const { mutate: modifyGuest } = useUpdateGuest()
 	const { mutate: removeGuest } = useDeleteGuest()
 
-	const [newGuestFormStatus, setNewGuestFormStatus] = useState({
-		loading: false,
-		response: null,
-		error: null,
-		pristine: true,
-	})
-	const [editGuestFormStatus, setEditGuestFormStatus] = useState({
-		loading: false,
-		response: null,
-		error: null,
-		pristine: true,
-	})
+	const [newGuestFormStatus, setNewGuestFormStatus] = useState(INITIAL_FORM_STATE)
+	const [editGuestFormStatus, setEditGuestFormStatus] = useState(INITIAL_FORM_STATE)
 	const [selectedGuestId, setSelectedGuestId] = useState(null)
 	const [searchValue, setSearchValue] = useState('')
 	const [toastNotification, setToastNotification] = useState({
@@ -110,15 +102,15 @@ export default function Guests() {
 	return (
 		<ErrorBoundary>
 			<FeatureWrapper
+				toastNotification={toastNotification}
+				newRecordComponent={<NewGuestForm submitFn={createGuest} />}
 				subHeaderProps={{
 					featureName: 'Guests',
 					recordCount: guests?.data?.length,
 					newRecordBtn: true,
 					newRecordStatus: newGuestFormStatus,
 					search: (e) => setSearchValue(e.target.value),
-				}}
-				toastNotification={toastNotification}
-				newRecordComponent={<NewGuestForm submitFn={createGuest} />}>
+				}}>
 				<GuestTable
 					isLoading={guests?.isPending}
 					tableData={guests?.data}
