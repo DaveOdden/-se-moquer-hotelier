@@ -1,8 +1,8 @@
 # Un Moquer Hotelier
 
-A mock hotel booking and guest management system built with the MERN stack. The idea is to continue implementing advanced concepts through out the tech stacks by building a custom content management system.
+A hotel booking, guest, and room management system built with React. The idea is to continue implementing advanced concepts through out the tech stacks by building a custom content management system.
 
-This repo is the front-end layer only.
+This repo is the front-end layer only and is not intended to be used by the public. This is simply a showcase of front-end architecture, bleeding-edge technologies, and general best practices.
 
 ![bookings](./docs/ui/Bookings.png)
 [See More UI Screenshots](#ui-screenshots)
