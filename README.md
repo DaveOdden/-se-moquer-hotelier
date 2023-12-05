@@ -1,6 +1,6 @@
 # Un Moquer Hotelier
 
-A hotel booking, guest, and room management system built with React. The idea is to continue implementing advanced concepts through out the tech stacks by building a custom content management system.
+A comprehensive hotel booking, guest, and room management system built with React.
 
 This repo is the front-end layer only and is not intended to be used by the public. This is simply a showcase of front-end architecture, bleeding-edge technologies, and general best practices.
 
