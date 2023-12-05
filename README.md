@@ -37,7 +37,7 @@ This repo is the front-end layer only and is not intended to be used by the publ
   - Use tailwind classes, extend tailwind theme (`tailwind.config.js`), or leverage Ant Design theme provider customizations.
 - Naming and structure should suffice in lieu of commenting in _most_ cases.
 - To achieve consistent component naming conventions, only use named component exports, no defaults.
-- Leverage React Query based custom hooks instead of accessing HTTP requests within components.
+- Leverage React Query based custom hooks instead of kicking off HTTP requests within components.
 
 ### Patterns
 
@@ -120,6 +120,10 @@ occupiedRooms: "/getCurrentlyOccupiedRooms",
 roomByAvailability: "/getRoomsByAvailability",
 settings: "/settings",
 ```
+
+## HTTP Flow
+
+![http flow](./docs/UnMoquerHotelier-HTTPFlow.jpg)
 
 ## Component Diagrams
 
