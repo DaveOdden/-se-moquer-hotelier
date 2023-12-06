@@ -39,15 +39,19 @@ This repo is the front-end layer only and is not intended to be used by the publ
 
 ### Rooms
 
-- Table
+- View grid of rooms
+- Indication of booked rooms
+- Detail view shows dates booked on calendar
 
 ### Settings
 
-- Table
+- Room rate
+- Default checkin time
+- Default checkout time
 
 ### Overview
 
-- Table
+- Statistics
 
 ## Tooling List
 
@@ -175,11 +179,9 @@ API.call( {
 } )
 ```
 
+Configuration objects must include, at minimum, a `method` and `endpoint`. This would presumably be a GET request for all records from the endpoint. If the aforementioned minimum required arguments are passed in alongside an `id`, it's assumed you'll be requesting or deleting a single record - depending on the method passed in.
+
 **NOTE:** GET requests with a passed in "payload" are transformed into query strings. POST and PUT requests with payloads are sent through the body of the request as they normally would.
-
-Must include, at minimum, a `method` and `endpoint`. This would presumably be a GET request for all records from the endpoint.
-
-If the aforementioned minimum required arguments are passed in alongside an `id`, it's assumed you'll be requesting or deleting a single record - depending on the method passed in.
 
 sample config:
 
