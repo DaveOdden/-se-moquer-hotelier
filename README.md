@@ -135,9 +135,10 @@ This repo is the front-end layer only and is not intended to be used by the publ
 ## API Gateway
 
 [src/api/API.js](src/api/API.js)
+
 An exclusive channel for transmitting API requests.
 
-All API requests converge here where they are processed and dispatched. The response can be capture in the returned Promise.
+All API requests converge here where they are processed and dispatched. The response can be captured in the returned Promise.
 
 ### Features
 
@@ -147,6 +148,7 @@ All API requests converge here where they are processed and dispatched. The resp
 - Converts response to JSON.
 - Success and error handling
 - DRY. No new features need dedicated api handlers.
+- One declaration of a `fetch` method for all outbound requests
 
 sample config to return all guest data
 
