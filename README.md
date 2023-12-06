@@ -9,7 +9,7 @@ This repo is the front-end layer only and is not intended to be used by the publ
 
 ## Features
 
-### Bookings
+#### Bookings
 
 - Table view of hotel bookings.
 - Filter table data via search functionality.
@@ -27,7 +27,7 @@ This repo is the front-end layer only and is not intended to be used by the publ
     - Functionality to prevent double-booking rooms
     - Option to free-up room if upcoming guest hasn't checked-in
 
-### Guests
+#### Guests
 
 - Table view of hotel guests.
 - Search across all available data to filter table view.
@@ -37,19 +37,19 @@ This repo is the front-end layer only and is not intended to be used by the publ
 - New Guest
 - Remove Guest
 
-### Rooms
+#### Rooms
 
 - View grid of rooms
 - Indication of booked rooms
 - Detail view shows dates booked on calendar
 
-### Settings
+#### Settings
 
 - Room rate
 - Default checkin time
 - Default checkout time
 
-### Overview
+#### Overview
 
 - Statistics
 

@@ -38,8 +38,11 @@ export const AppAPI = {
         'Authorization': apiKey,
       }), 
     });
-    let jsonResponse = await response.json();
-    return jsonResponse;
+    if (response.status === 200) {
+      let jsonResponse = await response.json();
+      return jsonResponse;
+    }
+    return response
   },
 }
 
