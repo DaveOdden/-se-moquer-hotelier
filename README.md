@@ -12,9 +12,9 @@ This repo is the front-end layer only and is not intended to be used by the publ
 
 - [Features](#features)
 - [Tooling List](#tooling-list)
-- [API Layer & Data Storage](#api-layer-&-data-storage)
+- [API Layer & Data Storage](#api-layer--data-storage)
 - [Finding Your Way Around](#finding-your-way-around)
-- [Techniques & Decisions](#techniques-&-decisions)
+- [Techniques & Decisions](#techniques--decisions)
 - [API Gateway](#api-gateway)
 - [Data Flow for HTTP Requests](#data-flow-for-http-requests)
 - [Component Diagrams](#component-diagrams)
