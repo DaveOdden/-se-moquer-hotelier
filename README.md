@@ -5,7 +5,21 @@ A comprehensive hotel booking, guest, and room management system built with Reac
 This repo is the front-end layer only and is not intended to be used by the public. This is simply a showcase of front-end architecture, bleeding-edge technologies, and general best practices.
 
 ![bookings](./docs/ui/Bookings.png)
-[See More UI Screenshots](#ui-screenshots)
+
+<!-- [See More UI Screenshots](#ui-screenshots) -->
+
+## Table of Contents
+
+- [Features](#features)
+- [Tooling List](#tooling-list)
+- [API Layer & Data Storage](#api-layer-&-data-storage)
+- [Finding Your Way Around](#finding-your-way-around)
+- [Techniques & Decisions](#techniques-&-decisions)
+- [API Gateway](#api-gateway)
+- [Data Flow for HTTP Requests](#data-flow-for-http-requests)
+- [Component Diagrams](#component-diagrams)
+- [Component Hierarchy](#component-hierarchy)
+- [UI Screenshots](#ui-screenshots)
 
 ## Features
 
@@ -219,7 +233,7 @@ roomByAvailability: "/getRoomsByAvailability",
 settings: "/settings",
 ```
 
-## HTTP Flow
+## Data Flow for HTTP Requests
 
 ![http flow](./docs/UnMoquerHotelier-HTTPFlow.jpg)
 
