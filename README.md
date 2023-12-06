@@ -134,11 +134,10 @@ This repo is the front-end layer only and is not intended to be used by the publ
 
 ## API Gateway
 
-An exclusive channel for transmitting requests.
+[src/api/API.js](src/api/API.js)
+An exclusive channel for transmitting API requests.
 
-module: [src/api/API.js](src/api/API.js)
-
-All API requests converge here where they are processed and dispatched.
+All API requests converge here where they are processed and dispatched. The response can be capture in the returned Promise.
 
 ### Features
 
@@ -217,9 +216,10 @@ gets transformed into an api ready uri prior to fetch invocation
 /guests?checkinDate=2023-12-10T15:30:00.000Z&checkoutDate=2023-12-17T15:30:00.000Z&id=652a002a84fd6cdd03be4d0f`
 ```
 
-### Available API Path Endpoints
+### Available API Paths
 
 `src/api/constants.js`
+these keys are used for the endpoint path property in the API Gateway configuration
 
 ```
 bookings: "/bookings",
