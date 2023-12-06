@@ -29,12 +29,13 @@ const assembleQueryString = (config) => {
 
 export const AppAPI = {
   call: async (config) => {
+    console.log(config)
     let queryString = assembleQueryString(config)
     const response = await fetch(`${apiUrl}${config.endpoint}${queryString}`,{
       method: config.method,
       body: config.payload && config.method !== 'GET' ? JSON.stringify(config.payload) : null,
       headers: new Headers({
-        'Authorization': apiKey, 
+        'Authorization': apiKey,
       }), 
     });
     let jsonResponse = await response.json();
