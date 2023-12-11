@@ -183,7 +183,8 @@ API.call( {
     phone: "(827) 340-9834",
     dob: "1966-10-22",
     address: {
-        street: "606 Lureen Raveen",
+        address1: "606 Lureen Raveen",
+        address2: "Apt. 3",
         city: "Trunk",
         state: "TN",
         zip: "70301"

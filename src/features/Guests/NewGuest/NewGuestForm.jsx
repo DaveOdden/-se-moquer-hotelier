@@ -18,8 +18,11 @@ export const NewGuestForm = (props) => {
 			<Form.Item name="dob" label="Date of Birth">
 				<Input placeholder="YYYY-MM-DD" />
 			</Form.Item>
-			<Form.Item name="street" label="Street Address">
-				<Input placeholder="Street Address" />
+			<Form.Item name="address1" label="Address 1">
+				<Input placeholder="" />
+			</Form.Item>
+			<Form.Item name="address2" label="Address 2">
+				<Input placeholder="" />
 			</Form.Item>
 
 			<Space>

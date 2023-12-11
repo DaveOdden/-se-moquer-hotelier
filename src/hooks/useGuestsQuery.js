@@ -31,6 +31,7 @@ export const useCreateGuest = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (newGuest) => {
+      console.log(newGuest)
       return AppAPI.call({
         method: 'POST', 
         endpoint: apiPaths.guests,
