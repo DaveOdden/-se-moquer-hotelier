@@ -18,7 +18,8 @@ export const GuestTable = (props) => {
 					String(record.lastName).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.phone).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.email).toLowerCase().includes(value.toLowerCase()) ||
-					String(record.address.street).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.address.address1).toLowerCase().includes(value.toLowerCase()) ||
+					String(record.address.address2).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.address.city).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.address.state).toLowerCase().includes(value.toLowerCase()) ||
 					String(record.address.zip).toLowerCase().includes(value.toLowerCase()) ||
@@ -40,9 +41,15 @@ export const GuestTable = (props) => {
 			width: '170px',
 		},
 		{
-			title: 'Street Name',
-			dataIndex: ['address', 'street'],
-			key: 'street',
+			title: 'Address 1',
+			dataIndex: ['address', 'address1'],
+			key: 'address1',
+			width: '230px',
+		},
+		{
+			title: 'Address 2',
+			dataIndex: ['address', 'address2'],
+			key: 'address2',
 			width: '230px',
 		},
 		{

@@ -22,10 +22,17 @@ export const EditGuestForm = (props) => {
 			<Form.Item name="dob" label="Date of Birth" disabled={formStatus.loading}>
 				<Input placeholder="Date of Birth" disabled={formStatus.loading} />
 			</Form.Item>
-			<Form.Item name={['address', 'street']} label="Street Address" disabled={formStatus.loading}>
+			<Form.Item name={['address', 'address1']} label="Address 1" disabled={formStatus.loading}>
 				<Input
-					placeholder="Street Address"
-					value={formData.address.street}
+					placeholder="14675 Maple Ave."
+					value={formData.address.address1}
+					disabled={formStatus.loading}
+				/>
+			</Form.Item>
+			<Form.Item name={['address', 'address2']} label="Address 2" disabled={formStatus.loading}>
+				<Input
+					placeholder="Apt. 3"
+					value={formData.address.address2}
 					disabled={formStatus.loading}
 				/>
 			</Form.Item>

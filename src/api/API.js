@@ -29,7 +29,6 @@ const assembleQueryString = (config) => {
 
 export const AppAPI = {
   call: async (config) => {
-    console.log(config)
     let queryString = assembleQueryString(config)
     const response = await fetch(`${apiUrl}${config.endpoint}${queryString}`,{
       method: config.method,
