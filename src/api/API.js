@@ -3,6 +3,7 @@ import { apiUrl, apiKey } from './constants'
 const isRegularGetRequest = config => config.method === "GET" && config.payload == undefined && config.id === undefined
 const isGetRequestWithPayload = config => config.method === "GET" && config.payload
 const prependQuestionMark = string => '?' + string.substring(1, string.length)
+const getBrowserUtcOffset = () => new Date().getTimezoneOffset().toString()
 
 const dynamicallyAssembleQueryStringPartial = payload => {
   let partialQueryString = ''
@@ -13,7 +14,7 @@ const dynamicallyAssembleQueryStringPartial = payload => {
 }
 
 const assembleQueryString = (config) => {
-  let queryString = ''
+  let queryString = `?utcOffset=${getBrowserUtcOffset()}`
 
   if(isRegularGetRequest(config))
     return ''
@@ -24,7 +25,8 @@ const assembleQueryString = (config) => {
   if(config.id)
     queryString += `&id=${config.id}`
 
-  return prependQuestionMark(queryString)
+  //return prependQuestionMark(queryString)
+  return queryString
 }
 
 export const AppAPI = {

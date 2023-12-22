@@ -50,7 +50,6 @@ export const EditRoom = (props) => {
 				room: selectedRoom.id,
 			},
 		}
-		console.log(newData)
 		updateBooking(newData)
 	}
 

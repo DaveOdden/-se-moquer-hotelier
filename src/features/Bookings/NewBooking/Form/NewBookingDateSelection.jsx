@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Space, Form, DatePicker, TimePicker } from 'antd'
 import { useSettings } from 'src/hooks/useSettingsQuery'
 import dayjs from 'dayjs'
@@ -41,6 +41,13 @@ export const NewBookingDateSelection = (props) => {
 		return checkoutDate.add(minStayDuration || DEFAULT_MIN_STAY, 'hour')
 	}
 
+	// console.log(checkinTime)
+	// console.log(checkoutTime)
+
+	useEffect(() => {
+		setCheckinTime(dayjs(checkinTime).format('HH:mm:ss'))
+	}, [])
+
 	return (
 		<>
 			<Space>
@@ -58,6 +65,7 @@ export const NewBookingDateSelection = (props) => {
 				<Form.Item
 					name="checkinTime"
 					label="Checkin Time"
+					value={checkinTime}
 					rules={[
 						{
 							required: true,
@@ -69,7 +77,6 @@ export const NewBookingDateSelection = (props) => {
 						minuteStep={15}
 						format="h:mm a"
 						onSelect={(val) => setCheckinTime(val)}
-						value={checkinTime}
 						disabledTime={(now) => {
 							return {
 								disabledHours: () => {
@@ -123,7 +130,7 @@ export const NewBookingDateSelection = (props) => {
 						use12Hours
 						minuteStep={15}
 						format="h:mm a"
-						onSelect={(val) => setCheckinTime(val)}
+						onSelect={(val) => setCheckoutTime(val)}
 					/>
 				</Form.Item>
 			</Space>

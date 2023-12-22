@@ -23,7 +23,7 @@ export const NewBookingForm = (props) => {
 	/* Date / Time States */
 	const [checkinDate, setCheckinDate] = useState(null)
 	const [checkoutDate, setCheckoutDate] = useState(null)
-	const [checkinTime, setCheckinTime] = useState(dayjs('2.30.00', 'HH:mm:ss'))
+	const [checkinTime, setCheckinTime] = useState(dayjs('12.30.00', 'HH:mm:ss'))
 	const [checkoutTime, setCheckoutTime] = useState(dayjs('10.30.00', 'HH:mm:ss'))
 	const [durationOfStay, setDurationOfStay] = useState(0)
 
@@ -70,17 +70,17 @@ export const NewBookingForm = (props) => {
 		let formattedCheckoutTime = dayjs.isDayjs(checkoutTime)
 			? checkoutTime.format('HH:mm:ss')
 			: checkoutTime
+
 		let data = {
 			formData: {
 				guest: selectedGuest._id,
 				room: selectedRoom,
-				checkinDate: dayjs(
-					`${checkinDate.format('YYYY-MM-DD')}T${formattedCheckinTime}`
-				).toISOString(),
+				checkinDate: dayjs(`${checkinDate.format('YYYY-MM-DD')}T${formattedCheckinTime}`).format(),
 				checkoutDate: dayjs(
 					`${checkoutDate.format('YYYY-MM-DD')}T${formattedCheckoutTime}`
-				).toISOString(),
+				).format(),
 				paid: true,
+				checkedIn: false,
 				billing: {
 					rate: settings?.properties?.roomRate,
 					days: durationOfStay,
@@ -96,8 +96,10 @@ export const NewBookingForm = (props) => {
 	useEffect(() => {
 		// update checkin/checkout time from settings
 		if (settings) {
-			setCheckinTime(dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
+			setCheckinTime(dayjs(settings.properties.checkinTime, 'HH:mm:ss'))
 			setCheckoutTime(dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
+			bookingForm.setFieldValue('checkinTime', dayjs(settings.properties.checkinTime, 'HH:mm:ss'))
+			bookingForm.setFieldValue('checkoutTime', dayjs(settings.properties.checkoutTime, 'HH:mm:ss'))
 		}
 	}, [settings])
 
@@ -119,8 +121,8 @@ export const NewBookingForm = (props) => {
 			{showNewGuestPrompt && <NewGuestPrompt />}
 			{showDateSelection && (
 				<NewBookingDateSelection
-					checkinTime={settings.properties.checkinTime}
-					checkoutTime={settings.properties.checkoutTime}
+					checkinTime={checkinTime}
+					checkoutTime={checkoutTime}
 					onCheckinDateSelection={setCheckinDate}
 					onCheckoutDateSelection={setCheckoutDate}
 					setCheckinTime={setCheckinTime}

@@ -18,7 +18,6 @@ export const NewBookingGuestSelection = (props) => {
 			endpoint: apiPaths.guest,
 			id: data.id,
 		}).then((res) => {
-			console.log(res)
 			setSelectedGuest(res.message)
 		})
 	}

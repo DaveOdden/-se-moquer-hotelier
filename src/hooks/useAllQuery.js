@@ -17,7 +17,9 @@ export const useAllFeatures = () => {
         queryFn: () => AppAPI.call({
           method: 'GET',
           endpoint: apiPaths.bookings
-        }).then((res) => res.message) 
+        }).then((res) => {
+          return res.message
+        }) 
       }, { 
         queryKey: ["rooms"], 
         queryFn: () => AppAPI.call({
